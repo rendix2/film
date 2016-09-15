@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="bf8f40d4-4dd0-4f00-bbdf-2e671361294a" name="film" url="http://slonice.endora.cz">
+        <fileTransfer host="slonice.endora.cz" port="21" rootFolder="/madamme-lulu.cz/sub/film" password="dff9dfc3dfcfdfc7dfcfdfc4dfd9df9b" username="madammelulucz">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
