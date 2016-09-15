@@ -18,5 +18,5 @@ OK 15. zkontrolovat jestli user_name už není registrováno
 18. hledání pomocí LIKE i ve fultextovém
 OK 19. složka ajax
 20. šipky + esc při hledání
-////
+
 
