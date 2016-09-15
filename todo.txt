@@ -15,5 +15,5 @@ KO 1. preg_quote u preg_match
 17. sort by
 18. hledání pomocí LIKE i ve fultextovém // zatím jen když se nic nenajde
 20. šipky + esc při hledání
-//
+// přidan uplaod na ftp
 
