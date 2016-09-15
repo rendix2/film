@@ -1,0 +1,20 @@
+KO 1. preg_quote u preg_match
+2. csfr
+3. xss
+OK 4. správně parsovat název a rok
+5. pokud na csfd není obrázek vlastní
+6. vlastní profil filmu
+7. ukládat všechny obrázky k sobě
+8. nastavení uživatele
+9. bezpečná hesla
+10. vazby filmů
+11. hodnocení filmů
+12. počítadlo pokusů o přidání filmu
+13. některé akce pouze jako přihlášený
+14. bezpečná jména
+OK 15. zkontrolovat jestli user_name už není registrováno
+16. pagination
+17. sort by
+OK 18. hledání pomocí LIKE
+OK 19. složka ajax
+
