@@ -15,6 +15,7 @@ OK 4. správně parsovat název a rok
 OK 15. zkontrolovat jestli user_name už není registrováno
 16. pagination
 17. sort by
-OK 18. hledání pomocí LIKE
+18. hledání pomocí LIKE i ve fultextovém
 OK 19. složka ajax
+20. šipky + esc při hledání
 
