@@ -47,7 +47,7 @@
 					$errors[] = 'Odkaz není na csfd';
 
 				if ( count ( $errors ) != 0 )
-					myExit ( $this->smarty, implode ( '<br>', $errors ) );
+					Starter::myExit ( $this->smarty, implode ( '<br>', $errors ) );
 
 				$this->database->query ( 'SELECT 1 FROM movies WHERE movie_csfd_id = :csfdId LIMIT 1;',
 				[ 'csfdId' => self::getCsfdId ( $_POST[ 'csfdLink' ] ),
@@ -57,7 +57,7 @@
 					$errors[] = 'Film je již přidán!';
 
 				if ( count ( $errors ) != 0 )
-					myExit ( $this->smarty, implode ( '<br>', $errors ) );
+					Starter::myExit ( $this->smarty, implode ( '<br>', $errors ) );
 
 				$data = $this->getMovieInfo ();
 
@@ -198,9 +198,10 @@
 			$this->database->query ( 'SELECT movie_name_czech, movie_name_origin, movie_year, movie_picture, movie_description
 						FROM movies
 						WHERE movie_id = :movie_id LIMIT 1;',
+
 			[ 'movie_id' => $_GET[ 'movie_id' ] ] );
 
-			if ( !$this->database->numRows () == 1 )
+			if ( $this->database->numRows () == 0 )
 				Starter::myExit ( $this->smarty, 'Film nenalezen' );
 
 			$this->smarty->display ( 'movieShow', $this->database->fetch () );
