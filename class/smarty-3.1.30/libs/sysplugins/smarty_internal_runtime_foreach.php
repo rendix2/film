@@ -8,10 +8,10 @@
      */
     class Smarty_Internal_Runtime_Foreach {
 
-        /**
-         * Stack of saved variables
-         * @var array
-         */
+    /**
+     * Stack of saved variables
+     * @var array
+     */
         private $stack = [ ];
 
         public function count ( $value ) {
@@ -80,13 +80,13 @@
                     if ( isset( $tpl->tpl_vars[ $key ] ) ) {
                         $saveVars[ $key ] = $tpl->tpl_vars[ $key ];
                     }
-                    $tpl->tpl_vars[ $key ] = new Smarty_Variable( NULL, $tpl->isRenderingCache );
+                $tpl->tpl_vars[ $key ] = new Smarty_Variable( NULL, $tpl->isRenderingCache );
                 }
-                if ( $needTotal ) {
+                if ($needTotal ) {
                     $tpl->tpl_vars[ $item ]->total = $total;
                 }
             }
-            if ( $name ) {
+            if ($name) {
                 $namedVar = "__smarty_foreach_{$name}";
                 if ( isset( $tpl->tpl_vars[ $namedVar ] ) ) {
                     $saveVars[ $namedVar ] = $tpl->tpl_vars[ $namedVar ];
@@ -95,13 +95,13 @@
                 if ( isset( $properties[ 'total' ] ) ) {
                     $namedProp[ 'total' ] = $total;
                 }
-                if ( isset( $properties[ 'iteration' ] ) ) {
+                if (isset($properties[ 'iteration' ] ) ) {
                     $namedProp[ 'iteration' ] = 0;
                 }
-                if ( isset( $properties[ 'index' ] ) ) {
+                if (isset($properties[ 'index' ] ) ) {
                     $namedProp[ 'index' ] = -1;
                 }
-                if ( isset( $properties[ 'show' ] ) ) {
+                if (isset($properties[ 'show' ] ) ) {
                     $namedProp[ 'show' ] = ( $total > 0 );
                 }
                 $tpl->tpl_vars[ $namedVar ] = new Smarty_Variable( $namedProp );

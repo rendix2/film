@@ -8,13 +8,13 @@
      */
     class Smarty_Internal_Runtime_Make_Nocache {
 
-        /**
-         * Save current variable value while rendering compiled template and inject nocache code to
-         * assign variable value in cahed template
-         * @param \Smarty_Internal_Template $tpl
-         * @param string $var variable name
-         * @throws \SmartyException
-         */
+    /**
+     * Save current variable value while rendering compiled template and inject nocache code to
+     * assign variable value in cahed template
+     * @param \Smarty_Internal_Template $tpl
+     * @param string $var variable name
+     * @throws \SmartyException
+     */
         public function save ( Smarty_Internal_Template $tpl, $var ) {
             if ( isset( $tpl->tpl_vars[ $var ] ) ) {
                 $export = preg_replace ( '/^Smarty_Variable::__set_state[(]|\s|[)]$/', '',
@@ -44,5 +44,5 @@
                 }
                 $tpl->tpl_vars[ $var ] = $newVar;
             }
-        }
     }
+}

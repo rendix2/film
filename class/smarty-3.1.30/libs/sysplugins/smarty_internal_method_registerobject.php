@@ -46,19 +46,19 @@
                     if ( !is_callable ( [ $object, $method ] ) && !property_exists ( $object, $method ) ) {
                         throw new SmartyException( "Undefined method or property '$method' in registered object" );
                     }
+                }
+            }
+        // test if block methods callable
+        if (!empty($block_methods ) ) {
+            foreach ( (array) $block_methods as $method ) {
+                if ( !is_callable ( [ $object, $method ] ) ) {
+                    throw new SmartyException( "Undefined method '$method' in registered object" );
+                }
             }
         }
-        // test if block methods callable
-            if ( !empty( $block_methods ) ) {
-                foreach ( (array) $block_methods as $method ) {
-                    if ( !is_callable ( [ $object, $method ] ) ) {
-                        throw new SmartyException( "Undefined method '$method' in registered object" );
-                    }
-                }
-        }
-        // register the object
-            $smarty->registered_objects[ $object_name ] =
-            [ $object, (array) $allowed_methods_properties, (boolean) $format, (array) $block_methods ];
+            // register the object
+        $smarty->registered_objects[ $object_name ] =
+        [ $object, (array) $allowed_methods_properties, (boolean) $format, (array) $block_methods ];
 
             return $obj;
         }

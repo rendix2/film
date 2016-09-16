@@ -7,10 +7,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Block {
-        /**
-         * Block name
-         * @var string
-         */
+    /**
+     * Block name
+     * @var string
+     */
         public $name = '';
 
         /**
@@ -79,4 +79,4 @@
          */
         public function callBlock ( Smarty_Internal_Template $tpl ) {
         }
-    }
+}

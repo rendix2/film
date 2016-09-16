@@ -54,7 +54,7 @@
                 $source = NULL;
                 $mtime  = NULL;
             }
-        }
+    }
 
         /**
          * Fetch a template's modification time from database

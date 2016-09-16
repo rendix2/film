@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_LoadFilter {
-        /**
-         * Valid for Smarty and template object
-         * @var int
-         */
+    /**
+     * Valid for Smarty and template object
+     * @var int
+     */
         public $objMap = 3;
 
         /**
@@ -31,7 +31,7 @@
             if ( !isset( $this->filterTypes[ $type ] ) ) {
                 throw new SmartyException( "Illegal filter type \"{$type}\"" );
             }
-        }
+    }
 
         /**
          * load a filter of specified type and name
@@ -66,7 +66,7 @@
 
                     return TRUE;
                 }
-            }
-            throw new SmartyException( "{$type}filter \"{$name}\" not found or callable" );
+        }
+        throw new SmartyException( "{$type}filter \"{$name}\" not found or callable" );
         }
     }

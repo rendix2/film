@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_ClearAllCache {
-        /**
-         * Valid for Smarty object
-         * @var int
-         */
+    /**
+     * Valid for Smarty object
+     * @var int
+     */
         public $objMap = 1;
 
         /**
@@ -30,4 +30,4 @@
 
             return $_cache_resource->clearAll ( $smarty, $exp_time );
         }
-    }
+}

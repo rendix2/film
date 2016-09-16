@@ -13,49 +13,49 @@
  * @package    Smarty
  * @subpackage Compiler
  */
-    class Smarty_Internal_Compile_Make_Nocache extends Smarty_Internal_CompileBase {
-        /**
-         * Attribute definition: Overwrites base class.
-         * @var array
-         * @see Smarty_Internal_CompileBase
-         */
-        public $option_flags = [ ];
+class Smarty_Internal_Compile_Make_Nocache extends Smarty_Internal_CompileBase {
+    /**
+     * Attribute definition: Overwrites base class.
+     * @var array
+     * @see Smarty_Internal_CompileBase
+     */
+    public $option_flags = [ ];
 
-        /**
-         * Array of names of required attribute required by tag
-         *
-         * @var array
-         */
-        public $required_attributes = [ 'var' ];
+    /**
+     * Array of names of required attribute required by tag
+     *
+     * @var array
+     */
+    public $required_attributes = [ 'var' ];
 
-        /**
-         * Shorttag attribute order defined by its names
-         *
-         * @var array
-         */
-        public $shorttag_order = [ 'var' ];
+    /**
+     * Shorttag attribute order defined by its names
+     *
+     * @var array
+     */
+    public $shorttag_order = [ 'var' ];
 
-        /**
-         * Compiles code for the {make_nocache} tag
-         *
-         * @param  array $args array with attributes from parser
-         * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
-         * @param  array $parameter array with compilation parameter
-         *
-         * @return string compiled code
-         * @throws \SmartyCompilerException
-         */
-        public function compile ( $args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter ) {
-            // check and get attributes
-            $_attr = $this->getAttributes ( $compiler, $args );
-            if ( $compiler->template->caching ) {
-                $output                              = "<?php \$_smarty_tpl->smarty->ext->_make_nocache->save(\$_smarty_tpl, {$_attr[ 'var' ]});\n?>\n";
-                $compiler->has_code                  = TRUE;
-                $compiler->suppressNocacheProcessing = TRUE;
+    /**
+     * Compiles code for the {make_nocache} tag
+     *
+     * @param  array $args array with attributes from parser
+     * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
+     * @param  array $parameter array with compilation parameter
+     *
+     * @return string compiled code
+     * @throws \SmartyCompilerException
+     */
+    public function compile ( $args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter ) {
+        // check and get attributes
+        $_attr = $this->getAttributes ( $compiler, $args );
+        if ( $compiler->template->caching ) {
+            $output                              = "<?php \$_smarty_tpl->smarty->ext->_make_nocache->save(\$_smarty_tpl, {$_attr[ 'var' ]});\n?>\n";
+            $compiler->has_code                  = TRUE;
+            $compiler->suppressNocacheProcessing = TRUE;
 
-                return $output;
-            } else {
-                return TRUE;
-            }
+            return $output;
+        } else {
+            return TRUE;
         }
     }
+}

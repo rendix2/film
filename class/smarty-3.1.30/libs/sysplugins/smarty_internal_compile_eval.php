@@ -29,11 +29,11 @@
 
         /**
          * Attribute definition: Overwrites base class.
-         *
-         * @var array
-         * @see Smarty_Internal_CompileBase
-         */
-        public $shorttag_order = [ 'var', 'assign' ];
+
+     * @var array
+     * @see Smarty_Internal_CompileBase
+     */
+    public $shorttag_order = [ 'var', 'assign' ];
 
         /**
          * Compiles code for the {eval} tag

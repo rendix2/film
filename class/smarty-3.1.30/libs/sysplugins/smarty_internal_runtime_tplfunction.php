@@ -7,10 +7,11 @@
      * @author     Uwe Tews
      **/
     class Smarty_Internal_Runtime_TplFunction {
-        /**
-         * Array of source information for known template functions
-         * @var array
-         */
+    /**
+     * Array of source information for known template functions
+     *
+     * @var array
+     */
         private $tplFunctions = [ ];
 
         /**
@@ -58,14 +59,13 @@
                                 ], "\n",
                                 $match[ 0 ] ) );
                             }
-                        }
+                    }
 
                         return TRUE;
                     }
-                }
             }
-
-            return FALSE;
+        }
+        return FALSE;
         }
 
         /**
@@ -88,7 +88,7 @@
                     } else {
                         $function = $this->tplFunctions[ $name ][ 'call_name' ];
                     }
-                }
+            }
                 if ( function_exists ( $function ) ) {
                     $this->saveTemplateVariables ( $tpl, $name );
                     $function ( $tpl, $params );
@@ -123,12 +123,11 @@
             }
         }
 
-        /**
-         * Register template functions defined by template
-         *
-         * @param \Smarty_Internal_Template $tpl
-         * @param  array $tplFunctions source information array of template functions defined in template
-         */
+    /**
+     * Register template functions defined by template
+     * @param \Smarty_Internal_Template $tpl
+     * @param  array $tplFunctions source information array of template functions defined in template
+     */
         public function registerTplFunctions ( Smarty_Internal_Template $tpl, $tplFunctions ) {
             $this->tplFunctions = array_merge ( $this->tplFunctions, $tplFunctions );
             $ptr                = $tpl;
@@ -139,12 +138,11 @@
             }
         }
 
-        /**
-         * Restore saved variables into template objects
-         *
-         * @param \Smarty_Internal_Template $tpl
-         * @param  string $name stack name
-         */
+    /**
+     * Restore saved variables into template objects
+     * @param \Smarty_Internal_Template $tpl
+     * @param  string $name stack name
+     */
         public function restoreTemplateVariables ( Smarty_Internal_Template $tpl, $name ) {
             if ( isset( $tpl->_cache[ 'varStack' ] ) ) {
                 $vars             = array_pop ( $tpl->_cache[ 'varStack' ] );
@@ -153,12 +151,12 @@
             }
         }
 
-        /**
-         * Save current template variables on stack
-         *
-         * @param \Smarty_Internal_Template $tpl
-         * @param  string $name stack name
-         */
+    /**
+     * Save current template variables on stack
+     *
+     * @param \Smarty_Internal_Template $tpl
+     * @param  string $name stack name
+     */
         public function saveTemplateVariables ( Smarty_Internal_Template $tpl, $name ) {
             $tpl->_cache[ 'varStack' ][] =
             [ 'tpl' => $tpl->tpl_vars, 'config' => $tpl->config_vars, 'name' => "_tplFunction_{$name}" ];

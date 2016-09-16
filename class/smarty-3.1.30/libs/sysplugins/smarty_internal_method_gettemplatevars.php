@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_GetTemplateVars {
-        /**
-         * Valid for all objects
-         * @var int
-         */
+    /**
+     * Valid for all objects
+     * @var int
+     */
         public $objMap = 7;
 
         /**
@@ -56,15 +56,12 @@
 
         /**
          * Returns a single or all template variables
-         *
          * @api  Smarty::getTemplateVars()
          * @link http://www.smarty.net/docs/en/api.get.template.vars.tpl
-         *
          * @param \Smarty_Internal_Data|\Smarty_Internal_Template|\Smarty $data
          * @param  string $varName variable name or null
          * @param \Smarty_Internal_Data|\Smarty_Internal_Template|\Smarty $_ptr optional pointer to data object
          * @param  bool $searchParents include parent templates?
-         *
          * @return mixed variable value or or array of variables
          */
         public function getTemplateVars ( Smarty_Internal_Data $data, $varName = NULL, Smarty_Internal_Data $_ptr = NULL,
@@ -80,30 +77,29 @@
                 $_result = [ ];
                 if ( $_ptr === NULL ) {
                     $_ptr = $data;
-                }
-                while ( $_ptr !== NULL ) {
-                    foreach ( $_ptr->tpl_vars AS $key => $var ) {
-                        if ( !array_key_exists ( $key, $_result ) ) {
-                            $_result[ $key ] = $var->value;
-                        }
-                    }
-                    // not found, try at parent
-                    if ( $searchParents ) {
-                        $_ptr = $_ptr->parent;
-                    } else {
-                        $_ptr = NULL;
+            }
+            while ( $_ptr !== NULL ) {
+                foreach ( $_ptr->tpl_vars AS $key => $var ) {
+                    if ( !array_key_exists ( $key, $_result ) ) {
+                        $_result[ $key ] = $var->value;
                     }
                 }
-                if ( $searchParents && isset( Smarty::$global_tpl_vars ) ) {
-                    foreach ( Smarty::$global_tpl_vars AS $key => $var ) {
-                        if ( !array_key_exists ( $key, $_result ) ) {
-                            $_result[ $key ] = $var->value;
-                        }
+                // not found, try at parent
+                if ( $searchParents ) {
+                    $_ptr = $_ptr->parent;
+                } else {
+                    $_ptr = NULL;
+                }
+            }
+            if ( $searchParents && isset( Smarty::$global_tpl_vars ) ) {
+                foreach ( Smarty::$global_tpl_vars AS $key => $var ) {
+                    if ( !array_key_exists ( $key, $_result ) ) {
+                        $_result[ $key ] = $var->value;
                     }
                 }
-
-                return $_result;
+            }
+            return $_result;
             }
         }
 
-    }
+}

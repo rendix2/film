@@ -8,7 +8,7 @@
 /**
  * @ignore
  */
-    require_once ( SMARTY_PLUGINS_DIR . 'shared.escape_special_chars.php' );
+require_once ( SMARTY_PLUGINS_DIR . 'shared.escape_special_chars.php' );
     /**
      * @ignore
      */
@@ -59,7 +59,7 @@
             for ( $i = 1; $i <= 12; $i++ ) {
                 $_month_timestamps[ $i ] = mktime ( 0, 0, 0, $i, 1, 2000 );
             }
-        }
+    }
 
         /* Default values. */
         $prefix         = "Date_";
@@ -171,7 +171,7 @@
                     }
                     break;
             }
-        }
+    }
 
         // Note: date() is faster than strftime()
         // Note: explode(date()) is faster than date() date() date()
@@ -184,7 +184,7 @@
                     isset( $params[ 'time' ][ $prefix . $_elementName ] ) ? $params[ 'time' ][ $prefix . $_elementName ] :
                     date ( $_elementKey );
                 }
-            } elseif ( isset( $params[ 'time' ][ $field_array ][ $prefix . 'Year' ] ) ) {
+        } elseif ( isset( $params[ 'time' ][ $field_array ][ $prefix . 'Year' ] ) ) {
                 // $_REQUEST given
                 foreach ( [ 'Y' => 'Year', 'm' => 'Month', 'd' => 'Day' ] as $_elementKey => $_elementName ) {
                     $_variableName  = '_' . strtolower ( $_elementName );
@@ -192,10 +192,10 @@
                     $params[ 'time' ][ $field_array ][ $prefix . $_elementName ] : date ( $_elementKey );
                 }
             } else {
-                // no date found, use NOW
+            // no date found, use NOW
                 list( $_year, $_month, $_day ) = $time = explode ( '-', date ( 'Y-m-d' ) );
             }
-        } elseif ( $time === NULL ) {
+        } elseif ($time === NULL ) {
             if ( array_key_exists ( 'time', $params ) ) {
                 $_year = $_month = $_day = $time = NULL;
             } else {
@@ -243,7 +243,7 @@
                 $_html_years =
                 '<input type="text" name="' . $_name . '" value="' . $_year . '" size="4" maxlength="4"' . $_extra .
                 $extra_attrs . ' />';
-            } else {
+        } else {
                 $_html_years = '<select name="' . $_name . '"';
                 if ( $year_id !== NULL || $all_id !== NULL ) {
                     $_html_years .= ' id="' . smarty_function_escape_special_chars ( $year_id !== NULL ?
@@ -251,7 +251,7 @@
                     ( $all_id ? ( $all_id . $_name ) :
                     $_name ) ) . '"';
                 }
-                if ( $year_size ) {
+                if ($year_size ) {
                     $_html_years .= ' size="' . $year_size . '"';
                 }
                 $_html_years .= $_extra . $extra_attrs . '>' . $option_separator;
@@ -278,7 +278,7 @@
             if ( $all_extra ) {
                 $_extra .= ' ' . $all_extra;
             }
-            if ( $month_extra ) {
+            if ($month_extra ) {
                 $_extra .= ' ' . $month_extra;
             }
 
@@ -318,7 +318,7 @@
             if ( $all_extra ) {
                 $_extra .= ' ' . $all_extra;
             }
-            if ( $day_extra ) {
+            if ($day_extra ) {
                 $_extra .= ' ' . $day_extra;
             }
 
@@ -359,7 +359,7 @@
                         if ( $_html ) {
                             $_html .= $field_separator;
                         }
-                        $_html .= $_html_years;
+                    $_html .= $_html_years;
                     }
                     break;
 
@@ -369,7 +369,7 @@
                         if ( $_html ) {
                             $_html .= $field_separator;
                         }
-                        $_html .= $_html_months;
+                    $_html .= $_html_months;
                     }
                     break;
 
@@ -379,11 +379,11 @@
                         if ( $_html ) {
                             $_html .= $field_separator;
                         }
-                        $_html .= $_html_days;
+                    $_html .= $_html_days;
                     }
                     break;
             }
         }
 
         return $_html;
-    }
+}

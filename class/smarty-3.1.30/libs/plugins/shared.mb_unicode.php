@@ -7,24 +7,24 @@
 
 /**
  * convert characters to their decimal unicode equivalents
- *
+
  * @link   http://www.ibm.com/developerworks/library/os-php-unicode/index.html#listing3 for inspiration
- *
+
  * @param string $string characters to calculate unicode of
  * @param string $encoding encoding of $string, if null mb_internal_encoding() is used
- *
+
  * @return array sequence of unicodes
  * @author Rodney Rehm
  */
-    function smarty_mb_to_unicode ( $string, $encoding = NULL ) {
-        if ( $encoding ) {
-            $expanded = mb_convert_encoding ( $string, "UTF-32BE", $encoding );
-        } else {
-            $expanded = mb_convert_encoding ( $string, "UTF-32BE" );
-        }
-
-        return unpack ( "N*", $expanded );
+function smarty_mb_to_unicode ( $string, $encoding = NULL ) {
+    if ( $encoding ) {
+        $expanded = mb_convert_encoding ( $string, "UTF-32BE", $encoding );
+    } else {
+        $expanded = mb_convert_encoding ( $string, "UTF-32BE" );
     }
+
+    return unpack ( "N*", $expanded );
+}
 
     /**
      * convert unicodes to the character of given encoding

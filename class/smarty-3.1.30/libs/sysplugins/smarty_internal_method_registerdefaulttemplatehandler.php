@@ -49,7 +49,7 @@
                 throw new SmartyException( 'Default handler: No ' . ( $source->isConfig ? 'config' : 'template' ) .
                 " default content for '{$source->type}:{$source->name}'" );
             }
-    }
+        }
 
         /**
          * Register template default handler

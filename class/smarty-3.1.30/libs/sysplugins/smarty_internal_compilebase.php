@@ -27,10 +27,9 @@
 
         /**
          * Shorttag attribute order defined by its names
-         *
          * @var array
-         */
-        public $shorttag_order = [ ];
+     */
+    public $shorttag_order = [ ];
 
         /**
          * Array of names of valid option flags
@@ -77,8 +76,8 @@
                     }
                 }
                 // wrong nesting of tags
-                $compiler->trigger_template_error ( "unclosed {$compiler->smarty->left_delimiter}" . $_openTag .
-                "{$compiler->smarty->right_delimiter} tag" );
+            $compiler->trigger_template_error ( "unclosed {$compiler->smarty->left_delimiter}" . $_openTag .
+            "{$compiler->smarty->right_delimiter} tag" );
 
                 return;
             }
@@ -94,8 +93,10 @@
          * optional attributes. Required attributes must be present. Optional attributes are check against
          * the corresponding list. The keyword '_any' specifies that any attribute will be accepted
          * as valid
+         *
          * @param  object $compiler compiler object
          * @param  array $attributes attributes applied to the tag
+         *
          * @return array  of mapped attributes for further processing
          */
         public function getAttributes ( $compiler, $attributes ) {
@@ -139,14 +140,14 @@
                             $_indexed_attr[ $k ] = $v;
                         }
                     }
-                }
+            }
         }
         // check if all required attributes present
-            foreach ( $this->required_attributes as $attr ) {
-                if ( !isset( $_indexed_attr[ $attr ] ) ) {
-                    $compiler->trigger_template_error ( "missing \"" . $attr . "\" attribute", NULL, TRUE );
-                }
+        foreach ( $this->required_attributes as $attr ) {
+            if ( !isset( $_indexed_attr[ $attr ] ) ) {
+                $compiler->trigger_template_error ( "missing \"" . $attr . "\" attribute", NULL, TRUE );
             }
+        }
             // check for not allowed attributes
             if ( $this->optional_attributes != [ '_any' ] ) {
                 if ( !isset( $this->mapCache[ 'all' ] ) ) {
@@ -166,20 +167,21 @@
                     $_indexed_attr[ $flag ] = FALSE;
                 }
             }
-            if ( isset( $_indexed_attr[ 'nocache' ]) && $_indexed_attr[ 'nocache' ] ) {
+            if ( isset( $_indexed_attr[ 'nocache' ] ) && $_indexed_attr[ 'nocache' ] ) {
                 $compiler->tag_nocache = TRUE;
             }
 
             return $_indexed_attr;
         }
 
-    /**
-     * Push opening tag name on stack
+        /**
+         * Push opening tag name on stack
      * Optionally additional data can be saved on stack
+
      * @param object $compiler compiler object
-     * @param string $openTag the opening tag's name
-     * @param mixed $data optional data saved
-     */
+     * @param string $openTag  the opening tag's name
+         * @param mixed $data optional data saved
+         */
         public function openTag ( $compiler, $openTag, $data = NULL ) {
             array_push ( $compiler->_tag_stack, [ $openTag, $data ] );
         }

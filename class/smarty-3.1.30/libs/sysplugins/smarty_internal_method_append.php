@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_Append {
-        /**
-         * Valid for all objects
-         * @var int
-         */
+    /**
+     * Valid for all objects
+     * @var int
+     */
         public $objMap = 7;
 
         /**
@@ -43,7 +43,7 @@
                         } else {
                             $data->tpl_vars[ $tpl_var ] = clone $tpl_var_inst;
                         }
-                    }
+                }
                     if ( !( is_array ( $data->tpl_vars[ $tpl_var ]->value ) ||
                     $data->tpl_vars[ $tpl_var ]->value instanceof ArrayAccess )
                     ) {
@@ -64,4 +64,4 @@
 
             return $data;
         }
-    }
+}

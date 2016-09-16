@@ -14,10 +14,10 @@
      * @author     Rodney Rehm
      */
     class Smarty_Template_Cached extends Smarty_Template_Resource_Base {
-        /**
-         * Cache Is Valid
-         * @var boolean
-         */
+    /**
+     * Cache Is Valid
+     * @var boolean
+     */
         public $valid = NULL;
 
         /**
@@ -85,7 +85,7 @@
             if ( !class_exists ( 'Smarty_CacheResource', FALSE ) ) {
                 require SMARTY_SYSPLUGINS_DIR . 'smarty_cacheresource.php';
             }
-            $this->handler = Smarty_CacheResource::load ( $_template->smarty );
+        $this->handler = Smarty_CacheResource::load ( $_template->smarty );
         }
 
         /**
@@ -102,8 +102,7 @@
             ) {
                 $_template->cached->valid = FALSE;
             }
-
-            return $_template->cached;
+        return $_template->cached;
         }
 
         /**
@@ -177,12 +176,10 @@
                     } elseif ( $this->is_locked ) {
                         $this->handler->releaseLock ( $_template->smarty, $this );
                     }
-                }
-
-                return $this->valid;
             }
-
             return $this->valid;
+        }
+        return $this->valid;
         }
 
         /**
@@ -195,11 +192,11 @@
             if ( $this->handler->process ( $_template, $this, $update ) === FALSE ) {
                 $this->valid = FALSE;
             }
-            if ( $this->valid ) {
-                $this->processed = TRUE;
-            } else {
-                $this->processed = FALSE;
-            }
+        if ( $this->valid ) {
+            $this->processed = TRUE;
+        } else {
+            $this->processed = FALSE;
+        }
         }
 
         /**
@@ -213,8 +210,7 @@
             if ( !$_template->source->handler->recompiled ) {
                 return $this->handler->readCachedContent ( $_template );
             }
-
-            return FALSE;
+        return FALSE;
         }
 
         /**
@@ -245,5 +241,5 @@
             } else {
                 $_template->smarty->ext->_updateCache->updateCache ( $this, $_template, $no_output_filter );
             }
-        }
     }
+}

@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_AssignGlobal {
-        /**
-         * Valid for all objects
-         * @var int
-         */
+    /**
+     * Valid for all objects
+     * @var int
+     */
         public $objMap = 7;
 
         /**
@@ -30,8 +30,8 @@
                     $ptr->tpl_vars[ $varName ] = clone Smarty::$global_tpl_vars[ $varName ];
                     $ptr                       = $ptr->parent;
                 }
-            }
+        }
 
             return $data;
         }
-    }
+}

@@ -35,7 +35,7 @@
       "libs/SmartyBC.class.php",
       "libs/sysplugins/"
     ]
-  },
+    },
   "extra": {
     "branch-alias": {
       "dev-master": "3.1.x-dev"

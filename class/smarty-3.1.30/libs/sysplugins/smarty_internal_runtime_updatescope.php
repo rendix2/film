@@ -34,7 +34,7 @@
                 if ( isset( $tpl->smarty ) ) {
                     $_stack[] = $tpl->smarty;
                 }
-            } elseif ( $mergedScope & Smarty::SCOPE_ROOT ) {
+        } elseif ( $mergedScope & Smarty::SCOPE_ROOT ) {
                 while ( isset( $ptr ) ) {
                     if ( $ptr->_objType != 2 ) {
                         $_stack[] = $ptr;
@@ -42,9 +42,8 @@
                     }
                     $ptr = $ptr->parent;
                 }
-            }
-
-            return $_stack;
+        }
+        return $_stack;
         }
 
         /**
@@ -73,8 +72,8 @@
                         $this->_updateVarStack ( $ptr, $varName );
                     }
                 }
-            }
         }
+    }
 
         /**
          * Update variable in template local variable stack
@@ -88,7 +87,7 @@
                 $this->_updateVariableInOtherScope ( $tpl->_cache[ 'varStack' ][ $i ][ 'tpl' ], $tpl, $varName );
                 $i++;
             }
-        }
+    }
 
         /**
          * Update varibale in other scope
@@ -104,5 +103,5 @@
                 $tpl_vars[ $varName ]        = clone $tpl_vars[ $varName ];
                 $tpl_vars[ $varName ]->value = $from->tpl_vars[ $varName ]->value;
             }
-        }
     }
+}

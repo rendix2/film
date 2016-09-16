@@ -8,18 +8,19 @@
      * @author     Uwe Tews
      */
 
-    /**
-     * Smarty Internal Plugin Compile Modifier Class
-     * @package    Smarty
-     * @subpackage Compiler
-     */
+/**
+ * Smarty Internal Plugin Compile Modifier Class
+ *
+ * @package    Smarty
+ * @subpackage Compiler
+ */
     class Smarty_Internal_Compile_Private_Modifier extends Smarty_Internal_CompileBase {
-    /**
+        /**
      * Compiles code for modifier execution
-     * @param  array $args array with attributes from parser
-     * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
-     * @param  array $parameter array with compilation parameter
-     * @return string compiled code
+         * @param  array $args array with attributes from parser
+         * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
+         * @param  array $parameter array with compilation parameter
+         * @return string compiled code
      * @throws \SmartyCompilerException
      */
         public function compile ( $args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter ) {
@@ -127,7 +128,7 @@
                                         } else {
                                             $output = $function[ 0 ] . '::' . $function[ 1 ] . '(' . $params . ')';
                                         }
-                                }
+                                    }
                             }
                                 if ( isset( $compiler->parent_compiler->template->compiled->required_plugins[ 'nocache' ][ $modifier ][ Smarty::PLUGIN_MODIFIER ][ 'file' ] ) ||
                                 isset( $compiler->parent_compiler->template->compiled->required_plugins[ 'compiled' ][ $modifier ][ Smarty::PLUGIN_MODIFIER ][ 'file' ] )
@@ -140,12 +141,12 @@
                                 break 2;
                             }
                     }
-            }
+                }
             if ( !isset( $compiler->known_modifier_type[ $modifier ] ) ) {
                 $compiler->trigger_template_error ( "unknown modifier \"" . $modifier . "\"", NULL, TRUE );
             }
-            }
+        }
 
-            return $output;
+        return $output;
         }
     }

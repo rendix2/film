@@ -15,9 +15,9 @@
  *        as this would lead to (severe) performance penalty! how should this be handled?
  */
 
-    /**
-     * This class does contain the security settings
-     */
+/**
+ * This class does contain the security settings
+ */
     class Smarty_Security {
         /**
          * This determines how Smarty handles "<?php ... ?>" tags in templates.
@@ -253,18 +253,18 @@
 
                 return;
             } elseif ( is_object ( $security_class ) ) {
-                throw new SmartyException( "Class '" . get_class ( $security_class ) . "' must extend Smarty_Security." );
+                throw new SmartyException( "Class '" . get_class($security_class ) . "' must extend Smarty_Security." );
             }
             if ( $security_class == NULL ) {
                 $security_class = $smarty->security_class;
             }
-            if ( !class_exists ( $security_class ) ) {
-                throw new SmartyException( "Security class '$security_class' is not defined" );
-            } elseif ( $security_class !== 'Smarty_Security' && !is_subclass_of ( $security_class, 'Smarty_Security' ) ) {
-                throw new SmartyException( "Class '$security_class' must extend Smarty_Security." );
-            } else {
-                $smarty->security_policy = new $security_class( $smarty );
-            }
+        if ( !class_exists ( $security_class ) ) {
+            throw new SmartyException( "Security class '$security_class' is not defined" );
+        } elseif ( $security_class !== 'Smarty_Security' && !is_subclass_of ( $security_class, 'Smarty_Security' ) ) {
+            throw new SmartyException( "Class '$security_class' must extend Smarty_Security." );
+        } else {
+            $smarty->security_policy = new $security_class( $smarty );
+        }
 
             return;
         }
@@ -292,7 +292,7 @@
                     return $dirs;
                 }
                 // abort if we've reached root
-                if ( !preg_match ( '#[\\\/][^\\\/]+[\\\/]$#', $directory ) ) {
+                if ( !preg_match ( '#[\\\/][^\\\/]+[\\\/]$#', $directory)) {
                     break;
                 }
                 // bubble up one level
@@ -300,8 +300,8 @@
             }
 
             // give up
-            throw new SmartyException( "directory '{$filepath}' not allowed by security setting" );
-        }
+            throw new SmartyException( "directory '{$filepath}' not allowed by security setting");
+    }
 
         /**
          * Exit template processing
@@ -315,10 +315,8 @@
 
         /**
          * Check if constants are enabled or trusted
-         *
          * @param  string $const constant name
          * @param  object $compiler compiler object
-         *
          * @return bool
          */
         public function isTrustedConstant ( $const, $compiler ) {
@@ -337,7 +335,7 @@
             if ( $this->allow_constants ) {
                 return TRUE;
             }
-            $compiler->trigger_template_error ( "Security: access to constants not permitted" );
+            $compiler->trigger_template_error ("Security: access to constants not permitted" );
 
             return FALSE;
         }
@@ -361,7 +359,7 @@
                 if ( empty( $this->disabled_modifiers ) || !in_array ( $modifier_name, $this->disabled_modifiers ) ) {
                     return TRUE;
                 } else {
-                    $compiler->trigger_template_error ( "modifier '{$modifier_name}' disabled by security setting", NULL,
+                    $compiler->trigger_template_error ( "modifier '{$modifier_name}' disabled by security setting", null,
                     TRUE );
                 }
             } elseif ( in_array ( $modifier_name, $this->allowed_modifiers ) &&
@@ -422,7 +420,7 @@
 
             $compiler->trigger_template_error ( "PHP function '{$function_name}' not allowed by security setting" );
 
-            return FALSE; // should not, but who knows what happens to the compiler in the future?
+            return false; // should not, but who knows what happens to the compiler in the future?
         }
 
         /**
@@ -466,8 +464,8 @@
                 }
                 $this->_include_path_status = $this->smarty->use_include_path;
             }
-            if ( $isConfig !== TRUE &&
-            ( !isset( $this->smarty->_cache[ 'template_dir_new' ] ) || $this->smarty->_cache[ 'template_dir_new' ] )
+            if ( $isConfig !== true &&
+            (!isset($this->smarty->_cache[ 'template_dir_new' ] ) || $this->smarty->_cache[ 'template_dir_new' ] )
             ) {
                 $_dir = $this->smarty->getTemplateDir ();
                 if ( $this->_template_dir !== $_dir ) {
@@ -477,7 +475,7 @@
                     foreach ( $_dir as $directory ) {
                         $this->_resource_dir[ $directory ] = TRUE;
                     }
-                    $this->_template_dir = $_dir;
+                $this->_template_dir = $_dir;
                 }
                 $this->smarty->_cache[ 'template_dir_new' ] = FALSE;
             }
@@ -492,20 +490,20 @@
                     foreach ( $_dir as $directory ) {
                         $this->_resource_dir[ $directory ] = TRUE;
                     }
-                    $this->_config_dir = $_dir;
+                $this->_config_dir = $_dir;
                 }
                 $this->smarty->_cache[ 'config_dir_new' ] = FALSE;
             }
-            if ( $this->_secure_dir !== (array) $this->secure_dir ) {
-                foreach ( $this->_secure_dir as $directory ) {
-                    unset( $this->_resource_dir[ $directory ] );
-                }
-                foreach ( (array) $this->secure_dir as $directory ) {
-                    $directory                         = $this->smarty->_realpath ( $directory . DS, TRUE );
-                    $this->_resource_dir[ $directory ] = TRUE;
-                }
-                $this->_secure_dir = (array) $this->secure_dir;
+        if ($this->_secure_dir !== (array) $this->secure_dir) {
+            foreach ( $this->_secure_dir as $directory ) {
+                unset( $this->_resource_dir[ $directory ] );
             }
+            foreach ( (array) $this->secure_dir as $directory ) {
+                $directory                         = $this->smarty->_realpath ( $directory . DS, TRUE );
+                $this->_resource_dir[ $directory ] = TRUE;
+            }
+            $this->_secure_dir = (array) $this->secure_dir;
+        }
             $this->_resource_dir = $this->_checkDir ( $filepath, $this->_resource_dir );
 
             return TRUE;
@@ -547,7 +545,7 @@
 
             $compiler->trigger_template_error ( "access to static class '{$class_name}' not allowed by security setting" );
 
-            return FALSE; // should not, but who knows what happens to the compiler in the future?
+            return false; // should not, but who knows what happens to the compiler in the future?
         }
 
         /**
@@ -565,7 +563,7 @@
             }
             if ( $params[ 2 ] == 'method' ) {
                 $allowed = $this->trusted_static_methods;
-                $name    = substr ( $params[ 0 ], 0, strpos ( $params[ 0 ], '(' ) );
+                $name    = substr ( $params[ 0 ], 0, strpos($params[ 0 ], '(' ) );
             } else {
                 $allowed = $this->trusted_static_properties;
                 // strip '$'
@@ -576,15 +574,14 @@
                     // fall back
                     return $this->isTrustedStaticClass ( $class_name, $compiler );
                 }
-                if ( isset( $allowed[ $class_name ] ) &&
-                ( empty( $allowed[ $class_name ] ) || in_array ( $name, $allowed[ $class_name ] ) )
+                if ( isset( $allowed[ $class_name ]) &&
+                ( empty( $allowed[ $class_name ] ) || in_array ( $name, $allowed[ $class_name ]))
                 ) {
                     return TRUE;
                 }
             }
-            $compiler->trigger_template_error ( "access to static class '{$class_name}' {$params[2]} '{$name}' not allowed by security setting" );
-
-            return FALSE; // should not, but who knows what happens to the compiler in the future?
+            $compiler->trigger_template_error ( "access to static class '{$class_name}' {$params[2]} '{$name}' not allowed by security setting");
+        return FALSE; // should not, but who knows what happens to the compiler in the future?
         }
 
         /**
@@ -625,7 +622,7 @@
                 } else {
                     $compiler->trigger_template_error ( "tag '{$tag_name}' disabled by security setting", NULL, TRUE );
                 }
-            } elseif ( in_array ( $tag_name, $this->allowed_tags ) && !in_array ( $tag_name, $this->disabled_tags ) ) {
+            } elseif (in_array($tag_name, $this->allowed_tags ) && !in_array ( $tag_name, $this->disabled_tags ) ) {
                 return TRUE;
             } else {
                 $compiler->trigger_template_error ( "tag '{$tag_name}' not allowed by security setting", NULL, TRUE );
@@ -639,7 +636,9 @@
          * To simplify things, isTrustedUri() resolves all input to "{$PROTOCOL}://{$HOSTNAME}".
          * So "http://username:password@hello.world.example.org:8080/some-path?some=query-string"
          * is reduced to "http://hello.world.example.org" prior to applying the patters from {@link $trusted_uri}.
+         *
          * @param  string $uri
+         *
          * @return boolean         true if URI is trusted
          * @throws SmartyException if URI is not trusted
          * @uses $trusted_uri for list of patterns to match against $uri

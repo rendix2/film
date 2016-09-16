@@ -30,11 +30,11 @@
 
         /**
          * Attribute definition: Overwrites base class.
-         *
-         * @var array
-         * @see Smarty_Internal_CompileBase
-         */
-        public $optional_attributes = [ '_any' ];
+
+     * @var array
+     * @see Smarty_Internal_CompileBase
+     */
+    public $optional_attributes = [ '_any' ];
 
         /**
          * Compiles code for the {function} tag
@@ -84,11 +84,9 @@
 
         /**
          * Compiles code for the {/function} tag
-         *
          * @param  array $args array with attributes from parser
          * @param object|\Smarty_Internal_TemplateCompilerBase $compiler compiler object
          * @param  array $parameter array with compilation parameter
-         *
          * @return bool true
          */
         public function compile ( $args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter ) {
@@ -110,7 +108,7 @@
                     $_paramsArray[] = "'$_key'=>$_value";
                 }
             }
-            if ( !empty($_paramsArray ) ) {
+            if ( !empty($_paramsArray) ) {
                 $_params     = 'array(' . implode ( ",", $_paramsArray ) . ')';
                 $_paramsCode = "\$params = array_merge($_params, \$params);\n";
             } else {
@@ -182,12 +180,12 @@
                     }
             }
         }
-        // restore old buffer
+            // restore old buffer
 
         $compiler->parser->current_buffer = $saved_data[ 1 ];
-            // restore old status
-            $compiler->template->compiled->has_nocache_code = $saved_data[ 2 ];
-            $compiler->template->caching                    = $saved_data[ 3 ];
+        // restore old status
+        $compiler->template->compiled->has_nocache_code = $saved_data[ 2 ];
+            $compiler->template->caching                = $saved_data[ 3 ];
 
             return TRUE;
         }

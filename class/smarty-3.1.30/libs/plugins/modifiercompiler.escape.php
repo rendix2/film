@@ -8,7 +8,7 @@
 /**
  * @ignore
  */
-    require_once ( SMARTY_PLUGINS_DIR . 'shared.literal_compiler_param.php' );
+require_once ( SMARTY_PLUGINS_DIR . 'shared.literal_compiler_param.php' );
 
     /**
      * Smarty escape modifier plugin
@@ -62,8 +62,8 @@
                             return 'mb_convert_encoding(htmlspecialchars(' . $params[ 0 ] . ', ENT_QUOTES, ' .
                             var_export ( $char_set, TRUE ) . '), "HTML-ENTITIES", ' . var_export ( $char_set, TRUE ) . ')';
                         } else {
-                            // fall back to modifier.escape.php
-                        }
+                        // fall back to modifier.escape.php
+                    }
                     }
 
                     // no MBString fallback
@@ -108,7 +108,7 @@
             SMARTY_PLUGINS_DIR . 'modifier.escape.php';
             $compiler->parent_compiler->template->compiled->required_plugins[ 'compiled' ][ 'escape' ][ 'modifier' ][ 'function' ] =
             'smarty_modifier_escape';
-        }
+    }
 
         return 'smarty_modifier_escape(' . join ( ', ', $params ) . ')';
     }

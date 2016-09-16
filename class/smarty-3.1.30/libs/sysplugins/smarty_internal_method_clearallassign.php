@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_ClearAllAssign {
-        /**
-         * Valid for all objects
-         * @var int
-         */
+    /**
+     * Valid for all objects
+     * @var int
+     */
         public $objMap = 7;
 
         /**

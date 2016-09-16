@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_MustCompile {
-        /**
-         * Valid for template object
-         * @var int
-         */
+    /**
+     * Valid for template object
+     * @var int
+     */
         public $objMap = 2;
 
         /**
@@ -41,4 +41,4 @@
 
             return $_template->mustCompile;
         }
-    }
+}

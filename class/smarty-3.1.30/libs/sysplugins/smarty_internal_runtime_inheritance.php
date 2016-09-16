@@ -107,7 +107,7 @@
 
         /**
      * Initialize inheritance
-         * @param \Smarty_Internal_Template $tpl template object of caller
+ * @param \Smarty_Internal_Template $tpl template object of caller
          * @param bool $initChild if true init for child template
          * @param array $blockNames outer level block name
          */
@@ -119,7 +119,7 @@
 
                 return;
             }
-            $this->tplIndex ++;
+            $this->tplIndex++;
             $this->sources[ $this->tplIndex ] = $tpl->source;
 
             // start of child sub template(s)
@@ -129,7 +129,7 @@
                     //grab any output of child templates
                     ob_start ();
                 }
-                $this->inheritanceLevel++;
+                $this->inheritanceLevel ++;
                 //           $tpl->startRenderCallbacks[ 'inheritance' ] = array($this, 'subTemplateStart');
                 //           $tpl->endRenderCallbacks[ 'inheritance' ] = array($this, 'subTemplateEnd');
             }
@@ -180,7 +180,7 @@
             if ( $block->hide && !isset( $block->child ) ) {
                 return;
             }
-            if ( isset($block->child ) && $block->child->hide && !isset( $block->child->child ) ) {
+            if ( isset( $block->child ) && $block->child->hide && !isset( $block->child->child ) ) {
                 $block->child = NULL;
             }
             $block->parent = $parent;
@@ -204,6 +204,6 @@
                     }
                 }
             }
-            $block->parent = NULL;
-        }
+            $block->parent = null;
     }
+}

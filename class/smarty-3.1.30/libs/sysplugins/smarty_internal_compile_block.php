@@ -140,11 +140,9 @@
     class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_Compile_Shared_Inheritance {
         /**
          * Compiles code for the {/block} tag
-     *
          * @param  array $args array with attributes from parser
          * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
          * @param  array $parameter array with compilation parameter
-         *
          * @return bool true
          */
         public function compile ( $args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter ) {
@@ -210,11 +208,11 @@
         }
 
         // restore old status
-        $compiler->template->compiled->has_nocache_code = $_has_nocache_code;
-            $compiler->tag_nocache                      = $compiler->nocache;
-            $compiler->nocache                          = $_nocache;
-            $compiler->parser->current_buffer           = $_buffer;
-            $output                                     = "<?php \n";
+            $compiler->template->compiled->has_nocache_code = $_has_nocache_code;
+        $compiler->tag_nocache                              = $compiler->nocache;
+            $compiler->nocache                              = $_nocache;
+            $compiler->parser->current_buffer               = $_buffer;
+            $output                                         = "<?php \n";
             if ( $compiler->_cache[ 'blockNesting' ] == 1 ) {
                 $output .= "\$_smarty_tpl->inheritance->instanceBlock(\$_smarty_tpl, '$_className', $_name);\n";
             } else {

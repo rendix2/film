@@ -3,23 +3,23 @@
   from "/home/users/madammelulucz/madamme-lulu.cz/sub/film/template/liveMoviesView.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
-if ($_smarty_tpl->_decodeProperties($_smarty_tpl, [
+if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
   'unifunc' => 'content_57dbbf1b6c9d17_96872870',
   'has_nocache_code' => FALSE,
   'file_dependency' => 
-  [
+  array (
     'b0acd6cbbf46d99b9ecdda016d9db89e7bfb4d12' => 
-    [
+    array (
       0 => '/home/users/madammelulucz/madamme-lulu.cz/sub/film/template/liveMoviesView.tpl',
       1 => 1474019076,
       2 => 'file',
-    ],
-  ],
+    ),
+  ),
   'includes' => 
-  [
-  ],
-],FALSE)) {
+  array (
+  ),
+),FALSE)) {
 function content_57dbbf1b6c9d17_96872870 (Smarty_Internal_Template $_smarty_tpl) {
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['data']->value, 'movie');
 if ($_from !== NULL) {

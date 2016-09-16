@@ -10,29 +10,26 @@
  * Type:     modifier<br>
  * Name:     regex_replace<br>
  * Purpose:  regular expression search/replace
- *
  * @link    http://smarty.php.net/manual/en/language.modifier.regex.replace.php
  *          regex_replace (Smarty online manual)
  * @author  Monte Ohrt <monte at ohrt dot com>
- *
  * @param string $string input string
  * @param string|array $search regular expression(s) to search for
  * @param string|array $replace string(s) that should be replaced
  * @param int $limit the maximum number of replacements
- *
  * @return string
  */
-    function smarty_modifier_regex_replace ( $string, $search, $replace, $limit = -1 ) {
-        if ( is_array ( $search ) ) {
-            foreach ( $search as $idx => $s ) {
-                $search[ $idx ] = _smarty_regex_replace_check ( $s );
-            }
-        } else {
-            $search = _smarty_regex_replace_check ( $search );
+function smarty_modifier_regex_replace ( $string, $search, $replace, $limit = -1 ) {
+    if ( is_array ( $search ) ) {
+        foreach ( $search as $idx => $s ) {
+            $search[ $idx ] = _smarty_regex_replace_check ( $s );
         }
-
-        return preg_replace ( $search, $replace, $string, $limit );
+    } else {
+        $search = _smarty_regex_replace_check ( $search );
     }
+
+    return preg_replace ( $search, $replace, $string, $limit );
+}
 
     /**
      * @param  string $search string(s) that should be replaced

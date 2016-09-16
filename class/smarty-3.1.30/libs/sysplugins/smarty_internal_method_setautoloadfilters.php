@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_SetAutoloadFilters {
-        /**
-         * Valid for Smarty and template object
-         * @var int
-         */
+    /**
+     * Valid for Smarty and template object
+     * @var int
+     */
         public $objMap = 3;
 
         /**
@@ -31,7 +31,7 @@
             if ( !isset( $this->filterTypes[ $type ] ) ) {
                 throw new SmartyException( "Illegal filter type \"{$type}\"" );
             }
-        }
+    }
 
         /**
          * Set autoload filters
@@ -58,7 +58,6 @@
                 }
                 $smarty->autoload_filters = (array) $filters;
             }
-
-            return $obj;
+        return $obj;
         }
     }

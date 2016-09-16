@@ -25,7 +25,7 @@
         public $_include_dirs = [ ];
 
         /**
-         * include path directory cache
+     * include path directory cache
          *
          * @var array
          */
@@ -93,14 +93,14 @@
                         continue;
                     }
                 }
-            if (isset($this->_user_dirs[ $dir_n ] ) ) {
+            if ( isset( $this->_user_dirs[ $dir_n ] ) ) {
                 if ( FALSE === $this->_user_dirs[ $dir_n ] ) {
                     continue;
                 } else {
                     $dir = $this->_user_dirs[ $dir_n ];
                 }
             } else {
-                if ( $dir[ 0 ] == '/' || $dir[ 1 ] == ':' ) {
+                if ($dir[ 0 ] == '/' || $dir[ 1 ] == ':' ) {
                     $dir = str_ireplace ( getcwd (), '.', $dir );
                     if ( $dir[ 0 ] == '/' || $dir[ 1 ] == ':' ) {
                         $this->_user_dirs[ $dir_n ] = FALSE;
@@ -110,17 +110,17 @@
                 $dir = substr ( $dir, 2 );
                 $this->_user_dirs[ $dir_n ] = $dir;
             }
-                if ( $this->_has_stream_include ) {
-                    $path = stream_resolve_include_path ( $dir . ( isset( $file ) ? $file : '' ) );
-                    if ( $path ) {
-                        return $this->isFile[ $dir_n ][ $file ] = $path;
-                    }
-                } else {
-                    foreach ( $this->_include_dirs as $key => $_i_path ) {
-                        $path = isset( $this->isPath[ $key ][ $dir_n ] ) ? $this->isPath[ $key ][ $dir_n ] :
-                        $this->isPath[ $key ][ $dir_n ] = is_dir ( $_dir_path = $_i_path . $dir ) ? $_dir_path : FALSE;
-                        if ( $path === FALSE ) {
-                            continue;
+            if ($this->_has_stream_include ) {
+                $path = stream_resolve_include_path ( $dir . ( isset( $file ) ? $file : '' ) );
+                if ( $path ) {
+                    return $this->isFile[ $dir_n ][ $file ] = $path;
+                }
+            } else {
+                foreach ( $this->_include_dirs as $key => $_i_path ) {
+                    $path = isset( $this->isPath[ $key ][ $dir_n ] ) ? $this->isPath[ $key ][ $dir_n ] :
+                    $this->isPath[ $key ][ $dir_n ] = is_dir ( $_dir_path = $_i_path . $dir ) ? $_dir_path : FALSE;
+                    if ( $path === FALSE ) {
+                        continue;
                     }
                     if (isset( $file ) ) {
                         $_file = $this->isFile[ $dir_n ][ $file ] = ( is_file ( $path . $file ) ) ? $path . $file : FALSE;
@@ -131,19 +131,18 @@
                         // no file was given return directory path
                         return $path;
                     }
-                    }
+                }
             }
-        }
-        return false;
-        }
+            }
 
-        /**
-         * return array with include path directories
-         *
-         * @param \Smarty $smarty
-         *
-         * @return array
-         */
+            return false;
+    }
+
+    /**
+     * return array with include path directories
+     * @param \Smarty $smarty
+     * @return array
+     */
         public function getIncludePathDirs ( Smarty $smarty ) {
             $this->isNewIncludePath ( $smarty );
 
@@ -152,7 +151,9 @@
 
         /**
          * Check if include path was updated
+         *
          * @param \Smarty $smarty
+         *
          * @return bool
          */
         public function isNewIncludePath ( Smarty $smarty ) {
@@ -167,8 +168,8 @@
                     }
                 }
 
-                return TRUE;
-            }
+                return true;
+        }
 
             return FALSE;
         }

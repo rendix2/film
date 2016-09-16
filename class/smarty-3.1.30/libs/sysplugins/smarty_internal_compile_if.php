@@ -13,59 +13,58 @@
  * @package    Smarty
  * @subpackage Compiler
  */
-    class Smarty_Internal_Compile_If extends Smarty_Internal_CompileBase {
-        /**
-         * Compiles code for the {if} tag
-         * @param array $args array with attributes from parser
-         * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
-         * @param array $parameter array with compilation parameter
-         * @return string compiled code
-         * @throws \SmartyCompilerException
-         */
-        public function compile ( $args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter ) {
-            // check and get attributes
-            $_attr = $this->getAttributes ( $compiler, $args );
-            $this->openTag ( $compiler, 'if', [ 1, $compiler->nocache ] );
-            // must whole block be nocache ?
-            $compiler->nocache = $compiler->nocache | $compiler->tag_nocache;
+class Smarty_Internal_Compile_If extends Smarty_Internal_CompileBase {
+    /**
+     * Compiles code for the {if} tag
+     * @param array $args array with attributes from parser
+     * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
+     * @param array $parameter array with compilation parameter
+     * @return string compiled code
+     * @throws \SmartyCompilerException
+     */
+    public function compile ( $args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter ) {
+        // check and get attributes
+        $_attr = $this->getAttributes ( $compiler, $args );
+        $this->openTag ( $compiler, 'if', [ 1, $compiler->nocache ] );
+        // must whole block be nocache ?
+        $compiler->nocache = $compiler->nocache | $compiler->tag_nocache;
 
-            if ( !array_key_exists ( "if condition", $parameter ) ) {
-                $compiler->trigger_template_error ( "missing if condition", NULL, TRUE );
-            }
+        if ( !array_key_exists ( "if condition", $parameter ) ) {
+            $compiler->trigger_template_error ( "missing if condition", NULL, TRUE );
+        }
 
-            if ( is_array ( $parameter[ 'if condition' ] ) ) {
-                if ( $compiler->nocache ) {
-                    // create nocache var to make it know for further compiling
-                    if ( is_array ( $parameter[ 'if condition' ][ 'var' ] ) ) {
-                        $var = $parameter[ 'if condition' ][ 'var' ][ 'var' ];
-                    } else {
-                        $var = $parameter[ 'if condition' ][ 'var' ];
-                    }
-                    $compiler->setNocacheInVariable ( $var );
-                }
-                $assignCompiler          = new Smarty_Internal_Compile_Assign();
-                $assignAttr              = [ ];
-                $assignAttr[][ 'value' ] = $parameter[ 'if condition' ][ 'value' ];
+        if ( is_array ( $parameter[ 'if condition' ] ) ) {
+            if ( $compiler->nocache ) {
+                // create nocache var to make it know for further compiling
                 if ( is_array ( $parameter[ 'if condition' ][ 'var' ] ) ) {
-                    $assignAttr[][ 'var' ] = $parameter[ 'if condition' ][ 'var' ][ 'var' ];
-                    $_output               = $assignCompiler->compile ( $assignAttr, $compiler,
-                    [ 'smarty_internal_index' => $parameter[ 'if condition' ][ 'var' ][ 'smarty_internal_index' ] ] );
+                    $var = $parameter[ 'if condition' ][ 'var' ][ 'var' ];
                 } else {
-                    $assignAttr[][ 'var' ] = $parameter[ 'if condition' ][ 'var' ];
-                    $_output               = $assignCompiler->compile ( $assignAttr, $compiler, [ ] );
+                    $var = $parameter[ 'if condition' ][ 'var' ];
                 }
-                $_output .= "<?php if (" . $parameter[ 'if condition' ][ 'value' ] . ") {?>";
-
-                return $_output;
-            } else {
-                return "<?php if ({$parameter['if condition']}) {?>";
+                $compiler->setNocacheInVariable ( $var );
             }
+            $assignCompiler          = new Smarty_Internal_Compile_Assign();
+            $assignAttr              = [ ];
+            $assignAttr[][ 'value' ] = $parameter[ 'if condition' ][ 'value' ];
+            if ( is_array ( $parameter[ 'if condition' ][ 'var' ] ) ) {
+                $assignAttr[][ 'var' ] = $parameter[ 'if condition' ][ 'var' ][ 'var' ];
+                $_output               = $assignCompiler->compile ( $assignAttr, $compiler,
+                [ 'smarty_internal_index' => $parameter[ 'if condition' ][ 'var' ][ 'smarty_internal_index' ] ] );
+            } else {
+                $assignAttr[][ 'var' ] = $parameter[ 'if condition' ][ 'var' ];
+                $_output               = $assignCompiler->compile ( $assignAttr, $compiler, [ ] );
+            }
+            $_output .= "<?php if (" . $parameter[ 'if condition' ][ 'value' ] . ") {?>";
+
+            return $_output;
+        } else {
+            return "<?php if ({$parameter['if condition']}) {?>";
         }
     }
+}
 
     /**
-     * Smarty Internal Plugin Compile Else Class
-     *
+ * Smarty Internal Plugin Compile Else Class
      * @package    Smarty
      * @subpackage Compiler
      */
@@ -87,7 +86,6 @@
 
     /**
      * Smarty Internal Plugin Compile ElseIf Class
-     *
      * @package    Smarty
      * @subpackage Compiler
      */
@@ -134,7 +132,7 @@
                     $assignCode            = $assignCompiler->compile ( $assignAttr, $compiler, [ ] );
                 }
             } else {
-                $condition_by_assign = FALSE;
+                $condition_by_assign = false;
             }
 
             $prefixCode = $compiler->getPrefixCode ();
@@ -146,12 +144,12 @@
                     return $compiler->appendCode ( $_output,
                     "<?php if (" . $parameter[ 'if condition' ][ 'value' ] . ") {\n?>" );
                 } else {
-                    $this->openTag ( $compiler, 'elseif', [ $nesting, $compiler->tag_nocache ] );
+                    $this->openTag ( $compiler, 'elseif', array($nesting, $compiler->tag_nocache ) );
 
                     return "<?php } elseif ({$parameter['if condition']}) {?>";
                 }
             } else {
-                $_output = $compiler->appendCode ( "<?php } else {\n?>", $prefixCode );
+                $_output = $compiler->appendCode("<?php } else {\n?>", $prefixCode );
                 $this->openTag ( $compiler, 'elseif', [ $nesting + 1, $compiler->tag_nocache ] );
                 if ( $condition_by_assign ) {
                     $_output = $compiler->appendCode ( $_output, $assignCode );
@@ -167,8 +165,8 @@
 
     /**
      * Smarty Internal Plugin Compile Ifclose Class
-     *
-     * @package    Smarty
+
+ * @package    Smarty
      * @subpackage Compiler
      */
     class Smarty_Internal_Compile_Ifclose extends Smarty_Internal_CompileBase {
@@ -184,7 +182,7 @@
             if ( $compiler->nocache ) {
                 $compiler->tag_nocache = TRUE;
             }
-            list( $nesting, $compiler->nocache ) = $this->closeTag ( $compiler, [ 'if', 'else', 'elseif' ] );
+            list( $nesting, $compiler->nocache ) = $this->closeTag ($compiler, [ 'if', 'else', 'elseif' ] );
             $tmp = '';
             for ( $i = 0; $i < $nesting; $i++ ) {
                 $tmp .= '}';

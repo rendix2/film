@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_ClearConfig {
-        /**
-         * Valid for all objects
-         * @var int
-         */
+    /**
+     * Valid for all objects
+     * @var int
+     */
         public $objMap = 7;
 
         /**
@@ -28,7 +28,6 @@
             } else {
                 $data->config_vars = [ ];
             }
-
-            return $data;
+        return $data;
         }
     }

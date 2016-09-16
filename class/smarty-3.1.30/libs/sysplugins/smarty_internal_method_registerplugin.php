@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_RegisterPlugin {
-        /**
-         * Valid for Smarty and template object
-         * @var int
-         */
+    /**
+     * Valid for Smarty and template object
+     * @var int
+     */
         public $objMap = 3;
 
         /**
@@ -38,7 +38,6 @@
             } else {
                 $smarty->registered_plugins[ $type ][ $name ] = [ $callback, (bool) $cacheable, (array) $cache_attr ];
             }
-
-            return $obj;
+        return $obj;
         }
     }

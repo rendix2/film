@@ -8,10 +8,10 @@
      * @author     Rodney Rehm
      */
     class Smarty_Template_Source {
-        /**
-         * Unique Template ID
-         * @var string
-         */
+    /**
+     * Unique Template ID
+     * @var string
+     */
         public $uid = NULL;
 
         /**
@@ -199,4 +199,4 @@
 
             return $this->timestamp;
         }
-    }
+}

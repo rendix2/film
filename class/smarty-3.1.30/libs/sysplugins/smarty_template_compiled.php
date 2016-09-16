@@ -151,16 +151,16 @@
 
     /**
      * Read compiled content from handler
-     * @param Smarty_Internal_Template $_template template object
-     * @return string content
+ * @param Smarty_Internal_Template $_template template object
+ * @return string content
      */
-        public function read ( Smarty_Internal_Template $_template ) {
-            if ( !$_template->source->handler->recompiled ) {
-                return file_get_contents ( $this->filepath );
-            }
-
-            return isset( $this->content ) ? $this->content : FALSE;
+    public function read(Smarty_Internal_Template $_template ) {
+        if ( !$_template->source->handler->recompiled ) {
+            return file_get_contents ( $this->filepath );
         }
+
+        return isset( $this->content) ? $this->content : FALSE;
+    }
 
         /**
          * render compiled template code
@@ -176,13 +176,13 @@
                 $type = $_template->source->isConfig ? 'config' : 'template';
                 throw new SmartyException( "Unable to load {$type} '{$_template->source->type}:{$_template->source->name}'" );
             }
-            if ($_template->smarty->debugging ) {
+            if ( $_template->smarty->debugging ) {
                 if ( !isset( $_template->smarty->_debug ) ) {
                     $_template->smarty->_debug = new Smarty_Internal_Debug();
                 }
                 $_template->smarty->_debug->start_render ( $_template );
             }
-            if (!$this->processed ) {
+            if ( !$this->processed) {
                 $this->process ( $_template );
             }
             if ( isset( $_template->cached ) ) {
@@ -219,10 +219,11 @@
 
                         return TRUE;
                     }
-            }
-            return FALSE;
-            }
+                }
 
-            return true;
+                return false;
+        }
+
+            return TRUE;
         }
     }

@@ -9,15 +9,15 @@
 
 /**
  * Class with shared smarty/template methods
- *
+
  * @package      Smarty
  * @subpackage   Template
- *
+
  * @property Smarty $smarty
- *
+
  * The following methods will be dynamically loaded by the extension handler when they are called.
  * They are located in a corresponding Smarty_Internal_Method_xxxx class
- *
+
  * @method Smarty_Internal_TemplateBase addAutoloadFilters( mixed $filters, string $type = NULL )
  * @method Smarty_Internal_TemplateBase addDefaultModifier( mixed $modifiers )
  * @method Smarty_Internal_TemplateBase createData( Smarty_Internal_Data $parent = NULL, string $name = NULL )
@@ -53,18 +53,21 @@
         /**
          * Set this if you want different sets of compiled files for the same
          * templates.
+         *
          * @var string
          */
         public $compile_id = NULL;
 
         /**
          * caching enabled
+         *
          * @var boolean
          */
         public $caching = FALSE;
 
         /**
          * cache lifetime in seconds
+         *
          * @var integer
          */
         public $cache_lifetime = 3600;
@@ -112,7 +115,7 @@
                     // set caching in template object
                     $template->caching = $this->caching;
                 }
-            }
+        }
             // fetch template content
             $level = ob_get_level ();
             try {
@@ -151,13 +154,13 @@
                             $smarty->_cache[ 'tplObjects' ][ $template->templateId ] = $template;
                         }
                     }
-                }
-                if ( isset( $_smarty_old_error_level ) ) {
-                    error_reporting ( $_smarty_old_error_level );
-                }
+            }
+            if ( isset( $_smarty_old_error_level ) ) {
+                error_reporting ( $_smarty_old_error_level );
+            }
 
                 return $result;
-            } catch ( Exception $e ) {
+            } catch (Exception $e ) {
                 while ( ob_get_level () > $level ) {
                     ob_end_clean ();
                 }
@@ -168,14 +171,13 @@
             }
         }
 
-        /**
-         * displays a Smarty template
-         *
-         * @param string $template the resource handle of the template file or template object
-         * @param mixed $cache_id cache id to be used with this template
-         * @param mixed $compile_id compile id to be used with this template
-         * @param object $parent next higher level of Smarty variables
-         */
+    /**
+     * displays a Smarty template
+     * @param string $template the resource handle of the template file or template object
+     * @param mixed $cache_id cache id to be used with this template
+     * @param mixed $compile_id compile id to be used with this template
+     * @param object $parent next higher level of Smarty variables
+     */
         public function display ( $template = NULL, $cache_id = NULL, $compile_id = NULL, $parent = NULL ) {
             // display template
             $this->_execute ( $template, $cache_id, $compile_id, $parent, 1 );

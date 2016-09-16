@@ -6,7 +6,7 @@
 
 require '../libs/Smarty.class.php';
 
-	$smarty = new Smarty;
+$smarty = new Smarty;
 
 //$smarty->force_compile = true;
 $smarty->debugging          = TRUE;

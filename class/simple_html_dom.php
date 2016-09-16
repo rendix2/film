@@ -38,7 +38,7 @@
  * All of the Defines for the classes below.
  * @author S.C. Chen <me578022@gmail.com>
  */
-	define ( 'HDOM_TYPE_ELEMENT', 1 );
+define ( 'HDOM_TYPE_ELEMENT', 1 );
 	define ( 'HDOM_TYPE_COMMENT', 2 );
 	define ( 'HDOM_TYPE_TEXT', 3 );
 	define ( 'HDOM_TYPE_ENDTAG', 4 );
@@ -93,9 +93,9 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 }
 
 // dump html dom tree
-	function dump_html_tree ( $node, $show_attr = TRUE, $deep = 0 ) {
-		$node->dump ( $node );
-	}
+function dump_html_tree ( $node, $show_attr = TRUE, $deep = 0 ) {
+	$node->dump ( $node );
+}
 
 
 	/**
@@ -122,14 +122,13 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			$dom->nodes[] = $this;
 		}
 
-		function __destruct()
-	{
-		$this->clear ();
-	}
+		function __destruct () {
+			$this->clear ();
+		}
 
 		function __get ( $name)
 	{
-		if ( isset( $this->attr[ $name ] ) ) {
+		if ( isset( $this->attr[$name ] ) ) {
 			return $this->convert_text ( $this->attr[ $name ] );
 		}
 		switch ( $name ) {
@@ -204,6 +203,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 		/**
 		 * Returns true if $string is valid UTF-8 and false otherwise.
+		 *
 		 * @param mixed $str String to be tested
 		 * @return boolean
 		 */
@@ -237,14 +237,15 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 	// returns children of node
 
-		function appendChild ( $node ) {$node->parent ( $this );
+	function appendChild($node) {
+		$node->parent ( $this );
 
-			return $node;
-		}
+		return $node;
+	}
 
 		// returns the first child of node
 
-		function childNodes ( $idx = -1 ) {
+		function childNodes ( $idx = -1) {
 			return $this->children ( $idx );
 		}
 
@@ -272,7 +273,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 		// returns the previous sibling of node
 
-		function convert_text ( $text ) {
+		function convert_text ( $text) {
 			global $debug_object;
 			if ( is_object ( $debug_object ) ) {
 				$debug_object->debug_log_entry ( 1 );
@@ -287,7 +288,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				$sourceCharset = strtoupper ( $this->dom->_charset );
 				$targetCharset = strtoupper ( $this->dom->_target_charset );
 			}
-			if ( is_object ( $debug_object)) {
+			if ( is_object ( $debug_object ) ) {
 				$debug_object->debug_log ( 3, "source charset: " . $sourceCharset . " target charaset: " . $targetCharset );
 			}
 
@@ -311,11 +312,11 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			}
 
 			return $converted_text;
-	}
+		}
 
 		// function to locate a specific ancestor tag in the path to the root.
 
-		function dump ( $show_attr = TRUE, $deep = 0 ) {
+		function dump ( $show_attr = true, $deep = 0 ) {
 			$lead = str_repeat ( '	', $deep );
 
 			echo $lead . $this->tag;
@@ -336,17 +337,17 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 		// get dom node's inner html
 
-		function dump_node ( $echo = true) {
+		function dump_node ( $echo = true ) {
 
 			$string = $this->tag;
-			if (count ( $this->attr ) > 0 ) {
+			if ( count ( $this->attr ) > 0 ) {
 				$string .= '(';
 				foreach ( $this->attr as $k => $v ) {
 					$string .= "[$k]=>\"" . $this->$k . '", ';
 				}
 				$string .= ')';
 			}
-			if ( count ( $this->_ ) > 0 ) {
+			if (count ( $this->_ ) > 0 ) {
 				$string .= ' $_ (';
 				foreach ( $this->_ as $k => $v ) {
 					if ( is_array ( $v ) ) {
@@ -360,13 +361,13 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 					}
 				}
 				$string .= ")";
-			}
+		}
 
-		if (isset( $this->text ) ) {
+		if ( isset( $this->text ) ) {
 			$string .= " text: (" . $this->text . ")";
 		}
 
-			$string .= " HDOM_INNER_INFO: '";
+		$string .= " HDOM_INNER_INFO: '";
 			if ( isset( $node->_[ HDOM_INFO_INNER ] ) ) {
 				$string .= $node->_[ HDOM_INFO_INNER ] . "'";
 			} else {
@@ -389,13 +390,13 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 		// get dom node's outer text (with tag)
 
-		function find ( $selector, $idx= NULL, $lowercase = FALSE ) {
+		function find ( $selector, $idx = NULL, $lowercase = FALSE ) {
 			$selectors = $this->parse_selector ( $selector );
 			if ( ( $count = count ( $selectors ) ) === 0 ) return [ ];
 			$found_keys = [ ];
 
 			// find each selector
-			for ( $c = 0; $c<$count; ++$c ) {
+			for ( $c = 0; $c< $count; ++$c ) {
 				// The change on the below line was documented on the sourceforge code tracker id 2788009
 				// used to be: if (($levle=count($selectors[0]))===0) return array();
 				if ( ( $levle = count ( $selectors[ $c ] ) ) === 0 ) return [ ];
@@ -414,8 +415,8 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 					$head = $ret;
 				}
 
-				foreach ( $head as $k => $v ) {
-					if ( !isset($found_keys[ $k ] ) ) {
+				foreach ( $head as $k =>$v) {
+					if ( !isset( $found_keys[ $k ] ) ) {
 						$found_keys[ $k ] = 1;
 					}
 				}
@@ -466,8 +467,8 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 		// build node's text with tag
 
-		function first_child () {
-			if ( count ( $this->children ) > 0 ) {
+		function first_child() {
+			if ( count ( $this->children) > 0 ) {
 				return $this->children[ 0 ];
 			}
 
@@ -477,11 +478,9 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 		// find elements by css selector
 	//PaperG - added ability for find to lowercase the value of the selector.
 
-		function getAllAttributes () {
-			return $this->attr;
-		}
+	function getAllAttributes() {return $this->attr;}
 
-		// seek for given conditions
+	// seek for given conditions
 		// PaperG - added parameter to allow for case insensitive testing of the value of a selector.
 
 		function getAttribute ( $name ) {
@@ -507,6 +506,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 		/**
 		 * Function to try a few tricks to determine the displayed size of an img on the page.
 		 * NOTE: This will ONLY work on an IMG tag. Returns FALSE on all other tag types.
+		 *
 		 * @author John Schlick
 		 * @version April 19 2012
 		 * @return array an array containing the 'height' and 'width' of the image on the page or -1 if we can't figure it out.
@@ -540,7 +540,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				}
 
 				// If there is a width in the style attributes:
-				if ( isset( $attributes[ 'width' ] ) && $width == -1 ) {
+				if (isset( $attributes[ 'width' ] ) && $width == -1 ) {
 					// check that the last two characters are px (pixels)
 					if ( strtolower ( substr ( $attributes[ 'width' ], -2 ) ) == 'px' ) {
 						$proposed_width = substr ( $attributes[ 'width' ], 0, -2 );
@@ -552,21 +552,21 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				}
 
 				// If there is a width in the style attributes:
-			if ( isset( $attributes[ 'height' ] ) && $height == -1 ) {
-				// check that the last two characters are px (pixels)
-				if ( strtolower ( substr ( $attributes[ 'height' ], -2 ) ) == 'px' ) {
-					$proposed_height = substr ( $attributes[ 'height' ], 0, -2 );
-					// Now make sure that it's an integer and not something stupid.
-					if ( filter_var ( $proposed_height, FILTER_VALIDATE_INT ) ) {
+				if (isset( $attributes[ 'height' ] ) && $height == -1 ) {
+					// check that the last two characters are px (pixels)
+					if (strtolower(substr($attributes['height'], -2)) == 'px' ) {
+						$proposed_height = substr ( $attributes[ 'height' ], 0, -2 );
+						// Now make sure that it's an integer and not something stupid.
+					if (filter_var($proposed_height, FILTER_VALIDATE_INT)) {
 						$height = $proposed_height;
 					}
+					}
 				}
-			}
 
 			}
 
 			// Future enhancement:
-			// Look in the tag to see if there is a class or id specified that has a height or width attribute to it.
+		// Look in the tag to see if there is a class or id specified that has a height or width attribute to it.
 
 			// Far future enhancement
 			// Look at all the parent tags of this image to see if they specify a class or id that has an img selector that specifies a height or width
@@ -583,7 +583,8 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 		}
 
 		function hasAttribute ( $name ) {
-			return $this->__isset ( $name );}
+			return $this->__isset ( $name);
+		}
 
 		// PaperG - Function to convert the text from one character set to another if the two sets are not the same.
 
@@ -603,16 +604,17 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 	}
 	*/
 
-		function innertext () {
-			if ( isset( $this->_[ HDOM_INFO_INNER] ) ) return $this->_[ HDOM_INFO_INNER ];
-			if ( isset( $this->_[ HDOM_INFO_TEXT ] ) ) return $this->dom->restore_noise ( $this->_[ HDOM_INFO_TEXT ] );
+	function innertext()
+	{
+		if (isset($this->_[HDOM_INFO_INNER ] ) ) return $this->_[ HDOM_INFO_INNER ];
+		if ( isset( $this->_[ HDOM_INFO_TEXT ] ) ) return $this->dom->restore_noise ( $this->_[ HDOM_INFO_TEXT ] );
 
-			$ret = '';
-			foreach ( $this->nodes as $n )
-				$ret .= $n->outertext ();
+		$ret = '';
+		foreach ( $this->nodes as $n )
+			$ret .= $n->outertext ();
 
-			return $ret;
-		}
+		return $ret;
+	}
 
 		// camel naming conventions
 
@@ -621,7 +623,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 		}
 
 		function last_child () {
-			if ( ( $count = count ( $this->children) ) > 0 ) {
+			if ( ( $count = count ( $this->children ) ) > 0 ) {
 				return $this->children[ $count - 1 ];
 			}
 
@@ -639,7 +641,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				++$i;
 
 				// skip removed attribute
-				if ( $val === NULL || $val === false )
+				if ( $val === NULL || $val ===false )
 					continue;
 
 				$ret .= $this->_[ HDOM_INFO_SPACE ][ $i ][ 0 ];
@@ -657,7 +659,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 						default:
 							$quote = '';
 					}
-					$ret .= $key . $this->_[ HDOM_INFO_SPACE ][ $i ][ 1 ] . '=' . $this->_[ HDOM_INFO_SPACE ][ $i ][ 2 ] . $quote . $val . $quote;
+					$ret .= $key . $this->_[ HDOM_INFO_SPACE ][ $i ][ 1 ] . '='.$this->_[ HDOM_INFO_SPACE ][ $i ][ 2 ] . $quote . $val . $quote;
 				}
 			}
 			$ret = $this->dom->restore_noise ( $ret );
@@ -673,7 +675,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 			switch ( $exp ) {
 				case '=':
-					return ( $value === $pattern);
+					return ( $value === $pattern );
 				case '!=':
 					return ( $value !== $pattern );
 				case '^=':
@@ -702,9 +704,9 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 			$idx   = 0;
 			$count = count ( $this->parent->children );
-			while ( $idx < $count && $this !== $this->parent->children[ $idx ] ) {
-				++$idx;
-			}
+		while ( $idx < $count && $this !== $this->parent->children[ $idx ] ) {
+			++$idx;
+		}
 			if ( ++$idx >= $count ) {
 				return NULL;
 			}
@@ -760,7 +762,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			}
 
 			// render end tag
-			if ( isset( $this->_[ HDOM_INFO_END ] ) && $this->_[ HDOM_INFO_END ] != 0 )
+			if ( isset( $this->_[ HDOM_INFO_END]) && $this->_[ HDOM_INFO_END ] != 0 )
 				$ret .= '</' . $this->tag . '>';
 
 			return $ret;
@@ -795,7 +797,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 // This implies that an html attribute specifier may start with an @ sign that is NOT captured by the expression.
 // farther study is required to determine of this should be documented or removed.
 //		$pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
-			$pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-:]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
+		$pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-:]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
 			preg_match_all ( $pattern, trim ( $selector_string ) . ' ', $matches, PREG_SET_ORDER );
 			if ( is_object ( $debug_object ) ) {
 				$debug_object->debug_log ( 2, "Matches Array: ", $matches );
@@ -832,7 +834,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 				// convert to lowercase
 				if ( $this->dom->lowercase ) {
-					$tag = strtolower ( $tag );
+					$tag = strtolower($tag );
 					$key = strtolower ( $key );
 				}
 				//elements that do NOT have the specified attribute
@@ -842,7 +844,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				}
 
 				$result[] = [ $tag, $key, $val, $exp, $no_key ];
-				if ( trim ( $m[ 7 ] ) === ',' ) {
+				if ( trim ( $m[ 7 ] ) === ',') {
 					$selectors[] = $result;
 					$result      = [ ];
 				}
@@ -868,7 +870,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			return $this->prev_sibling ();
 		}
 
-		function removeAttribute( $name ) {
+		function removeAttribute ( $name ) {
 			$this->__set ( $name, NULL );
 		}
 
@@ -896,8 +898,8 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				return;
 			}
 
-			$end = ( !empty( $this->_[ HDOM_INFO_END ] ) ) ? $this->_[ HDOM_INFO_END] : 0;
-			if ( $end ==0 ) {
+			$end = ( !empty( $this->_[ HDOM_INFO_END ] ) ) ? $this->_[HDOM_INFO_END] : 0;
+			if ( $end== 0 ) {
 				$parent = $this->parent;
 				while ( !isset( $parent->_[ HDOM_INFO_END ] ) && $parent !== NULL ) {
 					$end -= 1;
@@ -906,8 +908,8 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				$end += $parent->_[ HDOM_INFO_END ];
 			}
 
-			for ( $i = $this->_[ HDOM_INFO_BEGIN ] + 1; $i<$end; ++$i ) {
-				$node = $this->dom->nodes[$i ];
+			for ( $i = $this->_[ HDOM_INFO_BEGIN ] +1; $i< $end; ++$i ) {
+				$node = $this->dom->nodes[ $i ];
 
 				$pass = TRUE;
 
@@ -950,7 +952,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 						$check = $this->match ( $exp, $val, $nodeKeyValue );
 					}
 					if ( is_object ( $debug_object ) ) {
-						$debug_object->debug_log ( 2, "after match: " . ($check ? "true" : "false" ) );
+						$debug_object->debug_log ( 2, "after match: " . ( $check ? "true" : "false" ) );
 					}
 
 					// handle multiple class
@@ -967,10 +969,10 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 							}
 						}
 					}
-					if ( !$check ) $pass = FALSE;
-				}
+					if ( !$check ) $pass = false;
+			}
 				if ( $pass ) $ret[ $i ] = 1;
-				unset($node);
+			unset($node);
 		}
 			// It's passed by reference so this is actually what this function returns.
 			if (is_object ( $debug_object ) ) {
@@ -982,7 +984,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			$this->__set ( $name, $value );
 		}
 
-		function text () {
+		function text() {
 			if ( isset( $this->_[ HDOM_INFO_INNER ] ) ) return $this->_[ HDOM_INFO_INNER ];
 			switch ( $this->nodetype ) {
 				case HDOM_TYPE_TEXT:
@@ -1085,7 +1087,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			}
 			// Forcing tags to be closed implies that we don't trust the html, but it can lead to parsing errors if we SHOULD trust the html.
 			if ( !$forceTagsClosed ) {
-				$this->optional_closing_array = [ ];
+			$this->optional_closing_array = [ ];
 			}
 			$this->_target_charset = $target_charset;
 		}
@@ -1120,10 +1122,10 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 		// set callback function
 
 		protected function as_text_node ( $tag ) {
-			$node = new simple_html_dom_node( $this );
+			$node = new simple_html_dom_node($this );
 			++$this->cursor;
 			$node->_[ HDOM_INFO_TEXT ] = '</' . $tag . '>';
-			$this->link_nodes($node, FALSE );
+			$this->link_nodes ( $node, FALSE );
 			$this->char = ( ++$this->pos < $this->size ) ? $this->doc[ $this->pos ] : NULL; // next
 			return TRUE;
 		}
@@ -1139,7 +1141,8 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 		function clear () {
 			foreach ( $this->nodes as $n ) {
 				$n->clear ();
-				$n = NULL;}
+				$n = null;
+			}
 			// This add next line is documented in the sourceforge repository. 2977248 as a fix for ongoing memory leaks that occur even with the use of clear.
 			if ( isset( $this->children ) ) foreach ( $this->children as $n ) {
 				$n->clear ();
@@ -1160,7 +1163,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 		// find dom node by css selector
 		// Paperg - allow us to specify that we want case insensitive testing of the value of the selector.
 
-		protected function copy_skip ( $chars) {
+		protected function copy_skip ( $chars ) {
 			$pos = $this->pos;
 			$len = strspn ( $this->doc, $chars, $pos );
 			$this->pos += $len;
@@ -1174,7 +1177,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 		protected function copy_until ( $chars ) {
 			$pos = $this->pos;
-			$len = strcspn ( $this->doc, $chars, $pos);
+			$len = strcspn ( $this->doc, $chars, $pos );
 			$this->pos += $len;
 			$this->char = ( $this->pos < $this->size ) ? $this->doc[ $this->pos ] : NULL; // next
 			return substr ( $this->doc, $pos, $len );
@@ -1197,7 +1200,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			$this->pos  = $pos;
 
 			return substr ( $this->doc, $pos_old, $pos - $pos_old);
-	}
+		}
 
 		// prepare HTML data and init everything
 
@@ -1222,7 +1225,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				}
 
 				$pos_old    = $this->pos;
-				$this->char = $this->doc[ $pos ];
+				$this->char = $this->doc[$pos ];
 				$this->pos  = $pos;
 
 				return substr ( $this->doc, $pos_old, $pos - $pos_old );
@@ -1231,9 +1234,9 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 		// parse html content
 
-	function createElement ( $name, $value = NULL ) {
-		return @str_get_html ( "<$name>$value</$name>" )->first_child ();
-	}
+		function createElement ( $name, $value = NULL ) {
+			return @str_get_html ( "<$name>$value</$name>" )->first_child ();
+		}
 
 		// PAPERG - dkchou - added this to try to identify the character set of the page we have just parsed so we know better how to spit it out later.
 		// NOTE:  IF you provide a routine called get_last_retrieve_url_contents_content_type which returns the CURLINFO_CONTENT_TYPE from the last curl_exec
@@ -1264,14 +1267,13 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 		// as a text node
 
 		function getElementById ( $id ) {
-			return $this->find ( "#$id", 0 );
-		}
+			return $this->find ( "#$id", 0 );}
 
-		function getElementByTagName ( $name ) {
-			return $this->find ( $name, 0 );
-		}
+	function getElementByTagName ( $name ) {
+		return $this->find ( $name, 0 );
+	}
 
-		function getElementsById ( $id, $idx = null ) {
+		function getElementsById ( $id, $idx=null ) {
 			return $this->find ( "#$id", $idx );
 		}
 
@@ -1283,7 +1285,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			return $this->root->last_child ();
 		}
 
-		protected function link_nodes( &$node, $is_child ) {
+		protected function link_nodes ( &$node, $is_child ) {
 			$node->parent          = $this->parent;
 			$this->parent->nodes[] = $node;
 			if ( $is_child ) {
@@ -1300,7 +1302,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			// prepare
 			$this->prepare ( $str, $lowercase, $stripRN, $defaultBRText, $defaultSpanText );
 			// strip out cdata
-			$this->remove_noise ( "'<!\[CDATA\[(.*?)\]\]>'is", TRUE );
+			$this->remove_noise ( "'<!\[CDATA\[(.*?)\]\]>'is", TRUE);
 			// strip out comments
 			$this->remove_noise ( "'<!--(.*?)-->'is" );
 			// Per sourceforge http://sourceforge.net/tracker/?func=detail&aid=2949097&group_id=218559&atid=1044037
@@ -1339,8 +1341,8 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 		// Sometimes we NEED one of the noise elements.
 
 		function load_file () {
-			$args = func_get_args();
-			$this->load ( call_user_func_array ( 'file_get_contents', $args ), TRUE );
+			$args = func_get_args ();
+			$this->load ( call_user_func_array ( 'file_get_contents', $args ), true);
 			// Throw an error if we can't properly load the dom.
 			if ( ( $error = error_get_last () ) !== NULL ) {
 				$this->clear ();
@@ -1355,7 +1357,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			}
 
 			// text
-			$node = new simple_html_dom_node( $this );
+			$node = new simple_html_dom_node( $this);
 			++$this->cursor;
 			$node->_[ HDOM_INFO_TEXT ] = $s;
 			$this->link_nodes ( $node, FALSE );
@@ -1390,7 +1392,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			}
 			// PaperG: Attributes should not have \r or \n in them, that counts as html whitespace.
 			$node->attr[ $name ] = str_replace ( "\r", "", $node->attr[ $name ] );
-			$node->attr[ $name ] = str_replace ( "\n", "", $node->attr[ $name ] );
+			$node->attr[$name ]  = str_replace ( "\n", "", $node->attr[ $name ] );
 			// PaperG: If this is a "class" selector, lets get rid of the preceeding and trailing space since some people leave it in the multi class case.
 			if ( $name == "class" ) {
 				$node->attr[ $name ] = trim ( $node->attr[ $name ] );
@@ -1406,7 +1408,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 			if ( function_exists ( 'get_last_retrieve_url_contents_content_type' ) ) {
 				$contentTypeHeader = get_last_retrieve_url_contents_content_type ();
-				$success           = preg_match ( '/charset=(.+)/', $contentTypeHeader, $matches );
+				$success           = preg_match('/charset=(.+)/', $contentTypeHeader, $matches );
 				if ( $success ) {
 					$charset = $matches[ 1 ];
 					if ( is_object ( $debug_object ) ) {
@@ -1420,7 +1422,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				$el = $this->root->find ( 'meta[http-equiv=Content-Type]', 0, TRUE );
 				if ( !empty( $el ) ) {
 					$fullvalue = $el->content;
-					if ( is_object ( $debug_object ) ) {
+					if (is_object($debug_object ) ) {
 						$debug_object->debug_log ( 2, 'meta content-type tag found' . $fullvalue );
 					}
 
@@ -1430,7 +1432,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 							$charset = $matches[ 1 ];
 						} else {
 							// If there is a meta tag, and they don't specify the character set, research says that it's typically ISO-8859-1
-							if ( is_object ( $debug_object ) ) {
+							if ( is_object ( $debug_object) ) {
 								$debug_object->debug_log ( 2, 'meta content-type tag couldn\'t be parsed. using iso-8859 default.' );
 							}
 							$charset = 'ISO-8859-1';
@@ -1452,7 +1454,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				}
 
 				// and if this doesn't work...  then we need to just wrongheadedly assume it's UTF-8 so that we can move on - cause this will usually give us most of what we need...
-				if ($charset === FALSE ) {
+				if ( $charset === FALSE ) {
 					if ( is_object ( $debug_object ) ) {
 						$debug_object->debug_log ( 2, 'since mb_detect failed - using default of utf-8' );
 					}
@@ -1475,7 +1477,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			return $this->_charset = $charset;
 		}
 
-		protected function prepare ( $str, $lowercase =true, $stripRN = TRUE, $defaultBRText = DEFAULT_BR_TEXT, $defaultSpanText = DEFAULT_SPAN_TEXT ) {
+		protected function prepare ( $str, $lowercase=true, $stripRN = TRUE, $defaultBRText = DEFAULT_BR_TEXT, $defaultSpanText = DEFAULT_SPAN_TEXT ) {
 			$this->clear ();
 
 			// set the length of content before we do anything to it.
@@ -1594,7 +1596,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				if ( $this->char === '>' ) $node->_[ HDOM_INFO_TEXT ] .= '>';
 				$this->link_nodes ( $node, TRUE );
 				$this->char = ( ++$this->pos < $this->size ) ? $this->doc[ $this->pos ] : NULL; // next
-				return true;
+				return TRUE;
 			}
 
 			// text
@@ -1602,7 +1604,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				$tag                       = '<' . substr ( $tag, 0, -1 );
 				$node->_[ HDOM_INFO_TEXT ] = $tag;
 				$this->link_nodes ( $node, FALSE );
-				$this->char = $this->doc[--$this->pos ]; // prev
+				$this->char = $this->doc[ --$this->pos ]; // prev
 				return TRUE;
 			}
 
@@ -1616,8 +1618,8 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 				if ( $this->char === '>' ) $node->_[ HDOM_INFO_TEXT ] .= '>';
 				$this->link_nodes ( $node, FALSE );
-				$this->char = ( ++$this->pos < $this->size ) ? $this->doc[ $this->pos ] : NULL; // next
-				return TRUE;
+				$this->char = ( ++$this->pos < $this->size ) ? $this->doc[ $this->pos ] : null; // next
+			return TRUE;
 			}
 
 			// begin tag
@@ -1626,7 +1628,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			$node->tag      = ( $this->lowercase ) ? $tag_lower : $tag;
 
 			// handle optional closing tags
-			if (isset( $this->optional_closing_tags[ $tag_lower ] ) ) {
+			if ( isset( $this->optional_closing_tags[ $tag_lower ] ) ) {
 				while ( isset( $this->optional_closing_tags[ $tag_lower ][ strtolower ( $this->parent->tag ) ] ) ) {
 					$this->parent->_[ HDOM_INFO_END ] = 0;
 					$this->parent                     = $this->parent->parent;
@@ -1639,7 +1641,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 			// attributes
 			do {
-				if ( $this->char !==null && $space[ 0 ] === '' ) {
+				if ( $this->char!==null && $space[ 0 ] === '' ) {
 					break;
 				}
 				$name = $this->copy_until ( $this->token_equal );
@@ -1647,7 +1649,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 					$this->char = ( ++$this->pos < $this->size ) ? $this->doc[ $this->pos ] : NULL; // next
 					continue;
 				}
-			$guard = $this->pos;
+				$guard = $this->pos;
 
 				// handle endless '<'
 				if ( $this->pos >= $this->size - 1 && $this->char !== '>' ) {
@@ -1678,7 +1680,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 					$space[ 1 ] = $this->copy_skip ( $this->token_blank );
 					$name       = $this->restore_noise ( $name );
 					if ( $this->lowercase ) $name = strtolower ( $name );
-					if ($this->char === '=' ) {
+					if ( $this->char === '=' ) {
 						$this->char = ( ++$this->pos < $this->size ) ? $this->doc[ $this->pos ] : NULL; // next
 						$this->parse_attr ( $node, $name, $space );
 					} else {
@@ -1722,7 +1724,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 		protected function remove_noise ( $pattern, $remove_tag = FALSE ) {
 			global $debug_object;
-			if ( is_object ( $debug_object)) {
+			if ( is_object ( $debug_object )) {
 				$debug_object->debug_log_entry ( 1 );
 			}
 
@@ -1733,7 +1735,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 				if ( is_object ( $debug_object ) ) {
 					$debug_object->debug_log ( 2, 'key is: ' . $key );
 				}
-				$idx                 = ( $remove_tag ) ? 0 : 1;
+				$idx                 = ($remove_tag ) ? 0 : 1;
 				$this->noise[ $key ] = $matches[ $i ][ $idx ][ 0 ];
 				$this->doc           = substr_replace ( $this->doc, $key, $matches[ $i ][ $idx ][ 1 ], strlen ( $matches[ $i ][ $idx ][ 0 ] ) );
 			}
@@ -1753,7 +1755,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 			while ( ( $pos = strpos ( $text, '___noise___' ) ) !== FALSE ) {
 				// Sometimes there is a broken piece of markup, and we don't GET the pos+11 etc... token which indicates a problem outside of us...
-				if ( strlen ( $text ) > $pos + 15 ) {
+				if (strlen ( $text ) > $pos + 15 ) {
 					$key = '___noise___' . $text[ $pos + 11 ] . $text[ $pos + 12 ] . $text[ $pos + 13 ] . $text[ $pos + 14 ] . $text[ $pos + 15 ];
 					if ( is_object ( $debug_object ) ) {
 						$debug_object->debug_log ( 2, 'located key of: ' . $key );
@@ -1767,7 +1769,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 					}
 				} else {
 					// There is no valid key being given back to us... We must get rid of the ___noise___ or we will have a problem.
-					$text = substr ( $text, 0, $pos ) . 'NO NUMERIC NOISE KEY' . substr ( $text, $pos + 11 );
+					$text = substr ( $text, 0, $pos ) . 'NO NUMERIC NOISE KEY' . substr($text, $pos + 11 );
 				}
 			}
 
@@ -1781,7 +1783,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 			return $ret;
 		}
 
-		function search_noise ( $text) {
+		function search_noise($text ) {
 			global $debug_object;
 			if ( is_object ( $debug_object ) ) {
 				$debug_object->debug_log_entry ( 1 );
@@ -1800,7 +1802,7 @@ function str_get_html ( $str, $lowercase = TRUE, $forceTagsClosed = TRUE, $targe
 
 		protected function skip ( $chars ) {
 			$this->pos += strspn ( $this->doc, $chars, $this->pos );
-			$this->char = ( $this->pos< $this->size ) ? $this->doc[ $this->pos ] : NULL; // next
+			$this->char = ($this->pos < $this->size ) ? $this->doc[ $this->pos ] : NULL; // next
 		}
 	}
 

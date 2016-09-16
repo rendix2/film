@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_GetTags {
-        /**
-         * Valid for Smarty and template object
-         * @var int
-         */
+    /**
+     * Valid for Smarty and template object
+     * @var int
+     */
         public $objMap = 3;
 
         /**
@@ -37,7 +37,7 @@
                 if ( !$tpl->source->exists ) {
                     throw new SmartyException( "Unable to load template {$tpl->source->type} '{$tpl->source->name}'" );
                 }
-            }
+        }
             if ( isset( $tpl ) ) {
                 $tpl->smarty                            = clone $tpl->smarty;
                 $tpl->smarty->_cache[ 'get_used_tags' ] = TRUE;

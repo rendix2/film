@@ -195,7 +195,7 @@
                 $content = NULL;
                 $mtime   = NULL;
             }
-        }
+    }
 
         /**
          * Save content to cache
@@ -290,7 +290,7 @@
             }
 
             return $stmt;
-        }
+    }
 
         /*
 		 * Decodes the content before saving to database

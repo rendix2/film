@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_ConfigLoad {
-        /**
-         * Valid for all objects
-         * @var int
-         */
+    /**
+     * Valid for all objects
+     * @var int
+     */
         public $objMap = 7;
 
         /**
@@ -40,10 +40,10 @@
                             } else {
                                 $config_vars[ $variable ] = array_merge ( (array) $config_vars[ $variable ], (array) $value );
                             }
-                        }
                     }
                 }
             }
+        }
         }
 
         /**
@@ -106,10 +106,8 @@
 
         /**
          * load config variables into template object
-         *
          * @param \Smarty_Internal_Template $tpl
          * @param  array $new_config_vars
-         *
          */
         public function _loadConfigVars ( Smarty_Internal_Template $tpl, $new_config_vars ) {
             $this->_assignConfigVars ( $tpl->parent->config_vars, $tpl, $new_config_vars );
@@ -121,7 +119,7 @@
                     if ( !$tpl->scope ) {
                         return;
                     }
-                }
+            }
                 if ( $tpl->parent->_objType == 2 && ( $tagScope || $tpl->parent->scope ) ) {
                     $mergedScope = $tagScope | $tpl->scope;
                     if ( $mergedScope ) {
@@ -131,18 +129,17 @@
                             if ( $tagScope && $ptr->_objType == 2 && isset( $tpl->_cache[ 'varStack' ] ) ) {
                                 $this->_updateVarStack ( $tpl, $new_config_vars );
                             }
-                        }
                     }
                 }
             }
         }
+    }
 
-        /**
-         * Update config variables in template local variable stack
-         *
-         * @param \Smarty_Internal_Template $tpl
-         * @param array $config_vars
-         */
+    /**
+     * Update config variables in template local variable stack
+     * @param \Smarty_Internal_Template $tpl
+     * @param array $config_vars
+     */
         public function _updateVarStack ( Smarty_Internal_Template $tpl, $config_vars ) {
             $i = 0;
             while ( isset( $tpl->_cache[ 'varStack' ][ $i ] ) ) {
@@ -151,20 +148,17 @@
             }
         }
 
-        /**
-         * load a config file, optionally load just selected sections
-         *
-         * @api  Smarty::configLoad()
-         * @link http://www.smarty.net/docs/en/api.config.load.tpl
-         *
-         * @param \Smarty_Internal_Data|\Smarty_Internal_Template|\Smarty $data
-         * @param  string $config_file filename
-         * @param  mixed $sections array of section names, single
-         *                                                                             section or null
-         *
-         * @return \Smarty|\Smarty_Internal_Data|\Smarty_Internal_Template
-         * @throws \SmartyException
-         */
+    /**
+     * load a config file, optionally load just selected sections
+     * @api  Smarty::configLoad()
+     * @link http://www.smarty.net/docs/en/api.config.load.tpl
+     * @param \Smarty_Internal_Data|\Smarty_Internal_Template|\Smarty $data
+     * @param  string $config_file filename
+     * @param  mixed $sections array of section names, single
+     *                                                                             section or null
+     * @return \Smarty|\Smarty_Internal_Data|\Smarty_Internal_Template
+     * @throws \SmartyException
+     */
         public function configLoad ( Smarty_Internal_Data $data, $config_file, $sections = NULL ) {
             $this->_loadConfigFile ( $data, $config_file, $sections, NULL );
 

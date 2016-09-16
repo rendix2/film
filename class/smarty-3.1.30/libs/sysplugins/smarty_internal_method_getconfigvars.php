@@ -40,11 +40,11 @@
                 } else {
                     $_ptr = NULL;
                 }
-        }
-        if ( isset( $varname ) ) {
-            return '';
+            }
+            if ( isset( $varname ) ) {
+                return '';
         } else {
             return $var_array;
         }
-        }
     }
+}

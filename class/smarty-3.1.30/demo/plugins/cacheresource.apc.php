@@ -16,11 +16,11 @@
             }
         }
 
-        /**
-         * Remove values from cache
-         * @param  array $keys list of keys to delete
-         * @return boolean true on success, false on failure
-         */
+    /**
+     * Remove values from cache
+     * @param  array $keys list of keys to delete
+     * @return boolean true on success, false on failure
+     */
         protected function delete ( array $keys ) {
             foreach ( $keys as $k ) {
                 apc_delete ( $k );
@@ -50,7 +50,7 @@
                 $_res[ $k ] = $v;
             }
 
-            return $_res;
+        return $_res;
         }
 
         /**

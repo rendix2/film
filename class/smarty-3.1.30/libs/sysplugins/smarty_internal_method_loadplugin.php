@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_LoadPlugin {
-        /**
-         * Cache of searched plugin files
-         * @var array
-         */
+    /**
+     * Cache of searched plugin files
+     * @var array
+     */
         public $plugin_files = [ ];
 
         /**
@@ -53,7 +53,7 @@
 
                         return FALSE;
                     }
-                }
+            }
             }
             // plugin filename is expected to be: [type].[name].php
             $_plugin_filename = "{$match[1]}.{$match[4]}.php";
@@ -70,7 +70,7 @@
                     if ( isset( $this->plugin_files[ 'include_path' ][ $_lower_filename ] ) ) {
                         return $this->plugin_files[ 'include_path' ][ $_lower_filename ];
                     }
-                }
+            }
             }
             $_file_names = [ $_plugin_filename ];
             if ( $_lower_filename != $_plugin_filename ) {
@@ -87,23 +87,23 @@
                             require_once ( $file );
 
                             return $file;
-                        }
+                    }
                         $this->plugin_files[ 'plugins_dir' ][ $_lower_filename ] = FALSE;
                     }
-                }
             }
-            if ( $smarty->use_include_path ) {
-                foreach ( $_file_names as $_file_name ) {
-                    // try PHP include_path
-                    $file                                                     = $smarty->ext->_getIncludePath->getIncludePath ( $_p_dirs, $_file_name, $smarty );
-                    $this->plugin_files[ 'include_path' ][ $_lower_filename ] = $file;
-                    if ( $file !== FALSE ) {
-                        require_once ( $file );
+        }
+        if ($smarty->use_include_path ) {
+            foreach ( $_file_names as $_file_name ) {
+                // try PHP include_path
+                $file                                                     = $smarty->ext->_getIncludePath->getIncludePath ( $_p_dirs, $_file_name, $smarty );
+                $this->plugin_files[ 'include_path' ][ $_lower_filename ] = $file;
+                if ( $file !== FALSE ) {
+                    require_once ( $file );
 
-                        return $file;
-                    }
+                    return $file;
                 }
             }
+        }
 
             // no plugin loaded
             return FALSE;

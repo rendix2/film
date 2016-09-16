@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_ClearCompiledTemplate {
-        /**
-         * Valid for Smarty object
-         * @var int
-         */
+    /**
+     * Valid for Smarty object
+     * @var int
+     */
         public $objMap = 1;
 
         /**
@@ -45,7 +45,7 @@
                     $_resource_part_1_length = strlen ( $_resource_part_1 );
                 } else {
                     return 0;
-                }
+            }
                 $_resource_part_2        = str_replace ( '.php', '.cache.php', $_resource_part_1 );
                 $_resource_part_2_length = strlen ( $_resource_part_2 );
             }
@@ -103,10 +103,10 @@
                         if ( function_exists ( 'opcache_invalidate' ) && strlen ( ini_get ( "opcache.restrict_api" ) ) < 1 ) {
                             opcache_invalidate ( $_filepath, TRUE );
                         }
-                    }
                 }
             }
+        }
 
             return $_count;
         }
-    }
+}

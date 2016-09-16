@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_GetRegisteredObject {
-        /**
-         * Valid for Smarty and template object
-         * @var int
-         */
+    /**
+     * Valid for Smarty and template object
+     * @var int
+     */
         public $objMap = 3;
 
         /**
@@ -34,4 +34,4 @@
 
             return $smarty->registered_objects[ $object_name ][ 0 ];
         }
-    }
+}

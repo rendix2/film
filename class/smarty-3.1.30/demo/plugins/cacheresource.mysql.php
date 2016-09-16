@@ -109,18 +109,15 @@
             }
         }
 
-        /**
-         * Fetch cached content's modification timestamp from data source
-         *
-         * @note implementing this method is optional. Only implement it if modification times can be accessed faster than loading the complete cached content.
-         *
-         * @param  string $id unique cache content identifier
-         * @param  string $name template name
-         * @param  string $cache_id cache id
-         * @param  string $compile_id compile id
-         *
-         * @return integer|boolean timestamp (epoch) the template was modified, or false if not found
-         */
+    /**
+     * Fetch cached content's modification timestamp from data source
+     * @note implementing this method is optional. Only implement it if modification times can be accessed faster than loading the complete cached content.
+     * @param  string $id unique cache content identifier
+     * @param  string $name template name
+     * @param  string $cache_id cache id
+     * @param  string $compile_id compile id
+     * @return integer|boolean timestamp (epoch) the template was modified, or false if not found
+     */
         protected function fetchTimestamp ( $id, $name, $cache_id, $compile_id ) {
             $this->fetchTimestamp->execute ( [ 'id' => $id ] );
             $mtime = strtotime ( $this->fetchTimestamp->fetchColumn () );

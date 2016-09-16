@@ -7,11 +7,11 @@
      * @subpackage Template
      */
     class Smarty_Undefined_Variable {
-        /**
-         * Returns FALSE for 'nocache' and NULL otherwise.
-         * @param  string $name
-         * @return bool
-         */
+    /**
+     * Returns FALSE for 'nocache' and NULL otherwise.
+     * @param  string $name
+     * @return bool
+     */
         public function __get ( $name ) {
             if ( $name == 'nocache' ) {
                 return FALSE;
@@ -27,4 +27,4 @@
         public function __toString () {
             return "";
         }
-    }
+}

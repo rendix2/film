@@ -9,13 +9,13 @@
      */
     class Smarty_Internal_Undefined {
 
-        /**
-         * Call error handler for undefined method
-         * @param string $name unknown method-name
-         * @param array $args argument array
-         * @return mixed
-         * @throws SmartyException
-         */
+    /**
+     * Call error handler for undefined method
+     * @param string $name unknown method-name
+     * @param array $args argument array
+     * @return mixed
+     * @throws SmartyException
+     */
         public function __call ( $name, $args ) {
             throw new SmartyException( get_class ( $args[ 0 ] ) . "->{$name}() undefined method" );
         }
@@ -38,4 +38,4 @@
 
             return FALSE;
         }
-    }
+}

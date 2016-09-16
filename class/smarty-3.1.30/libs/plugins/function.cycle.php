@@ -28,7 +28,7 @@
  * {cycle name=row values="one,two,three" reset=true}
  * {cycle name=row}
  * </pre>
- *
+
  * @link     http://www.smarty.net/manual/en/language.function.cycle.php {cycle}
  *           (Smarty online manual)
  * @author   Monte Ohrt <monte at ohrt dot com>
@@ -36,68 +36,68 @@
  * @author   credit to Gerard <gerard@interfold.com>
  * @author   credit to Jason Sweat <jsweat_php@yahoo.com>
  * @version  1.3
- *
+
  * @param array $params parameters
  * @param Smarty_Internal_Template $template template object
- *
+
  * @return string|null
  */
 
-    function smarty_function_cycle ( $params, $template ) {
-        static $cycle_vars;
+function smarty_function_cycle ( $params, $template ) {
+    static $cycle_vars;
 
-        $name    = ( empty( $params[ 'name' ] ) ) ? 'default' : $params[ 'name' ];
-        $print   = ( isset( $params[ 'print' ] ) ) ? (bool) $params[ 'print' ] : TRUE;
-        $advance = ( isset( $params[ 'advance' ] ) ) ? (bool) $params[ 'advance' ] : TRUE;
-        $reset   = ( isset( $params[ 'reset' ] ) ) ? (bool) $params[ 'reset' ] : FALSE;
+    $name    = ( empty( $params[ 'name' ] ) ) ? 'default' : $params[ 'name' ];
+    $print   = ( isset( $params[ 'print' ] ) ) ? (bool) $params[ 'print' ] : TRUE;
+    $advance = ( isset( $params[ 'advance' ] ) ) ? (bool) $params[ 'advance' ] : TRUE;
+    $reset   = ( isset( $params[ 'reset' ] ) ) ? (bool) $params[ 'reset' ] : FALSE;
 
-        if ( !isset( $params[ 'values' ] ) ) {
-            if ( !isset( $cycle_vars[ $name ][ 'values' ] ) ) {
-                trigger_error ( "cycle: missing 'values' parameter" );
+    if ( !isset( $params[ 'values' ] ) ) {
+        if ( !isset( $cycle_vars[ $name ][ 'values' ] ) ) {
+            trigger_error ( "cycle: missing 'values' parameter" );
 
-                return;
-            }
-        } else {
-            if ( isset( $cycle_vars[ $name ][ 'values' ] ) && $cycle_vars[ $name ][ 'values' ] != $params[ 'values' ] ) {
-                $cycle_vars[ $name ][ 'index' ] = 0;
-            }
-            $cycle_vars[ $name ][ 'values' ] = $params[ 'values' ];
+            return;
         }
-
-        if ( isset( $params[ 'delimiter' ] ) ) {
-            $cycle_vars[ $name ][ 'delimiter' ] = $params[ 'delimiter' ];
-        } elseif ( !isset( $cycle_vars[ $name ][ 'delimiter' ] ) ) {
-            $cycle_vars[ $name ][ 'delimiter' ] = ',';
-        }
-
-        if ( is_array ( $cycle_vars[ $name ][ 'values' ] ) ) {
-            $cycle_array = $cycle_vars[ $name ][ 'values' ];
-        } else {
-            $cycle_array = explode ( $cycle_vars[ $name ][ 'delimiter' ], $cycle_vars[ $name ][ 'values' ] );
-        }
-
-        if ( !isset( $cycle_vars[ $name ][ 'index' ] ) || $reset ) {
+    } else {
+        if ( isset( $cycle_vars[ $name ][ 'values' ] ) && $cycle_vars[ $name ][ 'values' ] != $params[ 'values' ] ) {
             $cycle_vars[ $name ][ 'index' ] = 0;
         }
-
-        if ( isset( $params[ 'assign' ] ) ) {
-            $print = FALSE;
-            $template->assign ( $params[ 'assign' ], $cycle_array[ $cycle_vars[ $name ][ 'index' ] ] );
-        }
-
-        if ( $print ) {
-            $retval = $cycle_array[ $cycle_vars[ $name ][ 'index' ] ];
-        } else {
-            $retval = NULL;
-        }
-
-        if ( $advance ) {
-            if ( $cycle_vars[ $name ][ 'index' ] >= count ( $cycle_array ) - 1 ) {
-                $cycle_vars[ $name ][ 'index' ] = 0;
-            } else {
-                $cycle_vars[ $name ][ 'index' ]++;
-            }
-        }
-
-        return $retval;
+        $cycle_vars[ $name ][ 'values' ] = $params[ 'values' ];
     }
+
+    if ( isset( $params[ 'delimiter' ] ) ) {
+        $cycle_vars[ $name ][ 'delimiter' ] = $params[ 'delimiter' ];
+    } elseif ( !isset( $cycle_vars[ $name ][ 'delimiter' ] ) ) {
+        $cycle_vars[ $name ][ 'delimiter' ] = ',';
+    }
+
+    if ( is_array ( $cycle_vars[ $name ][ 'values' ] ) ) {
+        $cycle_array = $cycle_vars[ $name ][ 'values' ];
+    } else {
+        $cycle_array = explode ( $cycle_vars[ $name ][ 'delimiter' ], $cycle_vars[ $name ][ 'values' ] );
+    }
+
+    if ( !isset( $cycle_vars[ $name ][ 'index' ] ) || $reset ) {
+        $cycle_vars[ $name ][ 'index' ] = 0;
+    }
+
+    if ( isset( $params[ 'assign' ] ) ) {
+        $print = FALSE;
+        $template->assign ( $params[ 'assign' ], $cycle_array[ $cycle_vars[ $name ][ 'index' ] ] );
+    }
+
+    if ( $print ) {
+        $retval = $cycle_array[ $cycle_vars[ $name ][ 'index' ] ];
+    } else {
+        $retval = NULL;
+    }
+
+    if ( $advance ) {
+        if ( $cycle_vars[ $name ][ 'index' ] >= count ( $cycle_array ) - 1 ) {
+            $cycle_vars[ $name ][ 'index' ] = 0;
+        } else {
+            $cycle_vars[ $name ][ 'index' ]++;
+        }
+    }
+
+    return $retval;
+}

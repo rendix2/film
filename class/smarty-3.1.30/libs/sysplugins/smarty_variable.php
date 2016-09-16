@@ -7,10 +7,10 @@
      * @subpackage Template
      */
     class Smarty_Variable {
-        /**
-         * template variable
-         * @var mixed
-         */
+    /**
+     * template variable
+     * @var mixed
+     */
         public $value = NULL;
 
         /**
@@ -36,5 +36,5 @@
         public function __toString () {
             return (string) $this->value;
         }
-    }
+}
 

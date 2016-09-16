@@ -7,12 +7,13 @@
      * @author     Uwe Tews
      **/
     class Smarty_Internal_Runtime_UpdateCache {
-        /**
-         * check client side cache
-         * @param \Smarty_Template_Cached $cached
-         * @param Smarty_Internal_Template $_template
-         * @param  string $content
-         */
+    /**
+     * check client side cache
+     *
+     * @param \Smarty_Template_Cached $cached
+     * @param Smarty_Internal_Template $_template
+     * @param  string $content
+     */
         public function cacheModifiedCheck ( Smarty_Template_Cached $cached, Smarty_Internal_Template $_template, $content ) {
         }
 
@@ -52,13 +53,13 @@
                     $_template->cached->has_nocache_code = TRUE;
                     $content .= $cache_parts[ 1 ][ $curr_idx ];
                 }
-            }
-            if ( !$no_output_filter && !$_template->cached->has_nocache_code &&
-            ( isset( $_template->smarty->autoload_filters[ 'output' ] ) ||
-            isset( $_template->smarty->registered_filters[ 'output' ] ) )
-            ) {
-                $content = $_template->smarty->ext->_filterHandler->runFilter ( 'output', $content, $_template );
-            }
+        }
+        if ( !$no_output_filter && !$_template->cached->has_nocache_code &&
+        ( isset( $_template->smarty->autoload_filters[ 'output' ] ) ||
+        isset( $_template->smarty->registered_filters[ 'output' ] ) )
+        ) {
+            $content = $_template->smarty->ext->_filterHandler->runFilter ( 'output', $content, $_template );
+        }
             // write cache file content
             $this->writeCachedContent ( $cached, $_template, $content );
         }
@@ -77,7 +78,7 @@
             if ( !isset( $_template->compiled ) ) {
                 $_template->loadCompiled ();
             }
-            $_template->compiled->render ( $_template );
+        $_template->compiled->render ( $_template );
             if ( $_template->smarty->debugging ) {
                 $_template->smarty->_debug->start_cache ( $_template );
             }
@@ -128,7 +129,7 @@
                 $cached->processed = FALSE;
             }
 
-            return FALSE;
+        return FALSE;
         }
 
         /**
@@ -147,7 +148,7 @@
                 // don't write cache file
                 return FALSE;
             }
-            $content = $_template->smarty->ext->_codeFrame->create ( $_template, $content, '', TRUE );
+        $content = $_template->smarty->ext->_codeFrame->create ( $_template, $content, '', TRUE );
 
             return $this->write ( $cached, $_template, $content );
         }

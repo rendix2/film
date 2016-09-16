@@ -52,5 +52,5 @@
                 $source = NULL;
                 $mtime  = NULL;
             }
-        }
     }
+}

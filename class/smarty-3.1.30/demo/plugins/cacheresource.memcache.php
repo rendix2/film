@@ -10,10 +10,10 @@
      * @author  Rodney Rehm
      */
     class Smarty_CacheResource_Memcache extends Smarty_CacheResource_KeyValueStore {
-        /**
-         * memcache instance
-         * @var Memcache
-         */
+    /**
+     * memcache instance
+     * @var Memcache
+     */
         protected $memcache = NULL;
 
         public function __construct () {
@@ -62,8 +62,8 @@
                 $_keys[]       = $_k;
                 $lookup[ $_k ] = $k;
             }
-            $_res = [ ];
-            $res  = $this->memcache->get ( $_keys );
+        $_res    = [ ];
+            $res = $this->memcache->get ( $_keys );
             foreach ( $res as $k => $v ) {
                 $_res[ $lookup[ $k ] ] = $v;
             }

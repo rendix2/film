@@ -6,17 +6,19 @@
      * @author     Uwe Tews
      */
 
-    /**
-     * Smarty Config Resource Data Object
-     * Meta Data Container for Template Files
-     * @package    Smarty
-     * @subpackage TemplateResources
-     * @author     Uwe Tews
-     */
+/**
+ * Smarty Config Resource Data Object
+ * Meta Data Container for Template Files
+ *
+ * @package    Smarty
+ * @subpackage TemplateResources
+ * @author     Uwe Tews
+ *
+ */
     class Smarty_Template_Config extends Smarty_Template_Source {
-    /**
+        /**
      * array of section names, single section or null
-     * @var null|string|array
+         * @var null|string|array
      */
         public $config_sections = NULL;
 
@@ -24,18 +26,16 @@
          * scope into which the config variables shall be loaded
          * @var int
          */
-    public $scope = 0;
+        public $scope = 0;
 
         /**
          * Flag that source is a config file
-         *
          * @var bool
          */
         public $isConfig = TRUE;
 
         /**
          * Name of the Class to compile this resource's contents with
-         *
          * @var string
          */
         public $compiler_class = 'Smarty_Internal_Config_File_Compiler';
@@ -75,7 +75,7 @@
         if ( empty( $template_resource ) ) {
             throw new SmartyException( 'Source: Missing  name' );
         }
-            // parse resource_name, load resource handler
+         // parse resource_name, load resource handler
             list( $name, $type ) = Smarty_Resource::parseResourceName ( $template_resource, $smarty->default_config_type );
             // make sure configs are not loaded via anything smarty can't handle
             if ( isset( $_incompatible_resources[ $type ] ) ) {

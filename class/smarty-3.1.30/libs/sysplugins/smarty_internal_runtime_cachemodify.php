@@ -7,12 +7,13 @@
      * @author     Uwe Tews
      **/
     class Smarty_Internal_Runtime_CacheModify {
-        /**
-         * check client side cache
-         * @param \Smarty_Template_Cached $cached
-         * @param \Smarty_Internal_Template $_template
-         * @param  string $content
-         */
+    /**
+     * check client side cache
+     *
+     * @param \Smarty_Template_Cached $cached
+     * @param \Smarty_Internal_Template $_template
+     * @param  string $content
+     */
         public function cacheModifiedCheck ( Smarty_Template_Cached $cached, Smarty_Internal_Template $_template, $content ) {
             $_isCached           = $_template->isCached () && !$_template->compiled->has_nocache_code;
             $_last_modified_date =
@@ -59,5 +60,5 @@
                 }
                 echo $content;
             }
-        }
     }
+}

@@ -8,7 +8,7 @@
 /**
  * @ignore
  */
-    require_once ( SMARTY_PLUGINS_DIR . 'shared.escape_special_chars.php' );
+require_once ( SMARTY_PLUGINS_DIR . 'shared.escape_special_chars.php' );
     /**
      * @ignore
      */
@@ -360,5 +360,5 @@
             }
         }
 
-        return $_html;
+    return $_html;
     }

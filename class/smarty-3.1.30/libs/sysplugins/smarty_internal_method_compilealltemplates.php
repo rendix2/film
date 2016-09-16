@@ -85,10 +85,9 @@
                         exit();
                     }
                 }
-        }
+            }
         echo "\n<br>";
-
-            return $_count;
+        return $_count;
         }
 
         /**

@@ -7,49 +7,52 @@
      * @author     Rodney Rehm
      */
 
-    /**
-     * Smarty Internal Plugin Resource Registered
-     * Implements the registered resource for Smarty template
-     * @package    Smarty
-     * @subpackage TemplateResources
-     * @deprecated
-     */
+/**
+ * Smarty Internal Plugin Resource Registered
+ * Implements the registered resource for Smarty template
+ *
+ * @package    Smarty
+ * @subpackage TemplateResources
+ * @deprecated
+ */
     class Smarty_Internal_Resource_Registered extends Smarty_Resource {
-    /**
-     * Determine basename for compiled filename
-     * @param  Smarty_Template_Source $source source object
-     * @return string                 resource's basename
-     */
-        public function getBasename ( Smarty_Template_Source $source ) {
-            return basename ( $source->name );
-        }
-
         /**
-         * Load template's source by invoking the registered callback into current template object
+     * Determine basename for compiled filename
          * @param  Smarty_Template_Source $source source object
-         * @return string                 template source
-         * @throws SmartyException        if source cannot be loaded
-         */
-    public function getContent ( Smarty_Template_Source $source ) {
-        // return template string
-        $content = NULL;
-        $t       = call_user_func_array ( $source->smarty->registered_resources[ $source->type ][ 0 ][ 0 ],
-        [ $source->name, &$content, $source->smarty ] );
-        if ( is_bool ( $t ) && !$t ) {
-            throw new SmartyException( "Unable to read template {$source->type} '{$source->name}'" );
-        }
-
-        return $content;
+ * @return string                 resource's basename
+     */
+    public function getBasename ( Smarty_Template_Source $source ) {
+        return basename ( $source->name );
     }
 
         /**
-         * populate Source Object with meta data from Resource
+         * Load template's source by invoking the registered callback into current template object
          *
          * @param  Smarty_Template_Source $source source object
-         * @param  Smarty_Internal_Template $_template template object
          *
-         * @return void
+         * @return string                 template source
+         * @throws SmartyException        if source cannot be loaded
          */
+        public function getContent ( Smarty_Template_Source $source ) {
+            // return template string
+        $content = null;
+            $t   = call_user_func_array ( $source->smarty->registered_resources[ $source->type ][ 0 ][ 0 ],
+            [ $source->name, &$content, $source->smarty ] );
+            if ( is_bool ( $t ) && !$t ) {
+                throw new SmartyException( "Unable to read template {$source->type} '{$source->name}'" );
+            }
+
+            return $content;
+    }
+
+    /**
+     * populate Source Object with meta data from Resource
+     *
+     * @param  Smarty_Template_Source $source source object
+     * @param  Smarty_Internal_Template $_template template object
+     *
+     * @return void
+     */
         public function populate ( Smarty_Template_Source $source, Smarty_Internal_Template $_template = NULL ) {
             $source->filepath  = $source->type . ':' . $source->name;
             $source->uid       = sha1 ( $source->filepath . $source->smarty->_joined_template_dir );

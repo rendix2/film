@@ -5,10 +5,10 @@
      * @package Smarty
      */
     class SmartyCompilerException extends SmartyException {
-        /**
-         * The line number of the template error
-         * @type int|null
-         */
+    /**
+     * The line number of the template error
+     * @type int|null
+     */
         public $line = NULL;
         /**
          * The template source snippet relating to the error
@@ -26,7 +26,7 @@
          */
         public $template = NULL;
 
-    public function __toString () {
-        return ' --> Smarty Compiler: ' . $this->message . ' <-- ';
+        public function __toString () {
+            return ' --> Smarty Compiler: ' . $this->message . ' <-- ';
     }
-    }
+}

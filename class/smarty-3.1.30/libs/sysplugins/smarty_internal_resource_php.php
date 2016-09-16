@@ -9,10 +9,10 @@
      * @author     Rodney Rehm
      */
     class Smarty_Internal_Resource_Php extends Smarty_Internal_Resource_File {
-        /**
-         * Flag that it's an uncompiled resource
-         * @var bool
-         */
+    /**
+     * Flag that it's an uncompiled resource
+     * @var bool
+     */
         public $uncompiled = TRUE;
         /**
          * Resource does implement populateCompiledFilepath() method
@@ -63,10 +63,8 @@
 
         /**
          * Render and output the template (without using the compiler)
-         *
          * @param  Smarty_Template_Source $source source object
          * @param  Smarty_Internal_Template $_template template object
-         *
          * @return void
          * @throws SmartyException          if template cannot be loaded or allow_php_templates is disabled
          */
@@ -74,7 +72,7 @@
             if ( !$source->smarty->allow_php_templates ) {
                 throw new SmartyException( "PHP templates are disabled" );
             }
-            if ( !$source->exists ) {
+            if (!$source->exists ) {
                 $parentIsTpl = isset( $this->parent ) && $this->parent->_objType == 2;
                 throw new SmartyException( "Unable to load template {$source->type} '{$source->name}'" .
                 ( $parentIsTpl ? " in '{$this->parent->template_resource}'" : '' ) );

@@ -10,4 +10,4 @@
         public function __toString () {
             return ' --> Smarty: ' . ( self::$escape ? htmlentities ( $this->message ) : $this->message ) . ' <-- ';
         }
-    }
+}

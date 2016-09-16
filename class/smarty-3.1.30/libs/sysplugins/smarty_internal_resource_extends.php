@@ -7,16 +7,17 @@
      * @author     Rodney Rehm
      */
 
-    /**
-     * Smarty Internal Plugin Resource Extends
-     * Implements the file system as resource for Smarty which {extend}s a chain of template files templates
-     * @package    Smarty
-     * @subpackage TemplateResources
-     */
+/**
+ * Smarty Internal Plugin Resource Extends
+ * Implements the file system as resource for Smarty which {extend}s a chain of template files templates
+ *
+ * @package    Smarty
+ * @subpackage TemplateResources
+ */
     class Smarty_Internal_Resource_Extends extends Smarty_Resource {
-    /**
+        /**
      * mbstring.overload flag
-     * @var int
+         * @var int
      */
         public $mbstring_overload = 0;
 
@@ -29,15 +30,13 @@
          * @param Smarty_Template_Source $source source object
          * @return string resource's basename
          */
-    public function getBasename ( Smarty_Template_Source $source ) {
-        return str_replace ( ':', '.', basename ( $source->filepath ) );
-    }
+        public function getBasename ( Smarty_Template_Source $source ) {
+            return str_replace ( ':', '.', basename ( $source->filepath ) );
+        }
 
         /**
          * Load template's source from files into current template object
-         *
          * @param Smarty_Template_Source $source source object
-         *
          * @return string template source
          * @throws SmartyException if source cannot be loaded
          */
@@ -82,15 +81,15 @@
                 if ( $_template ) {
                     $exists = $exists && $_s->exists;
                 }
-            }
-        $source->components   = $sources;
-            $source->filepath = $_s->filepath;
-            $source->uid      = sha1 ( $uid . $source->smarty->_joined_template_dir );
-            $source->exists   = $exists;
+        }
+            $source->components = $sources;
+            $source->filepath   = $_s->filepath;
+            $source->uid        = sha1 ( $uid . $source->smarty->_joined_template_dir );
+            $source->exists     = $exists;
             if ( $_template ) {
                 $source->timestamp = $_s->timestamp;
             }
-    }
+        }
 
         /*
 		  * Disable timestamp checks for extends resource.
@@ -101,6 +100,7 @@
 
         /**
          * populate Source Object with timestamp and exists from Resource
+         *
          * @param Smarty_Template_Source $source source object
          */
         public function populateTimestamp ( Smarty_Template_Source $source ) {
@@ -109,6 +109,6 @@
             foreach ( $source->components as $_s ) {
                 $source->exists = $source->exists && $_s->exists;
             }
-        $source->timestamp = $source->exists ? $_s->getTimeStamp () : FALSE;
+            $source->timestamp = $source->exists ? $_s->getTimeStamp () : FALSE;
         }
     }

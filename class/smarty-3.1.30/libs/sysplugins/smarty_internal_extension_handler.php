@@ -30,10 +30,10 @@
 
         public $objType = NULL;
 
-    /**
+        /**
      * Cache for property information from generic getter/setter
      * Preloaded with names which should not use with generic getter/setter
-     * @var array
+         * @var array
      */
     private $_property_info = [ 'AutoloadFilters' => 0, 'DefaultModifiers' => 0, 'ConfigVars' => 0,
                                 'DebugTemplate'   => 0, 'RegisteredObject' => 0, 'StreamVariable' => 0,
@@ -88,9 +88,11 @@
 
         /**
          * Call external Method
+         *
          * @param \Smarty_Internal_Data $data
          * @param string $name external method names
          * @param array $args argument array
+         *
          * @return mixed
          * @throws SmartyException
          */
@@ -117,7 +119,7 @@
                             return $this->_property_info[ $prop ] == 1 ? $data->$pn = $args[ 0 ] :
                             $data->smarty->$pn = $args[ 0 ];
                     }
-                } elseif (!class_exists ( $class ) ) {
+                } elseif ( !class_exists ( $class ) ) {
                         throw new SmartyException( "property '$pn' does not exist." );
                     }
                 }
@@ -125,14 +127,14 @@
                 $callback = [ $smarty->ext->$name = new $class(), $name ];
             }
             } else {
-                $callback = [ $smarty->ext->$name, $name ];
+            $callback = [ $smarty->ext->$name, $name ];
             }
             array_unshift ( $args, $data);
             if ( isset( $callback ) && $callback[ 0 ]->objMap | $data->_objType ) {
                 return call_user_func_array ( $callback, $args );
             }
 
-            return call_user_func_array(array ( new Smarty_Internal_Undefined(), $name ), $args );
+            return call_user_func_array ( [ new Smarty_Internal_Undefined(), $name ], $args );
         }
 
     }

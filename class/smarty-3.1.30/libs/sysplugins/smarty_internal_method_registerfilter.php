@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_RegisterFilter {
-        /**
-         * Valid for Smarty and template object
-         * @var int
-         */
+    /**
+     * Valid for Smarty and template object
+     * @var int
+     */
         public $objMap = 3;
 
         /**
@@ -31,7 +31,7 @@
             if ( !isset( $this->filterTypes[ $type ] ) ) {
                 throw new SmartyException( "Illegal filter type \"{$type}\"" );
             }
-        }
+    }
 
         /**
          * Return internal filter name
@@ -50,7 +50,7 @@
             } else {
                 return 'closure';
             }
-        }
+    }
 
         /**
          * Registers a filter function
@@ -74,7 +74,7 @@
             if ( !is_callable ( $callback ) ) {
                 throw new SmartyException( "{$type}filter \"{$name}\" not callable" );
             }
-            $smarty->registered_filters[ $type ][ $name ] = $callback;
+        $smarty->registered_filters[ $type ][ $name ] = $callback;
 
             return $obj;
         }

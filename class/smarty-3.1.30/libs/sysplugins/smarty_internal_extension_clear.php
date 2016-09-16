@@ -8,15 +8,15 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Extension_Clear {
-        /**
-         * Empty cache for a specific template
-         * @param Smarty $smarty
-         * @param string $resource_name template name
-         * @param string $cache_id cache id
-         * @param string $compile_id compile id
-         * @param integer $exp_time expiration time (number of seconds, not timestamp)
-         * @return integer number of cache files deleted
-         */
+    /**
+     * Empty cache for a specific template
+     * @param Smarty $smarty
+     * @param string $resource_name template name
+     * @param string $cache_id cache id
+     * @param string $compile_id compile id
+     * @param integer $exp_time expiration time (number of seconds, not timestamp)
+     * @return integer number of cache files deleted
+     */
         public static function clear ( Smarty $smarty, $resource_name, $cache_id, $compile_id, $exp_time ) {
             $_cache_id          = isset( $cache_id ) ? preg_replace ( '![^\w\|]+!', '_', $cache_id ) : NULL;
             $_compile_id        = isset( $compile_id ) ? preg_replace ( '![^\w]+!', '_', $compile_id ) : NULL;
@@ -34,7 +34,7 @@
                     foreach ( $_cache_id_parts as $id_part ) {
                         $_dir .= $id_part . DS;
                     }
-                }
+            }
             }
             if ( isset( $resource_name ) ) {
                 $_save_stat      = $smarty->caching;
@@ -80,7 +80,7 @@
                         $_parts[ $_parts_count - 2 - $_compile_id_offset ] != $_compile_id )
                         ) {
                             continue;
-                        }
+                    }
                         // check cache id
                         if ( isset( $_cache_id ) ) {
                             // count of cache id parts
@@ -93,7 +93,7 @@
                                 if ( $_parts[ $i ] != $_cache_id_parts[ $i ] ) {
                                     continue 2;
                                 }
-                            }
+                        }
                         }
                         // expired ?
                         if ( isset( $exp_time ) ) {
@@ -101,21 +101,21 @@
                                 preg_match ( '#\'cache_lifetime\' =>\s*(\d*)#', file_get_contents ( $_file ), $match );
                                 if ( $_time < ( @filemtime ( $_file ) + $match[ 1 ] ) ) {
                                     continue;
-                                }
+                            }
                             } else {
                                 if ( $_time - @filemtime ( $_file ) < $exp_time ) {
                                     continue;
                                 }
-                            }
                         }
+                    }
                         $_count += @unlink ( (string) $_file ) ? 1 : 0;
                         if ( function_exists ( 'opcache_invalidate' ) && strlen ( ini_get ( "opcache.restrict_api" ) ) < 1 ) {
                             opcache_invalidate ( (string) $_file, TRUE );
                         }
                     }
-                }
             }
+        }
 
             return $_count;
         }
-    }
+}

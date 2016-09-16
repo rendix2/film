@@ -40,7 +40,7 @@
                     $timestamp = $s->timestamp > $timestamp ? $s->timestamp : $timestamp;
                 } catch ( SmartyException $e ) {
                 }
-            }
+        }
             if ( !$sources ) {
                 $source->exists = FALSE;
 

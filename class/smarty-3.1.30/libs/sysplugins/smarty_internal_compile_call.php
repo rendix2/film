@@ -29,11 +29,11 @@
 
         /**
          * Attribute definition: Overwrites base class.
-         *
-         * @var array
-         * @see Smarty_Internal_CompileBase
-         */
-        public $optional_attributes = [ '_any' ];
+
+     * @var array
+     * @see Smarty_Internal_CompileBase
+     */
+    public $optional_attributes = [ '_any' ];
 
         /**
          * Compiles the calls of user defined tags defined by {function}
@@ -68,16 +68,16 @@
                     $_paramsArray[] = "'$_key'=>$_value";
                 }
             }
-        $_params = 'array(' . implode ( ",", $_paramsArray ) . ')';
+            $_params = 'array(' . implode ( ",", $_paramsArray ) . ')';
             //$compiler->suppressNocacheProcessing = true;
             // was there an assign attribute
             if ( isset( $_assign ) ) {
                 $_output =
                 "<?php ob_start();\n\$_smarty_tpl->ext->_tplFunction->callTemplateFunction(\$_smarty_tpl, {$_name}, {$_params}, {$_nocache});\n\$_smarty_tpl->assign({$_assign}, ob_get_clean());?>\n";
         } else {
-                $_output =
-                "<?php \$_smarty_tpl->ext->_tplFunction->callTemplateFunction(\$_smarty_tpl, {$_name}, {$_params}, {$_nocache});?>\n";
+            $_output =
+            "<?php \$_smarty_tpl->ext->_tplFunction->callTemplateFunction(\$_smarty_tpl, {$_name}, {$_params}, {$_nocache});?>\n";
         }
         return $_output;
-        }
     }
+}
