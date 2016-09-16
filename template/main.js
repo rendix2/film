@@ -21,10 +21,10 @@ $( document ).ready(function() {
 
                     $("#mysubmit").show();
                 }
-            });
+    });
         }
         return false;
-});
+    });
 
 
     /*jQuery("#result-live").on("click",function(e){
@@ -44,6 +44,7 @@ $( document ).ready(function() {
         jQuery("#result-live").fadeIn();
         $("#mysubmit").fadeIn();
     });
+
 
 
 });

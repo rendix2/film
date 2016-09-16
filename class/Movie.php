@@ -37,6 +37,11 @@
 			return $imageName;
 		}
 
+		public static function validateCsfdLink ( $address ) {
+			return preg_match ( '#^(http|https):\/\/(www.){0,1}csfd\.cz\/film\/[0-9]{1,6}-[a-z-0-9]*\/prehled\/$#',
+			$address );
+		}
+
 		public function add () {
 			$this->smarty->display ( 'movieAdd', $_POST[ 'csfdLink' ], 'csfdLink' );
 
@@ -45,21 +50,15 @@
 
 				if ( empty( $_POST[ 'csfdLink' ] ) )
 					$errors[] = 'Prázdný odkaz na csfd';
-				/*
-								if ( !preg_match('#'.preg_quote("^(http|https):\/\/(www.){0,1}csfd\.cz\/film\/[0-9]{1,6}-[a-z-0-9]*\/prehled\/$",'#').'#',$_POST[ 'csfdLink' ] ) )
-									$errors[] = 'Odkaz není na csfd';
 
-				*/
-
-				if ( !preg_match ( '#^(http|https):\/\/(www.){0,1}csfd\.cz\/film\/[0-9]{1,6}-[a-z-0-9]*\/prehled\/$#', $_POST[ 'csfdLink' ] ) )
+				if ( !self::validateCsfdLink ( $_POST[ 'csfdLink' ] ) )
 					$errors[] = 'Odkaz není na csfd';
 
 				if ( count ( $errors ) != 0 )
 					Starter::myExit ( $this->smarty, implode ( '<br>', $errors ) );
 
 				$this->database->query ( 'SELECT 1 FROM movies WHERE movie_csfd_id = :csfdId LIMIT 1;',
-				[ 'csfdId' => self::getCsfdId ( $_POST[ 'csfdLink' ] ),
-				] );
+				[ 'csfdId' => self::getCsfdId ( $_POST[ 'csfdLink' ] ) ] );
 
 				if ( $this->database->numRows () == 1 )
 					$errors[] = 'Film je již přidán!';
@@ -131,7 +130,7 @@
 
 				$year2 = substr ( $name[ 1 ], 0, 4 );
 			}
-///
+
 			$imageName = self::saveImage ( $result[ 'image' ] );
 
 			return [ 'cz'    => $czechName, 'origin' => $engName, 'year' => $year2, 'desc' => $result[ 'description' ],
