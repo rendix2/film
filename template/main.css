@@ -58,6 +58,7 @@ table {
 
 * {
     font-family: 'Open Sans', sans-serif;
+    color: #0c538a;
 }
 
 h2 {
@@ -83,10 +84,11 @@ body {
     -webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
     overflow: hidden;
+    border: 1px solid #b1b1b1;
 }
 
 .padding {
@@ -305,7 +307,7 @@ input:focus {
 
 #results-panel span, #results-panel form {
     font-size: 14px;
-    color: black;
+    color: #0c538a;
     font-weight: 300;
     padding: 0;
     line-height: 20px

@@ -17,7 +17,7 @@
 		}
 
 		public function login () {
-			if ( $_SESSION[ 'logged' ] ) myExit ( $this->smarty, 'Jsi přihlášen' );
+			if ( $_SESSION[ 'logged' ] ) Starter::myExit ( $this->smarty, 'Jsi přihlášen' );
 
 			$this->smarty->display ( 'userLogin', $_POST[ 'user_name' ], 'user_name' );
 
@@ -52,13 +52,13 @@
 		}
 
 		public function logout () {
-			if ( !$_SESSION[ 'logged' ] ) myExit ( $this->smarty, 'Nejsi přihlášen' );
+			if ( !$_SESSION[ 'logged' ] ) Starter::myExitm ( $this->smarty, 'Nejsi přihlášen' );
 
 			session_destroy ();
 		}
 
 		public function register () {
-			if ( $_SESSION[ 'logged' ] ) myExit ( $this->smarty, 'Jsi přihlášen' );
+			if ( $_SESSION[ 'logged' ] ) Starter::myExit ( $this->smarty, 'Jsi přihlášen' );
 
 			$this->smarty->display ( 'userRegister', $_POST[ 'user_name' ], 'user_name' );
 
@@ -111,7 +111,7 @@
 					$errors[] = 'Shodné jméno a heslo';
 
 				if ( count ( $errors ) != 0 ) {
-					myExit ( $this->smarty, implode ( '<br>', $errors ) );
+					Starter::myExit ( $this->smarty, implode ( '<br>', $errors ) );
 				}
 
 				$this->database->query ( 'INSERT INTO users (user_name, user_password) VALUES(:user_name,
