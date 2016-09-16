@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" persistUploadOnCheckin="false">
+  <component name="PublishConfigData" uploadOnCheckin="bf8f40d4-4dd0-4f00-bbdf-2e671361294a">
     <serverData>
       <paths name="QW">
         <serverdata>
@@ -20,5 +20,6 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myUploadOnCheckinName" value="film" />
   </component>
 </project>

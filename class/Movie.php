@@ -29,6 +29,14 @@
 			return explode ( '-', $csfdId[ 4 ] )[ 0 ];
 		}
 
+		private static function saveImage ( $address ) {
+			$image     = file_get_contents ( $address );
+			$imageName = md5 ( uniqid ( mt_rand (), TRUE ) ) . '.jpg';
+			file_put_contents ( '../images/' . $imageName, $image );
+
+			return $imageName;
+		}
+
 		public function add () {
 			$this->smarty->display ( 'movieAdd', $_POST[ 'csfdLink' ], 'csfdLink' );
 
@@ -78,18 +86,6 @@
 			}
 		}
 
-		private function prepareSearch ( $input ) {
-			$errors = [ ];
-
-			if ( empty( $input ) )
-				$errors[] = 'Prázné pole hledání';
-			if ( mb_strlen ( $input, Starter::UTF8 ) < 3 )
-				$errors[] = '';
-
-			if ( count ( $errors ) != 0 )
-				Starter::myExit ( $this->smarty, implode ( '<br>', $errors ) );
-		}
-
 		private function getMovieInfo () {
 			$result = [ ];
 
@@ -136,25 +132,11 @@
 				$year2 = substr ( $name[ 1 ], 0, 4 );
 			}
 
+			$imageName = self::saveImage ( $result[ 'image' ] );
+
 			return [ 'cz'    => $czechName, 'origin' => $engName, 'year' => $year2, 'desc' => $result[ 'description' ],
-			         'image' => $result[ 'image' ],
+			         'image' => $imageName,
 			];
-		}
-
-		public function realSearch () {
-			$this->prepareSearch ( $_POST[ 'search' ] );
-			$this->database->query ( 'SELECT movie_name_czech, movie_picture, movie_name_origin, movie_year FROM movies
-										  WHERE MATCH(movie_name_czech, movie_name_origin) AGAINST (:search IN
-										  BOOLEAN MODE)
- 										  ORDER BY MATCH(movie_name_czech) AGAINST (:search) DESC;',
-			[ 'search' => $_POST[ 'search' ] ] );
-
-			if ( $this->database->numRows () == 0 )
-				$this->database->query ( 'SELECT movie_name_czech, movie_picture, movie_name_origin, movie_year FROM
-			movies WHERE movie_name_czech LIKE concat("%", :search, "%") OR movie_name_origin LIKE concat("%", :search, "%");',
-				[ 'search' => $_POST[ 'search' ] ] );
-
-			$this->smarty->display ( 'moviesView', $this->database->fetchAll () );
 		}
 
 		public function liveRealSearch () {
@@ -179,6 +161,34 @@
 
 
 			$this->smarty->display ( 'liveMoviesView', $this->database->fetchAll () );
+		}
+
+		private function prepareSearch ( $input ) {
+			$errors = [ ];
+
+			if ( empty( $input ) )
+				$errors[] = 'Prázné pole hledání';
+			if ( mb_strlen ( $input, Starter::UTF8 ) < 3 )
+				$errors[] = '';
+
+			if ( count ( $errors ) != 0 )
+				Starter::myExit ( $this->smarty, implode ( '<br>', $errors ) );
+		}
+
+		public function realSearch () {
+			$this->prepareSearch ( $_POST[ 'search' ] );
+			$this->database->query ( 'SELECT movie_name_czech, movie_picture, movie_name_origin, movie_year FROM movies
+										  WHERE MATCH(movie_name_czech, movie_name_origin) AGAINST (:search IN
+										  BOOLEAN MODE)
+ 										  ORDER BY MATCH(movie_name_czech) AGAINST (:search) DESC;',
+			[ 'search' => $_POST[ 'search' ] ] );
+
+			if ( $this->database->numRows () == 0 )
+				$this->database->query ( 'SELECT movie_name_czech, movie_picture, movie_name_origin, movie_year FROM
+			movies WHERE movie_name_czech LIKE concat("%", :search, "%") OR movie_name_origin LIKE concat("%", :search, "%");',
+				[ 'search' => $_POST[ 'search' ] ] );
+
+			$this->smarty->display ( 'moviesView', $this->database->fetchAll () );
 		}
 
 		public function remove () {
