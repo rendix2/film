@@ -13,10 +13,10 @@
      * @subpackage TemplateResources
      */
     abstract class Smarty_Resource_Uncompiled extends Smarty_Resource {
-        /**
-         * Flag that it's an uncompiled resource
-         * @var bool
-         */
+    /**
+     * Flag that it's an uncompiled resource
+     * @var bool
+     */
         public $uncompiled = TRUE;
 
         /**
@@ -38,5 +38,5 @@
                 $compiled->file_dependency[ $_template->source->uid ] =
                 [ $compiled->filepath, $compiled->timestamp, $_template->source->type, ];
             }
-        }
     }
+}

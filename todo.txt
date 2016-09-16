@@ -3,7 +3,7 @@ KO 1. preg_quote u preg_match
 3. xss
 5. pokud na csfd není obrázek vlastní (not found obrázek)
 6. vlastní profil filmu
-7. ukládat všechny obrázky k sobě
+OK 7. ukládat všechny obrázky k sobě
 8. nastavení uživatele
 9. bezpečná hesla
 10. vazby filmů
@@ -13,7 +13,7 @@ KO 1. preg_quote u preg_match
 14. bezpečná jména
 16. pagination
 17. sort by
-18. hledání pomocí LIKE i ve fultextovém // zatím jen když se nic nenajde
+OK 18. hledání pomocí LIKE i ve fultextovém // zatím jen když se nic nenajde
 20. šipky + esc při hledání
-// přidan upload na ftp//
-waewa
+21. v případě, že v realtime hledaní LIKE nic nenajde, použít fultext
+

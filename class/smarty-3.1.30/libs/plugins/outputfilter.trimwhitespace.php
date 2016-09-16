@@ -5,14 +5,17 @@
      * @subpackage PluginsFilter
      */
 
-    /**
-     * Smarty trimwhitespace outputfilter plugin
-     * Trim unnecessary whitespace from HTML markup.
-     * @author   Rodney Rehm
-     * @param string $source input string
-     * @return string filtered output
-     * @todo     substr_replace() is not overloaded by mbstring.func_overload - so this function might fail!
-     */
+/**
+ * Smarty trimwhitespace outputfilter plugin
+ * Trim unnecessary whitespace from HTML markup.
+ *
+ * @author   Rodney Rehm
+ *
+ * @param string $source input string
+ *
+ * @return string filtered output
+ * @todo     substr_replace() is not overloaded by mbstring.func_overload - so this function might fail!
+ */
     function smarty_outputfilter_trimwhitespace ( $source ) {
         $store   = [ ];
         $_store  = 0;
@@ -33,7 +36,7 @@
                 $_offset += $_length - strlen ( $replace );
                 $_store++;
             }
-        }
+    }
 
         // Strip all HTML-Comments
         // yes, even the ones in <script> - see http://stackoverflow.com/a/808850/515124
@@ -52,7 +55,7 @@
                 $_offset += $_length - strlen ( $replace );
                 $_store++;
             }
-        }
+    }
 
         $expressions = [// replace multiple spaces between tags by a single space
             // can't remove them entirely, becaue that might break poorly implemented CSS display:inline-block elements
@@ -81,5 +84,5 @@
             }
         }
 
-        return $source;
+    return $source;
     }

@@ -7,11 +7,12 @@
      * @author     Uwe Tews
      */
 
-    /**
-     * Smarty Internal Plugin Compile For Class
-     * @package    Smarty
-     * @subpackage Compiler
-     */
+/**
+ * Smarty Internal Plugin Compile For Class
+ *
+ * @package    Smarty
+ * @subpackage Compiler
+ */
     class Smarty_Internal_Compile_For extends Smarty_Internal_CompileBase {
         /**
          * Compiles code for the {for} tag
@@ -46,14 +47,14 @@
                     if ( is_array ( $_statement[ 'var' ] ) ) {
                         $var   = $_statement[ 'var' ][ 'var' ];
                         $index = $_statement[ 'var' ][ 'smarty_internal_index' ];
-                    } else {
-                        $var   = $_statement[ 'var' ];
+                } else {
+                    $var = $_statement[ 'var' ];
                         $index = '';
-                    }
-                    $output .= "\$_smarty_tpl->tpl_vars[$var] = new Smarty_Variable(null, \$_smarty_tpl->isRenderingCache);\n";
+                }
+                $output .= "\$_smarty_tpl->tpl_vars[$var] = new Smarty_Variable(null, \$_smarty_tpl->isRenderingCache);\n";
                     $output .= "\$_smarty_tpl->tpl_vars[$var]->value{$index} = {$_statement['value']};\n";
                 }
-                if ( is_array ( $_attr[ 'var' ] ) ) {
+                if (is_array($_attr[ 'var' ] ) ) {
                     $var   = $_attr[ 'var' ][ 'var' ];
                     $index = $_attr[ 'var' ][ 'smarty_internal_index' ];
                 } else {
@@ -105,12 +106,14 @@
     class Smarty_Internal_Compile_Forelse extends Smarty_Internal_CompileBase {
         /**
          * Compiles code for the {forelse} tag
+         *
          * @param  array $args array with attributes from parser
          * @param  object $compiler compiler object
          * @param  array $parameter array with compilation parameter
+         *
          * @return string compiled code
          */
-        public function compile ( $args, $compiler, $parameter ) {
+        public function compile($args, $compiler, $parameter ) {
             // check and get attributes
             $_attr = $this->getAttributes ( $compiler, $args );
 
@@ -119,7 +122,7 @@
 
             return "<?php }} else { ?>";
         }
-    }
+}
 
     /**
      * Smarty Internal Plugin Compile Forclose Class
@@ -129,9 +132,11 @@
     class Smarty_Internal_Compile_Forclose extends Smarty_Internal_CompileBase {
         /**
          * Compiles code for the {/for} tag
+         *
          * @param  array $args array with attributes from parser
          * @param  object $compiler compiler object
          * @param  array $parameter array with compilation parameter
+         *
          * @return string compiled code
          */
         public function compile ( $args, $compiler, $parameter ) {

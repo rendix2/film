@@ -8,10 +8,10 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_GetConfigVars {
-        /**
-         * Valid for all objects
-         * @var int
-         */
+    /**
+     * Valid for all objects
+     * @var int
+     */
         public $objMap = 7;
 
         /**
@@ -40,11 +40,11 @@
                 } else {
                     $_ptr = NULL;
                 }
-            }
-            if ( isset( $varname ) ) {
-                return '';
-            } else {
-                return $var_array;
-            }
+        }
+        if ( isset( $varname ) ) {
+            return '';
+        } else {
+            return $var_array;
+        }
         }
     }

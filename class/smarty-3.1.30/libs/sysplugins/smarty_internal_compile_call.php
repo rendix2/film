@@ -13,22 +13,23 @@
      * @subpackage Compiler
      */
     class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase {
-        /**
-         * Attribute definition: Overwrites base class.
-         * @var array
-         * @see Smarty_Internal_CompileBase
-         */
+    /**
+     * Attribute definition: Overwrites base class.
+     * @var array
+     * @see Smarty_Internal_CompileBase
+     */
         public $required_attributes = [ 'name' ];
 
         /**
-         * Attribute definition: Overwrites base class.
+     * Attribute definition: Overwrites base class.
          * @var array
          * @see Smarty_Internal_CompileBase
          */
-        public $shorttag_order = [ 'name' ];
+    public $shorttag_order = [ 'name' ];
 
         /**
          * Attribute definition: Overwrites base class.
+         *
          * @var array
          * @see Smarty_Internal_CompileBase
          */
@@ -36,8 +37,10 @@
 
         /**
          * Compiles the calls of user defined tags defined by {function}
+         *
          * @param  array $args array with attributes from parser
          * @param  object $compiler compiler object
+         *
          * @return string compiled code
          */
         public function compile ( $args, $compiler ) {
@@ -65,17 +68,16 @@
                     $_paramsArray[] = "'$_key'=>$_value";
                 }
             }
-            $_params = 'array(' . implode ( ",", $_paramsArray ) . ')';
+        $_params = 'array(' . implode ( ",", $_paramsArray ) . ')';
             //$compiler->suppressNocacheProcessing = true;
             // was there an assign attribute
             if ( isset( $_assign ) ) {
                 $_output =
                 "<?php ob_start();\n\$_smarty_tpl->ext->_tplFunction->callTemplateFunction(\$_smarty_tpl, {$_name}, {$_params}, {$_nocache});\n\$_smarty_tpl->assign({$_assign}, ob_get_clean());?>\n";
-            } else {
+        } else {
                 $_output =
                 "<?php \$_smarty_tpl->ext->_tplFunction->callTemplateFunction(\$_smarty_tpl, {$_name}, {$_params}, {$_nocache});?>\n";
-            }
-
-            return $_output;
+        }
+        return $_output;
         }
     }

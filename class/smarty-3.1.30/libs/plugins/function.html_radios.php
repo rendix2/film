@@ -5,40 +5,43 @@
      * @subpackage PluginsFunction
      */
 
-    /**
-     * Smarty {html_radios} function plugin
-     * File:       function.html_radios.php<br>
-     * Type:       function<br>
-     * Name:       html_radios<br>
-     * Date:       24.Feb.2003<br>
-     * Purpose:    Prints out a list of radio input types<br>
-     * Params:
-     * <pre>
-     * - name       (optional) - string default "radio"
-     * - values     (required) - array
-     * - options    (required) - associative array
-     * - checked    (optional) - array default not set
-     * - separator  (optional) - ie <br> or &nbsp;
-     * - output     (optional) - the output next to each radio button
-     * - assign     (optional) - assign the output as an array to this variable
-     * - escape     (optional) - escape the content (not value), defaults to true
-     * </pre>
-     * Examples:
-     * <pre>
-     * {html_radios values=$ids output=$names}
-     * {html_radios values=$ids name='box' separator='<br>' output=$names}
-     * {html_radios values=$ids checked=$checked separator='<br>' output=$names}
-     * </pre>
-     * @link    http://smarty.php.net/manual/en/language.function.html.radios.php {html_radios}
-     *          (Smarty online manual)
-     * @author  Christopher Kvarme <christopher.kvarme@flashjab.com>
-     * @author  credits to Monte Ohrt <monte at ohrt dot com>
-     * @version 1.0
-     * @param array $params parameters
-     * @param Smarty_Internal_Template $template template object
-     * @return string
-     * @uses    smarty_function_escape_special_chars()
-     */
+/**
+ * Smarty {html_radios} function plugin
+ * File:       function.html_radios.php<br>
+ * Type:       function<br>
+ * Name:       html_radios<br>
+ * Date:       24.Feb.2003<br>
+ * Purpose:    Prints out a list of radio input types<br>
+ * Params:
+ * <pre>
+ * - name       (optional) - string default "radio"
+ * - values     (required) - array
+ * - options    (required) - associative array
+ * - checked    (optional) - array default not set
+ * - separator  (optional) - ie <br> or &nbsp;
+ * - output     (optional) - the output next to each radio button
+ * - assign     (optional) - assign the output as an array to this variable
+ * - escape     (optional) - escape the content (not value), defaults to true
+ * </pre>
+ * Examples:
+ * <pre>
+ * {html_radios values=$ids output=$names}
+ * {html_radios values=$ids name='box' separator='<br>' output=$names}
+ * {html_radios values=$ids checked=$checked separator='<br>' output=$names}
+ * </pre>
+ *
+ * @link    http://smarty.php.net/manual/en/language.function.html.radios.php {html_radios}
+ *          (Smarty online manual)
+ * @author  Christopher Kvarme <christopher.kvarme@flashjab.com>
+ * @author  credits to Monte Ohrt <monte at ohrt dot com>
+ * @version 1.0
+ *
+ * @param array $params parameters
+ * @param Smarty_Internal_Template $template template object
+ *
+ * @return string
+ * @uses    smarty_function_escape_special_chars()
+ */
     function smarty_function_html_radios ( $params, $template ) {
         require_once ( SMARTY_PLUGINS_DIR . 'shared.escape_special_chars.php' );
 
@@ -115,7 +118,7 @@
                             $extra .= ' ' . $_key . '="' . smarty_function_escape_special_chars ( $_key ) . '"';
                         }
 
-                        break;
+                    break;
                     }
                 // omit break; to fall through!
 
@@ -143,20 +146,20 @@
                 smarty_function_html_radios_output ( $name, $_key, $_val, $selected, $extra, $separator, $labels,
                 $label_ids, $escape );
             }
-        } else {
+    } else {
             foreach ( $values as $_i => $_key ) {
                 $_val           = isset( $output[ $_i ] ) ? $output[ $_i ] : '';
                 $_html_result[] =
                 smarty_function_html_radios_output ( $name, $_key, $_val, $selected, $extra, $separator, $labels,
                 $label_ids, $escape );
             }
-        }
+    }
 
-        if ( !empty( $params[ 'assign' ] ) ) {
-            $template->assign ( $params[ 'assign' ], $_html_result );
-        } else {
-            return implode ( "\n", $_html_result );
-        }
+    if ( !empty( $params[ 'assign' ] ) ) {
+        $template->assign ( $params[ 'assign' ], $_html_result );
+    } else {
+        return implode ( "\n", $_html_result );
+    }
     }
 
     function smarty_function_html_radios_output ( $name, $value, $output, $selected, $extra, $separator, $labels, $label_ids,
@@ -172,7 +175,7 @@
 
                 return '';
             }
-        } else {
+    } else {
             $value = (string) $value;
         }
 
@@ -185,7 +188,7 @@
 
                 return '';
             }
-        } else {
+    } else {
             $output = (string) $output;
         }
 
@@ -197,7 +200,7 @@
             } else {
                 $_output .= '<label>';
             }
-        }
+    }
 
         $name  = smarty_function_escape_special_chars ( $name );
         $value = smarty_function_escape_special_chars ( $value );
@@ -220,7 +223,7 @@
             $_output .= '</label>';
         }
 
-        $_output .= $separator;
+    $_output .= $separator;
 
         return $_output;
     }

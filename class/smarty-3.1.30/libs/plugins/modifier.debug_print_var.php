@@ -5,19 +5,22 @@
      * @subpackage Debug
      */
 
-    /**
-     * Smarty debug_print_var modifier plugin
-     * Type:     modifier<br>
-     * Name:     debug_print_var<br>
-     * Purpose:  formats variable contents for display in the console
-     * @author Monte Ohrt <monte at ohrt dot com>
-     * @param array|object $var variable to be formatted
-     * @param int $max maximum recursion depth if $var is an array or object
-     * @param int $length maximum string length if $var is a string
-     * @param int $depth actual recursion depth
-     * @param array $objects processed objects in actual depth to prevent recursive object processing
-     * @return string
-     */
+/**
+ * Smarty debug_print_var modifier plugin
+ * Type:     modifier<br>
+ * Name:     debug_print_var<br>
+ * Purpose:  formats variable contents for display in the console
+ *
+ * @author Monte Ohrt <monte at ohrt dot com>
+ *
+ * @param array|object $var variable to be formatted
+ * @param int $max maximum recursion depth if $var is an array or object
+ * @param int $length maximum string length if $var is a string
+ * @param int $depth actual recursion depth
+ * @param array $objects processed objects in actual depth to prevent recursive object processing
+ *
+ * @return string
+ */
     function smarty_modifier_debug_print_var ( $var, $max = 10, $length = 40, $depth = 0, $objects = [ ] ) {
         $_replace = [ "\n" => '\n', "\r" => '\r', "\t" => '\t' ];
         switch ( gettype ( $var ) ) {

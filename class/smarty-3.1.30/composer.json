@@ -25,10 +25,10 @@
     "irc": "irc://irc.freenode.org/smarty",
     "issues": "https://github.com/smarty-php/smarty/issues",
     "forum": "http://www.smarty.net/forums/"
-  },
+    },
   "require": {
     "php": ">=5.2"
-  },
+    },
   "autoload": {
     "classmap": [
       "libs/Smarty.class.php",
@@ -40,5 +40,5 @@
     "branch-alias": {
       "dev-master": "3.1.x-dev"
     }
-  }
+    }
 }

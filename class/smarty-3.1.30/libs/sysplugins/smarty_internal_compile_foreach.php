@@ -13,22 +13,23 @@
      * @subpackage Compiler
      */
     class Smarty_Internal_Compile_Foreach extends Smarty_Internal_Compile_Private_ForeachSection {
-        /**
-         * Attribute definition: Overwrites base class.
-         * @var array
-         * @see Smarty_Internal_CompileBase
-         */
+    /**
+     * Attribute definition: Overwrites base class.
+     * @var array
+     * @see Smarty_Internal_CompileBase
+     */
         public $required_attributes = [ 'from', 'item' ];
 
         /**
-         * Attribute definition: Overwrites base class.
+     * Attribute definition: Overwrites base class.
          * @var array
          * @see Smarty_Internal_CompileBase
          */
-        public $optional_attributes = [ 'name', 'key', 'properties' ];
+    public $optional_attributes = [ 'name', 'key', 'properties' ];
 
         /**
          * Attribute definition: Overwrites base class.
+         *
          * @var array
          * @see Smarty_Internal_CompileBase
          */
@@ -36,39 +37,46 @@
 
         /**
          * counter
+         *
          * @var int
          */
         public $counter = 0;
 
         /**
          * Name of this tag
+         *
          * @var string
          */
         public $tagName = 'foreach';
 
         /**
          * Valid properties of $smarty.foreach.name.xxx variable
+         *
          * @var array
          */
         public $nameProperties = [ 'first', 'last', 'index', 'iteration', 'show', 'total' ];
 
         /**
          * Valid properties of $item@xxx variable
+         *
          * @var array
          */
         public $itemProperties = [ 'first', 'last', 'index', 'iteration', 'show', 'total', 'key' ];
 
         /**
          * Flag if tag had name attribute
+         *
          * @var bool
          */
         public $isNamed = FALSE;
 
         /**
          * Compiles code for the {foreach} tag
+         *
          * @param  array $args array with attributes from parser
          * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
          * @param  array $parameter array with compilation parameter
+         *
          * @return string compiled code
          * @throws \SmartyCompilerException
          */
@@ -111,8 +119,8 @@
                 }
             }
 
-            $itemVar = "\$_smarty_tpl->tpl_vars['{$item}']";
-            $local   = '$__foreach_' . $attributes[ 'item' ] . '_' . $this->counter++ . '_';
+        $itemVar = "\$_smarty_tpl->tpl_vars['{$item}']";
+            $local = '$__foreach_' . $attributes[ 'item' ] . '_' . $this->counter++ . '_';
             // search for used tag attributes
             $itemAttr  = [ ];
             $namedAttr = [ ];
@@ -131,7 +139,7 @@
                         $compiler->trigger_template_error ( "Invalid property '{$prop}'", NULL, TRUE );
                     }
                 }
-                if ( $this->isNamed ) {
+                if ($this->isNamed) {
                     foreach ( $match[ 1 ] as $prop ) {
                         if ( in_array ( $prop, $this->nameProperties ) ) {
                             $nameAttr[ $prop ] = TRUE;
@@ -140,10 +148,10 @@
                         }
                     }
                 }
-            }
-            if ( isset( $itemAttr[ 'first' ] ) ) {
-                $itemAttr[ 'index' ] = TRUE;
-            }
+        }
+        if (isset($itemAttr[ 'first' ]) ) {
+            $itemAttr[ 'index' ] = TRUE;
+        }
             if ( isset( $namedAttr[ 'first' ] ) ) {
                 $namedAttr[ 'index' ] = TRUE;
             }
@@ -221,18 +229,18 @@
                 if ( isset( $namedAttr[ 'iteration' ] ) ) {
                     $output .= "{$foreachVar}->value['iteration']++;\n";
                 }
-                if ( isset( $namedAttr[ 'index' ] ) ) {
+                if ( isset( $namedAttr[ 'index' ])) {
                     $output .= "{$foreachVar}->value['index']++;\n";
                 }
-                if ( isset( $namedAttr[ 'first' ] ) ) {
+                if ( isset( $namedAttr[ 'first' ])) {
                     $output .= "{$foreachVar}->value['first'] = !{$foreachVar}->value['index'];\n";
                 }
-                if ( isset( $namedAttr[ 'last' ] ) ) {
+                if ( isset( $namedAttr[ 'last' ])) {
                     $output .= "{$foreachVar}->value['last'] = {$foreachVar}->value['iteration'] == {$foreachVar}->value['total'];\n";
                 }
             }
-            if ( !empty( $itemAttr ) ) {
-                $output .= "{$local}saved = {$itemVar};\n";
+            if ( !empty( $itemAttr )) {
+            $output .= "{$local}saved = {$itemVar};\n";
             }
             $output .= "?>";
 
@@ -248,9 +256,11 @@
     class Smarty_Internal_Compile_Foreachelse extends Smarty_Internal_CompileBase {
         /**
          * Compiles code for the {foreachelse} tag
+     *
          * @param  array $args array with attributes from parser
          * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
          * @param  array $parameter array with compilation parameter
+         *
          * @return string compiled code
          */
         public function compile ( $args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter ) {
@@ -271,15 +281,18 @@
 
     /**
      * Smarty Internal Plugin Compile Foreachclose Class
-     * @package    Smarty
+
+ * @package    Smarty
      * @subpackage Compiler
      */
     class Smarty_Internal_Compile_Foreachclose extends Smarty_Internal_CompileBase {
         /**
          * Compiles code for the {/foreach} tag
+         *
          * @param  array $args array with attributes from parser
          * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
          * @param  array $parameter array with compilation parameter
+         *
          * @return string compiled code
          */
         public function compile ( $args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter ) {

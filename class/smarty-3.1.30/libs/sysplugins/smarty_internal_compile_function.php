@@ -14,22 +14,23 @@
      */
     class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase {
 
-        /**
-         * Attribute definition: Overwrites base class.
-         * @var array
-         * @see Smarty_Internal_CompileBase
-         */
+    /**
+     * Attribute definition: Overwrites base class.
+     * @var array
+     * @see Smarty_Internal_CompileBase
+     */
         public $required_attributes = [ 'name' ];
 
         /**
-         * Attribute definition: Overwrites base class.
+     * Attribute definition: Overwrites base class.
          * @var array
          * @see Smarty_Internal_CompileBase
          */
-        public $shorttag_order = [ 'name' ];
+    public $shorttag_order = [ 'name' ];
 
         /**
          * Attribute definition: Overwrites base class.
+         *
          * @var array
          * @see Smarty_Internal_CompileBase
          */
@@ -37,9 +38,11 @@
 
         /**
          * Compiles code for the {function} tag
+         *
          * @param  array $args array with attributes from parser
          * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
          * @param  array $parameter array with compilation parameter
+         *
          * @return bool true
          * @throws \SmartyCompilerException
          */
@@ -50,7 +53,7 @@
             if ( $_attr[ 'nocache' ] === TRUE ) {
                 $compiler->trigger_template_error ( 'nocache option not allowed', NULL, TRUE );
             }
-            unset( $_attr[ 'nocache' ] );
+            unset($_attr[ 'nocache' ] );
             $_name                                             = trim ( $_attr[ 'name' ], "'\"" );
             $compiler->parent_compiler->tpl_function[ $_name ] = [ ];
             $save                                              = [ $_attr, $compiler->parser->current_buffer, $compiler->template->compiled->has_nocache_code,
@@ -74,15 +77,18 @@
 
         /**
          * Compiler object
+     *
          * @var object
          */
-        private $compiler = NULL;
+        private $compiler = null;
 
         /**
          * Compiles code for the {/function} tag
+         *
          * @param  array $args array with attributes from parser
          * @param object|\Smarty_Internal_TemplateCompilerBase $compiler compiler object
          * @param  array $parameter array with compilation parameter
+         *
          * @return bool true
          */
         public function compile ( $args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter ) {
@@ -92,7 +98,7 @@
             $_name                                                                    = trim ( $_attr[ 'name' ], "'\"" );
             $compiler->parent_compiler->tpl_function[ $_name ][ 'compiled_filepath' ] =
             $compiler->parent_compiler->template->compiled->filepath;
-            $compiler->parent_compiler->tpl_function[ $_name ][ 'uid' ]               = $compiler->template->source->uid;
+        $compiler->parent_compiler->tpl_function[ $_name ][ 'uid' ]                   = $compiler->template->source->uid;
             $_parameter                                                               = $_attr;
             unset( $_parameter[ 'name' ] );
             // default parameter
@@ -104,7 +110,7 @@
                     $_paramsArray[] = "'$_key'=>$_value";
                 }
             }
-            if ( !empty( $_paramsArray ) ) {
+            if ( !empty($_paramsArray ) ) {
                 $_params     = 'array(' . implode ( ",", $_paramsArray ) . ')';
                 $_paramsCode = "\$params = array_merge($_params, \$params);\n";
             } else {
@@ -174,11 +180,11 @@
                         $compiler->parent_compiler->template->compiled->required_plugins[ 'compiled' ][ $plugin ][ $type ] =
                         $data;
                     }
-                }
             }
-            // restore old buffer
+        }
+        // restore old buffer
 
-            $compiler->parser->current_buffer = $saved_data[ 1 ];
+        $compiler->parser->current_buffer = $saved_data[ 1 ];
             // restore old status
             $compiler->template->compiled->has_nocache_code = $saved_data[ 2 ];
             $compiler->template->caching                    = $saved_data[ 3 ];
@@ -188,7 +194,9 @@
 
         /**
          * Remove nocache code
+         *
          * @param $match
+         *
          * @return string
          */
         function removeNocache ( $match ) {

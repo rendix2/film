@@ -13,40 +13,35 @@
      * @author Uwe Tews <uwe.tews@googlemail.com>
      */
     class Smarty_Internal_Compile_Block extends Smarty_Internal_Compile_Shared_Inheritance {
+    /**
+     * nesting level of block tags
+     * @var int
+     */
+        public static $blockTagNestingLevel = 0;
         /**
          * Attribute definition: Overwrites base class.
          * @var array
          * @see Smarty_Internal_CompileBase
          */
         public $required_attributes = [ 'name' ];
-
         /**
          * Attribute definition: Overwrites base class.
          * @var array
          * @see Smarty_Internal_CompileBase
          */
         public $shorttag_order = [ 'name' ];
-
         /**
          * Attribute definition: Overwrites base class.
          * @var array
          * @see Smarty_Internal_CompileBase
          */
         public $option_flags = [ 'hide', 'nocache' ];
-
         /**
          * Attribute definition: Overwrites base class.
          * @var array
          * @see Smarty_Internal_CompileBase
          */
         public $optional_attributes = [ 'assign' ];
-
-        /**
-         * nesting level of block tags
-         * @var int
-         */
-        public static $blockTagNestingLevel = 0;
-
         /**
          * Saved compiler object
          * @var Smarty_Internal_TemplateCompilerBase
@@ -54,10 +49,53 @@
         public $compiler = NULL;
 
         /**
+         * Compile saved child block source
+         *
+         * @param \Smarty_Internal_TemplateCompilerBase compiler object
+         * @param string $_name optional name of child block
+         *
+         * @return string   compiled code of child block
+         */
+        static function compileChildBlock ( Smarty_Internal_TemplateCompilerBase $compiler, $_name = NULL ) {
+            if ( !isset( $compiler->_cache[ 'blockNesting' ] ) ) {
+                $compiler->trigger_template_error ( ' tag {$smarty.block.child} used outside {block} tags ',
+                $compiler->parser->lex->taglineno );
+            }
+            $compiler->has_code                                                                       = TRUE;
+            $compiler->suppressNocacheProcessing                                                      = TRUE;
+            $compiler->_cache[ 'blockParams' ][ $compiler->_cache[ 'blockNesting' ] ][ 'callsChild' ] = 'true';
+            $output                                                                                   = "<?php \n\$_smarty_tpl->inheritance->callChild(\$_smarty_tpl, \$this);\n?>\n";
+
+            return $output;
+        }
+
+        /**
+         * Compile $smarty.block.parent
+         *
+         * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
+         * @param string $_name optional name of child block
+         *
+         * @return string   compiled code of child block
+         */
+        static function compileParentBlock ( Smarty_Internal_TemplateCompilerBase $compiler, $_name = NULL ) {
+            if ( !isset( $compiler->_cache[ 'blockNesting' ] ) ) {
+                $compiler->trigger_template_error ( ' tag {$smarty.block.parent} used outside {block} tags ',
+                $compiler->parser->lex->taglineno );
+            }
+            $compiler->suppressNocacheProcessing = TRUE;
+            $compiler->has_code                  = TRUE;
+            $output                              = "<?php \n\$_smarty_tpl->inheritance->callParent(\$_smarty_tpl, \$this);\n?>\n";
+
+            return $output;
+        }
+
+        /**
          * Compiles code for the {block} tag
+         *
          * @param  array $args array with attributes from parser
          * @param  \Smarty_Internal_TemplateCompilerBase $compiler compiler object
          * @param  array $parameter array with compilation parameter
+         *
          * @return bool true
          */
         public function compile ( $args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter ) {
@@ -93,43 +131,6 @@
             $compiler->template->compiled->has_nocache_code = FALSE;
             $compiler->suppressNocacheProcessing            = TRUE;
         }
-
-        /**
-         * Compile saved child block source
-         * @param \Smarty_Internal_TemplateCompilerBase compiler object
-         * @param string $_name optional name of child block
-         * @return string   compiled code of child block
-         */
-        static function compileChildBlock ( Smarty_Internal_TemplateCompilerBase $compiler, $_name = NULL ) {
-            if ( !isset( $compiler->_cache[ 'blockNesting' ] ) ) {
-                $compiler->trigger_template_error ( ' tag {$smarty.block.child} used outside {block} tags ',
-                $compiler->parser->lex->taglineno );
-            }
-            $compiler->has_code                                                                       = TRUE;
-            $compiler->suppressNocacheProcessing                                                      = TRUE;
-            $compiler->_cache[ 'blockParams' ][ $compiler->_cache[ 'blockNesting' ] ][ 'callsChild' ] = 'true';
-            $output                                                                                   = "<?php \n\$_smarty_tpl->inheritance->callChild(\$_smarty_tpl, \$this);\n?>\n";
-
-            return $output;
-        }
-
-        /**
-         * Compile $smarty.block.parent
-         * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
-         * @param string $_name optional name of child block
-         * @return string   compiled code of child block
-         */
-        static function compileParentBlock ( Smarty_Internal_TemplateCompilerBase $compiler, $_name = NULL ) {
-            if ( !isset( $compiler->_cache[ 'blockNesting' ] ) ) {
-                $compiler->trigger_template_error ( ' tag {$smarty.block.parent} used outside {block} tags ',
-                $compiler->parser->lex->taglineno );
-            }
-            $compiler->suppressNocacheProcessing = TRUE;
-            $compiler->has_code                  = TRUE;
-            $output                              = "<?php \n\$_smarty_tpl->inheritance->callParent(\$_smarty_tpl, \$this);\n?>\n";
-
-            return $output;
-        }
     }
 
     /**
@@ -139,9 +140,11 @@
     class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_Compile_Shared_Inheritance {
         /**
          * Compiles code for the {/block} tag
+     *
          * @param  array $args array with attributes from parser
          * @param \Smarty_Internal_TemplateCompilerBase $compiler compiler object
          * @param  array $parameter array with compilation parameter
+         *
          * @return bool true
          */
         public function compile ( $args, Smarty_Internal_TemplateCompilerBase $compiler, $parameter ) {
@@ -204,14 +207,14 @@
                         $data;
                     }
                 }
-            }
+        }
 
-            // restore old status
-            $compiler->template->compiled->has_nocache_code = $_has_nocache_code;
-            $compiler->tag_nocache                          = $compiler->nocache;
-            $compiler->nocache                              = $_nocache;
-            $compiler->parser->current_buffer               = $_buffer;
-            $output                                         = "<?php \n";
+        // restore old status
+        $compiler->template->compiled->has_nocache_code = $_has_nocache_code;
+            $compiler->tag_nocache                      = $compiler->nocache;
+            $compiler->nocache                          = $_nocache;
+            $compiler->parser->current_buffer           = $_buffer;
+            $output                                     = "<?php \n";
             if ( $compiler->_cache[ 'blockNesting' ] == 1 ) {
                 $output .= "\$_smarty_tpl->inheritance->instanceBlock(\$_smarty_tpl, '$_className', $_name);\n";
             } else {

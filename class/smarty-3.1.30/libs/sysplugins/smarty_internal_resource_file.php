@@ -7,12 +7,13 @@
      * @author     Rodney Rehm
      */
 
-    /**
-     * Smarty Internal Plugin Resource File
-     * Implements the file system as resource for Smarty templates
-     * @package    Smarty
-     * @subpackage TemplateResources
-     */
+/**
+ * Smarty Internal Plugin Resource File
+ * Implements the file system as resource for Smarty templates
+ *
+ * @package    Smarty
+ * @subpackage TemplateResources
+ */
     class Smarty_Internal_Resource_File extends Smarty_Resource {
         /**
          * build template filepath by traversing the template_dir array
@@ -71,9 +72,9 @@
                             if ( isset( $_directories[ $keys[ $index ] ] ) ) {
                                 $_index_dirs[] = $_directories[ $keys[ $index ] ];
                             }
-                        }
                     }
                 }
+            }
                 if ( empty( $_index_dirs ) ) {
                     // index not found
                     return FALSE;
@@ -95,7 +96,7 @@
                 if ( is_file ( $path ) ) {
                     return $path;
                 }
-            }
+        }
             // Use include path ?
             if ( $source->smarty->use_include_path ) {
                 return $source->smarty->ext->_getIncludePath->getIncludePath ( $_directories, $file, $source->smarty );
@@ -105,7 +106,35 @@
         }
 
         /**
+         * Determine basename for compiled filename
+         *
+         * @param  Smarty_Template_Source $source source object
+         *
+         * @return string                 resource's basename
+         */
+        public function getBasename ( Smarty_Template_Source $source ) {
+            return basename ( $source->filepath );
+        }
+
+        /**
+         * Load template's source from file into current template object
+         *
+         * @param  Smarty_Template_Source $source source object
+         *
+         * @return string                 template source
+         * @throws SmartyException        if source cannot be loaded
+         */
+        public function getContent ( Smarty_Template_Source $source ) {
+            if ( $source->exists ) {
+                return file_get_contents ( $source->filepath );
+            }
+            throw new SmartyException( 'Unable to read ' . ( $source->isConfig ? 'config' : 'template' ) .
+            " {$source->type} '{$source->name}'" );
+        }
+
+        /**
          * populate Source Object with meta data from Resource
+         *
          * @param Smarty_Template_Source $source source object
          * @param Smarty_Internal_Template $_template template object
          */
@@ -123,10 +152,11 @@
             } else {
                 $source->timestamp = $source->exists = FALSE;
             }
-        }
+    }
 
         /**
          * populate Source Object with timestamp and exists from Resource
+         *
          * @param Smarty_Template_Source $source source object
          */
         public function populateTimestamp ( Smarty_Template_Source $source ) {
@@ -136,28 +166,5 @@
             if ( $source->exists ) {
                 $source->timestamp = filemtime ( $source->filepath );
             }
-        }
-
-        /**
-         * Load template's source from file into current template object
-         * @param  Smarty_Template_Source $source source object
-         * @return string                 template source
-         * @throws SmartyException        if source cannot be loaded
-         */
-        public function getContent ( Smarty_Template_Source $source ) {
-            if ( $source->exists ) {
-                return file_get_contents ( $source->filepath );
-            }
-            throw new SmartyException( 'Unable to read ' . ( $source->isConfig ? 'config' : 'template' ) .
-            " {$source->type} '{$source->name}'" );
-        }
-
-        /**
-         * Determine basename for compiled filename
-         * @param  Smarty_Template_Source $source source object
-         * @return string                 resource's basename
-         */
-        public function getBasename ( Smarty_Template_Source $source ) {
-            return basename ( $source->filepath );
         }
     }

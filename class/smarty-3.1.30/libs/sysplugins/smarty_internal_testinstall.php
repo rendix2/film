@@ -7,11 +7,12 @@
      * @author     Uwe Tews
      */
 
-    /**
-     * TestInstall class
-     * @package    Smarty
-     * @subpackage Utilities
-     */
+/**
+ * TestInstall class
+ *
+ * @package    Smarty
+ * @subpackage Utilities
+ */
     class Smarty_Internal_TestInstall {
         /**
          * diagnose Smarty setup
@@ -57,31 +58,31 @@
                             "FAILED: $_template_dir does not exist (and couldn't be found in include_path either)";
                             if ( $errors === NULL ) {
                                 echo $message . ".\n";
-                            } else {
-                                $errors[ 'template_dir' ] = $message;
-                            }
-
-                            continue;
-                        }
-                    } else {
-                        $status  = FALSE;
-                        $message = "FAILED: $_template_dir does not exist";
-                        if ( $errors === NULL ) {
-                            echo $message . ".\n";
                         } else {
                             $errors[ 'template_dir' ] = $message;
                         }
 
                         continue;
                     }
-                }
+                    } else {
+                        $status  = FALSE;
+                        $message = "FAILED: $_template_dir does not exist";
+                        if ( $errors === NULL ) {
+                            echo $message . ".\n";
+                    } else {
+                        $errors[ 'template_dir' ] = $message;
+                    }
+
+                        continue;
+                    }
+            }
 
                 if ( !is_dir ( $template_dir ) ) {
                     $status  = FALSE;
                     $message = "FAILED: $template_dir is not a directory";
                     if ( $errors === NULL ) {
                         echo $message . ".\n";
-                    } else {
+                } else {
                         $errors[ 'template_dir' ] = $message;
                     }
                 } elseif ( !is_readable ( $template_dir ) ) {
@@ -89,14 +90,14 @@
                     $message = "FAILED: $template_dir is not readable";
                     if ( $errors === NULL ) {
                         echo $message . ".\n";
-                    } else {
+                } else {
                         $errors[ 'template_dir' ] = $message;
                     }
-                } else {
+            } else {
                     if ( $errors === NULL ) {
                         echo "$template_dir is OK.\n";
                     }
-                }
+            }
             }
 
             if ( $errors === NULL ) {
@@ -176,31 +177,31 @@
                             $message = "FAILED: $_plugin_dir does not exist (and couldn't be found in include_path either)";
                             if ( $errors === NULL ) {
                                 echo $message . ".\n";
-                            } else {
-                                $errors[ 'plugins_dir' ] = $message;
-                            }
-
-                            continue;
-                        }
-                    } else {
-                        $status  = FALSE;
-                        $message = "FAILED: $_plugin_dir does not exist";
-                        if ( $errors === NULL ) {
-                            echo $message . ".\n";
                         } else {
                             $errors[ 'plugins_dir' ] = $message;
                         }
 
                         continue;
                     }
-                }
+                    } else {
+                        $status  = FALSE;
+                        $message = "FAILED: $_plugin_dir does not exist";
+                        if ( $errors === NULL ) {
+                            echo $message . ".\n";
+                    } else {
+                        $errors[ 'plugins_dir' ] = $message;
+                    }
+
+                        continue;
+                    }
+            }
 
                 if ( !is_dir ( $plugin_dir ) ) {
                     $status  = FALSE;
                     $message = "FAILED: $plugin_dir is not a directory";
                     if ( $errors === NULL ) {
                         echo $message . ".\n";
-                    } else {
+                } else {
                         $errors[ 'plugins_dir' ] = $message;
                     }
                 } elseif ( !is_readable ( $plugin_dir ) ) {
@@ -208,7 +209,7 @@
                     $message = "FAILED: $plugin_dir is not readable";
                     if ( $errors === NULL ) {
                         echo $message . ".\n";
-                    } else {
+                } else {
                         $errors[ 'plugins_dir' ] = $message;
                     }
                 } elseif ( $_core_plugins_dir && $_core_plugins_dir == realpath ( $plugin_dir ) ) {
@@ -216,11 +217,11 @@
                     if ( $errors === NULL ) {
                         echo "$plugin_dir is OK.\n";
                     }
-                } else {
+            } else {
                     if ( $errors === NULL ) {
                         echo "$plugin_dir is OK.\n";
                     }
-                }
+            }
             }
             if ( !$_core_plugins_available ) {
                 $status  = FALSE;
@@ -305,24 +306,24 @@
                             $message = "FAILED: $_config_dir does not exist (and couldn't be found in include_path either)";
                             if ( $errors === NULL ) {
                                 echo $message . ".\n";
-                            } else {
-                                $errors[ 'config_dir' ] = $message;
-                            }
-
-                            continue;
-                        }
-                    } else {
-                        $status  = FALSE;
-                        $message = "FAILED: $_config_dir does not exist";
-                        if ( $errors === NULL ) {
-                            echo $message . ".\n";
                         } else {
                             $errors[ 'config_dir' ] = $message;
                         }
 
                         continue;
                     }
-                }
+                    } else {
+                        $status  = FALSE;
+                        $message = "FAILED: $_config_dir does not exist";
+                        if ( $errors === NULL ) {
+                            echo $message . ".\n";
+                    } else {
+                        $errors[ 'config_dir' ] = $message;
+                    }
+
+                        continue;
+                    }
+            }
 
                 if ( !is_dir ( $config_dir ) ) {
                     $status  = FALSE;
@@ -337,7 +338,7 @@
                     $message = "FAILED: $config_dir is not readable";
                     if ( $errors === NULL ) {
                         echo $message . ".\n";
-                    } else {
+                } else {
                         $errors[ 'config_dir' ] = $message;
                     }
                 } else {
@@ -498,7 +499,7 @@
                         if ( isset( $expectedSysplugins[ $filename ] ) ) {
                             unset( $expectedSysplugins[ $filename ] );
                         }
-                    }
+                }
                 }
                 if ( $expectedSysplugins ) {
                     $status  = FALSE;
@@ -565,13 +566,13 @@
                     $message = "FAILED: files missing from libs/plugins: " . join ( ', ', array_keys ( $expectedPlugins ) );
                     if ( $errors === NULL ) {
                         echo $message . ".\n";
-                    } else {
+                } else {
                         $errors[ 'plugins' ] = $message;
                     }
-                } elseif ( $errors === NULL ) {
+            } elseif ( $errors === NULL ) {
                     echo "... OK\n";
                 }
-            } else {
+        } else {
                 $status  = FALSE;
                 $message = "FAILED: " . SMARTY_PLUGINS_DIR . ' is not a directory';
                 if ( $errors === NULL ) {
@@ -579,9 +580,9 @@
                 } else {
                     $errors[ 'plugins_dir_constant' ] = $message;
                 }
-            }
+        }
 
-            if ( $errors === NULL ) {
+            if ($errors === NULL ) {
                 echo "Tests complete.\n";
                 echo "</PRE>\n";
             }

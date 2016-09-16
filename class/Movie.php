@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 	/**
 	 * Created by PhpStorm.
@@ -31,8 +31,8 @@
 
 		private static function saveImage ( $address ) {
 			$image     = file_get_contents ( $address );
-			$imageName = md5 ( uniqid ( mt_rand (), TRUE ) ) . '.jpg';
-			file_put_contents ( '../images/' . $imageName, $image );
+			$imageName = md5 ( uniqid ( mt_rand (), TRUE ) );
+			file_put_contents ( dirname ( __DIR__ ) . '/images/' . $imageName . '.jpg', $image );
 
 			return $imageName;
 		}
@@ -111,7 +111,7 @@
 			}
 
 
-			if ( preg_match ( '\/', $result[ 'title' ] ) ) {
+			if ( preg_match ( '#\/#', preg_quote ( $result[ 'title' ], '#' ) ) ) {
 				$names     = $result[ 'title' ];
 				$names     = explode ( '/ ', $names );
 				$czechName = ucfirst ( $names[ 0 ] );

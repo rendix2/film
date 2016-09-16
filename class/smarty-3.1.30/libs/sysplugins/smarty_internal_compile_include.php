@@ -13,9 +13,9 @@
      * @subpackage Compiler
      */
     class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase {
-        /**
-         * caching mode to create nocache code but no cache file
-         */
+    /**
+     * caching mode to create nocache code but no cache file
+     */
         const CACHING_NOCACHE_CODE = 9999;
 
         /**
@@ -27,6 +27,7 @@
 
         /**
          * Attribute definition: Overwrites base class.
+         *
          * @var array
          * @see Smarty_Internal_CompileBase
          */
@@ -34,6 +35,7 @@
 
         /**
          * Attribute definition: Overwrites base class.
+         *
          * @var array
          * @see Smarty_Internal_CompileBase
          */
@@ -41,6 +43,7 @@
 
         /**
          * Attribute definition: Overwrites base class.
+         *
          * @var array
          * @see Smarty_Internal_CompileBase
          */
@@ -48,18 +51,21 @@
 
         /**
          * Valid scope names
+         *
          * @var array
          */
-        public $valid_scopes = [ 'parent' => Smarty::SCOPE_PARENT, 'root' => Smarty::SCOPE_ROOT,
-                                 'global' => Smarty::SCOPE_GLOBAL, 'tpl_root' => Smarty::SCOPE_TPL_ROOT,
-                                 'smarty' => Smarty::SCOPE_SMARTY,
-        ];
+        public $valid_scopes = array ( 'parent' => Smarty::SCOPE_PARENT, 'root' => Smarty::SCOPE_ROOT,
+                                       'global' => Smarty::SCOPE_GLOBAL, 'tpl_root' => Smarty::SCOPE_TPL_ROOT,
+                                       'smarty' => Smarty::SCOPE_SMARTY,
+        );
 
         /**
          * Compiles code for the {include} tag
+         *
          * @param  array $args array with attributes from parser
          * @param  Smarty_Internal_SmartyTemplateCompiler $compiler compiler object
          * @param  array $parameter array with compilation parameter
+         *
          * @throws SmartyCompilerException
          * @return string compiled code
          */
@@ -96,13 +102,13 @@
                             } else {
                                 $compiled->includes[ $fullResourceName ] = 1;
                             }
-                        }
-                        $fullResourceName = '"' . $fullResourceName . '"';
+                    }
+                    $fullResourceName = '"' . $fullResourceName . '"';
                     }
                 }
-                if ( empty( $match[ 5 ] ) ) {
-                    $variable_template = TRUE;
-                }
+            if (empty($match[ 5 ] ) ) {
+                $variable_template = TRUE;
+            }
             } else {
                 $variable_template = TRUE;
             }
@@ -141,12 +147,12 @@
                 }
             }
 
-            /*
-			* if the {include} tag provides individual parameter for caching or compile_id
-			* the subtemplate must not be included into the common cache file and is treated like
-			* a call in nocache mode.
-			*
-			*/
+        /*
+        * if the {include} tag provides individual parameter for caching or compile_id
+        * the subtemplate must not be included into the common cache file and is treated like
+        * a call in nocache mode.
+        *
+        */
             if ( $_attr[ 'nocache' ] !== TRUE && $_attr[ 'caching' ] ) {
                 $_caching     = $_new_caching = (int) $_attr[ 'caching' ];
                 $call_nocache = TRUE;
@@ -191,7 +197,7 @@
                 }
             }
 
-            $has_compiled_template = FALSE;
+        $has_compiled_template = FALSE;
             if ( $merge_compiled_includes ) {
                 $c_id = isset( $_attr[ 'compile_id' ] ) ? $_attr[ 'compile_id' ] : $compiler->template->compile_id;
                 // we must observe different compile_id and caching
@@ -207,7 +213,7 @@
                 } else {
                     $has_compiled_template = TRUE;
                 }
-                unset( $tpl );
+                unset($tpl);
             }
             // delete {include} standard attributes
             unset( $_attr[ 'file' ], $_attr[ 'assign' ], $_attr[ 'cache_id' ], $_attr[ 'compile_id' ], $_attr[ 'cache_lifetime' ], $_attr[ 'nocache' ], $_attr[ 'caching' ], $_attr[ 'scope' ], $_attr[ 'inline' ] );
@@ -228,7 +234,7 @@
                 if ( $update_compile_id ) {
                     $_output .= $compiler->makeNocacheCode ( "\$_compile_id_save[] = \$_smarty_tpl->compile_id;\n\$_smarty_tpl->compile_id = {$_compile_id};\n" );
                 }
-                if ( !empty( $_attr ) && $_caching == 9999 && $compiler->template->caching ) {
+                if (!empty($_attr ) && $_caching == 9999 && $compiler->template->caching ) {
                     $_vars_nc = "foreach ($_vars as \$ik => \$iv) {\n";
                     $_vars_nc .= "\$_smarty_tpl->tpl_vars[\$ik] =  new Smarty_Variable(\$iv);\n";
                     $_vars_nc .= "}\n";
@@ -236,22 +242,22 @@
                 }
                 if ( isset( $_assign ) ) {
                     $_output .= "ob_start();\n";
-                }
-                $_output .= "\$_smarty_tpl->_subTemplateRender({$fullResourceName}, {$_cache_id}, {$_compile_id}, {$_caching}, {$_cache_lifetime}, {$_vars}, {$_scope}, {$_cache_tpl}, '{$compiler->parent_compiler->mergedSubTemplatesData[$uid][$t_hash]['uid']}', '{$compiler->parent_compiler->mergedSubTemplatesData[$uid][$t_hash]['func']}');\n";
+            }
+            $_output .= "\$_smarty_tpl->_subTemplateRender({$fullResourceName}, {$_cache_id}, {$_compile_id}, {$_caching}, {$_cache_lifetime}, {$_vars}, {$_scope}, {$_cache_tpl}, '{$compiler->parent_compiler->mergedSubTemplatesData[$uid][$t_hash]['uid']}', '{$compiler->parent_compiler->mergedSubTemplatesData[$uid][$t_hash]['func']}');\n";
                 if ( isset( $_assign ) ) {
                     $_output .= "\$_smarty_tpl->assign({$_assign}, ob_get_clean());\n";
-                }
-                if ( $update_compile_id ) {
-                    $_output .= $compiler->makeNocacheCode ( "\$_smarty_tpl->compile_id = array_pop(\$_compile_id_save);\n" );
-                }
+            }
+            if ($update_compile_id ) {
+                $_output .= $compiler->makeNocacheCode ( "\$_smarty_tpl->compile_id = array_pop(\$_compile_id_save);\n" );
+            }
                 $_output .= "?>\n";
 
-                return $_output;
-            }
+            return $_output;
+        }
 
-            if ( $call_nocache ) {
-                $compiler->tag_nocache = TRUE;
-            }
+        if ($call_nocache) {
+            $compiler->tag_nocache = TRUE;
+        }
             $_output = "<?php ";
             if ( $update_compile_id ) {
                 $_output .= "\$_compile_id_save[] = \$_smarty_tpl->compile_id;\n\$_smarty_tpl->compile_id = {$_compile_id};\n";
@@ -285,9 +291,9 @@
             if ( !( $tpl->source->handler->uncompiled ) && $tpl->source->exists ) {
                 $compiler->parent_compiler->mergedSubTemplatesData[ $uid ][ $t_hash ][ 'uid' ] =
                 $tpl->source->uid;
-                if ( isset( $compiler->template->inheritance ) ) {
-                    $tpl->inheritance = clone $compiler->template->inheritance;
-                }
+            if (isset($compiler->template->inheritance ) ) {
+                $tpl->inheritance = clone $compiler->template->inheritance;
+            }
                 $tpl->compiled               = new Smarty_Template_Compiled();
                 $tpl->compiled->nocache_hash = $compiler->parent_compiler->template->compiled->nocache_hash;
                 $tpl->loadCompiler ();
@@ -298,13 +304,13 @@
                 $tpl->mustCompile                                                                       = TRUE;
                 $compiler->parent_compiler->mergedSubTemplatesData[ $uid ][ $t_hash ][ 'nocache_hash' ] =
                 $tpl->compiled->nocache_hash;
-                if ( $compiler->template->source->type == 'file' ) {
-                    $sourceInfo = $compiler->template->source->filepath;
-                } else {
-                    $basename   = $compiler->template->source->handler->getBasename ( $compiler->template->source );
-                    $sourceInfo = $compiler->template->source->type . ':' .
-                    ( $basename ? $basename : $compiler->template->source->name );
-                }
+            if ($compiler->template->source->type == 'file' ) {
+                $sourceInfo = $compiler->template->source->filepath;
+            } else {
+                $basename = $compiler->template->source->handler->getBasename ( $compiler->template->source );
+                $sourceInfo = $compiler->template->source->type . ':' .
+                ( $basename ? $basename : $compiler->template->source->name );
+            }
                 // get compiled code
                 $compiled_code = "<?php\n\n";
                 $compiled_code .= "/* Start inline template \"{$sourceInfo}\" =============================*/\n";

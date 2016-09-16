@@ -8,30 +8,11 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_RegisterDefaultTemplateHandler {
-        /**
-         * Valid for Smarty and template object
-         * @var int
-         */
+    /**
+     * Valid for Smarty and template object
+     * @var int
+     */
         public $objMap = 3;
-
-        /**
-         * Register template default handler
-         * @api  Smarty::registerDefaultTemplateHandler()
-         * @param \Smarty_Internal_TemplateBase|\Smarty_Internal_Template|\Smarty $obj
-         * @param  callable $callback class/method name
-         * @return \Smarty|\Smarty_Internal_Template
-         * @throws SmartyException              if $callback is not callable
-         */
-        public function registerDefaultTemplateHandler ( Smarty_Internal_TemplateBase $obj, $callback ) {
-            $smarty = isset( $obj->smarty ) ? $obj->smarty : $obj;
-            if ( is_callable ( $callback ) ) {
-                $smarty->default_template_handler_func = $callback;
-            } else {
-                throw new SmartyException( "Default template handler not callable" );
-            }
-
-            return $obj;
-        }
 
         /**
          * get default content from template or config resource handler
@@ -68,5 +49,26 @@
                 throw new SmartyException( 'Default handler: No ' . ( $source->isConfig ? 'config' : 'template' ) .
                 " default content for '{$source->type}:{$source->name}'" );
             }
+    }
+
+        /**
+         * Register template default handler
+         *
+         * @api  Smarty::registerDefaultTemplateHandler()
+         *
+         * @param \Smarty_Internal_TemplateBase|\Smarty_Internal_Template|\Smarty $obj
+         * @param  callable $callback class/method name
+         *
+         * @return \Smarty|\Smarty_Internal_Template
+         * @throws SmartyException              if $callback is not callable
+         */
+        public function registerDefaultTemplateHandler ( Smarty_Internal_TemplateBase $obj, $callback ) {
+            $smarty = isset( $obj->smarty ) ? $obj->smarty : $obj;
+            if ( is_callable ( $callback ) ) {
+                $smarty->default_template_handler_func = $callback;
+            } else {
+                throw new SmartyException( "Default template handler not callable" );
+            }
+        return $obj;
         }
     }

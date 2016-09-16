@@ -15,10 +15,39 @@
      * @deprecated
      */
     class Smarty_Internal_Resource_Registered extends Smarty_Resource {
+    /**
+     * Determine basename for compiled filename
+     * @param  Smarty_Template_Source $source source object
+     * @return string                 resource's basename
+     */
+        public function getBasename ( Smarty_Template_Source $source ) {
+            return basename ( $source->name );
+        }
+
+        /**
+         * Load template's source by invoking the registered callback into current template object
+         * @param  Smarty_Template_Source $source source object
+         * @return string                 template source
+         * @throws SmartyException        if source cannot be loaded
+         */
+    public function getContent ( Smarty_Template_Source $source ) {
+        // return template string
+        $content = NULL;
+        $t       = call_user_func_array ( $source->smarty->registered_resources[ $source->type ][ 0 ][ 0 ],
+        [ $source->name, &$content, $source->smarty ] );
+        if ( is_bool ( $t ) && !$t ) {
+            throw new SmartyException( "Unable to read template {$source->type} '{$source->name}'" );
+        }
+
+        return $content;
+    }
+
         /**
          * populate Source Object with meta data from Resource
+         *
          * @param  Smarty_Template_Source $source source object
          * @param  Smarty_Internal_Template $_template template object
+         *
          * @return void
          */
         public function populate ( Smarty_Template_Source $source, Smarty_Internal_Template $_template = NULL ) {
@@ -30,7 +59,9 @@
 
         /**
          * populate Source Object with timestamp and exists from Resource
+         *
          * @param  Smarty_Template_Source $source source object
+         *
          * @return void
          */
         public function populateTimestamp ( Smarty_Template_Source $source ) {
@@ -40,7 +71,9 @@
 
         /**
          * Get timestamp (epoch) the template source was modified
+         *
          * @param  Smarty_Template_Source $source source object
+         *
          * @return integer|boolean        timestamp (epoch) the template was modified, false if resources has no timestamp
          */
         public function getTemplateTimestamp ( Smarty_Template_Source $source ) {
@@ -50,32 +83,5 @@
             [ $source->name, &$time_stamp, $source->smarty ] );
 
             return is_numeric ( $time_stamp ) ? (int) $time_stamp : $time_stamp;
-        }
-
-        /**
-         * Load template's source by invoking the registered callback into current template object
-         * @param  Smarty_Template_Source $source source object
-         * @return string                 template source
-         * @throws SmartyException        if source cannot be loaded
-         */
-        public function getContent ( Smarty_Template_Source $source ) {
-            // return template string
-            $content = NULL;
-            $t       = call_user_func_array ( $source->smarty->registered_resources[ $source->type ][ 0 ][ 0 ],
-            [ $source->name, &$content, $source->smarty ] );
-            if ( is_bool ( $t ) && !$t ) {
-                throw new SmartyException( "Unable to read template {$source->type} '{$source->name}'" );
-            }
-
-            return $content;
-        }
-
-        /**
-         * Determine basename for compiled filename
-         * @param  Smarty_Template_Source $source source object
-         * @return string                 resource's basename
-         */
-        public function getBasename ( Smarty_Template_Source $source ) {
-            return basename ( $source->name );
         }
     }

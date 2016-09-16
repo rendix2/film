@@ -31,7 +31,6 @@
                 padding: 2px;
                 border-top: 1px solid black;
             }
-
             h3 {
                 text-align: left;
                 font-weight: bold;
@@ -85,16 +84,13 @@
                 color: black;
                 font-weight: bold;
             }
-
             #blue h3 {
                 color: blue;
             }
-
             #normal div {
                 color: black;
                 font-weight: normal;
             }
-
             #table_assigned_vars th {
                 color: blue;
                 font-weight: bold;

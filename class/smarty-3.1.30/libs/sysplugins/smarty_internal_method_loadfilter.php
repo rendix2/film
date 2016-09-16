@@ -1,66 +1,72 @@
 <?php
 
-	/**
-	 * Smarty Method LoadFilter
-	 * Smarty::loadFilter() method
-	 * @package    Smarty
-	 * @subpackage PluginsInternal
-	 * @author     Uwe Tews
-	 */
-	class Smarty_Internal_Method_LoadFilter {
-		/**
-		 * Valid for Smarty and template object
-		 * @var int
-		 */
-		public $objMap = 3;
+    /**
+     * Smarty Method LoadFilter
+     * Smarty::loadFilter() method
+     * @package    Smarty
+     * @subpackage PluginsInternal
+     * @author     Uwe Tews
+     */
+    class Smarty_Internal_Method_LoadFilter {
+        /**
+         * Valid for Smarty and template object
+         * @var int
+         */
+        public $objMap = 3;
 
-		/**
-		 * Valid filter types
-		 * @var array
-		 */
-		private $filterTypes = [ 'pre' => TRUE, 'post' => TRUE, 'output' => TRUE, 'variable' => TRUE ];
+        /**
+         * Valid filter types
+         * @var array
+         */
+        private $filterTypes = [ 'pre' => TRUE, 'post' => TRUE, 'output' => TRUE, 'variable' => TRUE ];
 
-		/**
-		 * Check if filter type is valid
-		 * @param string $type
-		 * @throws \SmartyException
-		 */
-		public function _checkFilterType ( $type ) {
-			if ( !isset( $this->filterTypes[ $type ] ) ) {
-				throw new SmartyException( "Illegal filter type \"{$type}\"" );
-			}
-		}
+        /**
+         * Check if filter type is valid
+         *
+         * @param string $type
+         *
+         * @throws \SmartyException
+         */
+        public function _checkFilterType ( $type ) {
+            if ( !isset( $this->filterTypes[ $type ] ) ) {
+                throw new SmartyException( "Illegal filter type \"{$type}\"" );
+            }
+        }
 
-		/**
-		 * load a filter of specified type and name
-		 * @api  Smarty::loadFilter()
-		 * @link http://www.smarty.net/docs/en/api.load.filter.tpl
-		 * @param \Smarty_Internal_TemplateBase|\Smarty_Internal_Template|\Smarty $obj
-		 * @param  string $type filter type
-		 * @param  string $name filter name
-		 * @return bool
-		 * @throws SmartyException if filter could not be loaded
-		 */
-		public function loadFilter ( Smarty_Internal_TemplateBase $obj, $type, $name ) {
-			$smarty = isset( $obj->smarty ) ? $obj->smarty : $obj;
-			$this->_checkFilterType ( $type );
-			$_plugin      = "smarty_{$type}filter_{$name}";
-			$_filter_name = $_plugin;
-			if ( is_callable ( $_plugin ) ) {
-				$smarty->registered_filters[ $type ][ $_filter_name ] = $_plugin;
+        /**
+         * load a filter of specified type and name
+         *
+         * @api  Smarty::loadFilter()
+         *
+         * @link http://www.smarty.net/docs/en/api.load.filter.tpl
+         *
+         * @param \Smarty_Internal_TemplateBase|\Smarty_Internal_Template|\Smarty $obj
+         * @param  string $type filter type
+         * @param  string $name filter name
+         *
+         * @return bool
+         * @throws SmartyException if filter could not be loaded
+         */
+        public function loadFilter ( Smarty_Internal_TemplateBase $obj, $type, $name ) {
+            $smarty = isset( $obj->smarty ) ? $obj->smarty : $obj;
+            $this->_checkFilterType ( $type );
+            $_plugin      = "smarty_{$type}filter_{$name}";
+            $_filter_name = $_plugin;
+            if ( is_callable ( $_plugin ) ) {
+                $smarty->registered_filters[ $type ][ $_filter_name ] = $_plugin;
 
-				return TRUE;
-			}
-			if ( $smarty->loadPlugin ( $_plugin ) ) {
-				if ( class_exists ( $_plugin, FALSE ) ) {
-					$_plugin = [ $_plugin, 'execute' ];
-				}
-				if ( is_callable ( $_plugin ) ) {
-					$smarty->registered_filters[ $type ][ $_filter_name ] = $_plugin;
+                return TRUE;
+            }
+            if ( $smarty->loadPlugin ( $_plugin ) ) {
+                if ( class_exists ( $_plugin, FALSE ) ) {
+                    $_plugin = [ $_plugin, 'execute' ];
+                }
+                if ( is_callable ( $_plugin ) ) {
+                    $smarty->registered_filters[ $type ][ $_filter_name ] = $_plugin;
 
-					return TRUE;
-				}
-			}
-			throw new SmartyException( "{$type}filter \"{$name}\" not found or callable" );
-		}
-	}
+                    return TRUE;
+                }
+            }
+            throw new SmartyException( "{$type}filter \"{$name}\" not found or callable" );
+        }
+    }

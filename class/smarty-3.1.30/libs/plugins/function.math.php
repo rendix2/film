@@ -6,18 +6,21 @@
      * @subpackage PluginsFunction
      */
 
-    /**
-     * Smarty {math} function plugin
-     * Type:     function<br>
-     * Name:     math<br>
-     * Purpose:  handle math computations in template
-     * @link     http://www.smarty.net/manual/en/language.function.math.php {math}
-     *           (Smarty online manual)
-     * @author   Monte Ohrt <monte at ohrt dot com>
-     * @param array $params parameters
-     * @param Smarty_Internal_Template $template template object
-     * @return string|null
-     */
+/**
+ * Smarty {math} function plugin
+ * Type:     function<br>
+ * Name:     math<br>
+ * Purpose:  handle math computations in template
+ *
+ * @link     http://www.smarty.net/manual/en/language.function.math.php {math}
+ *           (Smarty online manual)
+ * @author   Monte Ohrt <monte at ohrt dot com>
+ *
+ * @param array $params parameters
+ * @param Smarty_Internal_Template $template template object
+ *
+ * @return string|null
+ */
     function smarty_function_math ( $params, $template ) {
         static $_allowed_funcs =
         [ 'int'   => TRUE, 'abs' => TRUE, 'ceil' => TRUE, 'cos' => TRUE, 'exp' => TRUE, 'floor' => TRUE,
@@ -62,8 +65,8 @@
                 trigger_error ( "math: function call $curr_var not allowed", E_USER_WARNING );
 
                 return;
-            }
         }
+    }
 
         foreach ( $params as $key => $val ) {
             if ( $key != "equation" && $key != "format" && $key != "assign" ) {
@@ -72,7 +75,7 @@
                     trigger_error ( "math: parameter $key is empty", E_USER_WARNING );
 
                     return;
-                }
+            }
                 if ( !is_numeric ( $val ) ) {
                     trigger_error ( "math: parameter $key: is not numeric", E_USER_WARNING );
 
@@ -80,7 +83,7 @@
                 }
                 $equation = preg_replace ( "/\b$key\b/", " \$params['$key'] ", $equation );
             }
-        }
+    }
         $smarty_math_result = NULL;
         eval( "\$smarty_math_result = " . $equation . ";" );
 
@@ -90,11 +93,11 @@
             } else {
                 $template->assign ( $params[ 'assign' ], $smarty_math_result );
             }
-        } else {
+    } else {
             if ( empty( $params[ 'assign' ] ) ) {
                 printf ( $params[ 'format' ], $smarty_math_result );
             } else {
                 $template->assign ( $params[ 'assign' ], sprintf ( $params[ 'format' ], $smarty_math_result ) );
             }
         }
-    }
+}

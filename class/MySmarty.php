@@ -19,10 +19,6 @@
 			//$this->smarty->setCaching(TRUE);
 		}
 
-		public function getSmarty () {
-			return $this->smarty;
-		}
-
 		public function display ( $templateName, $data, $dataName = 'data' ) {
 			try {
 				$this->smarty->assign ( $dataName, $data );
@@ -31,5 +27,9 @@
 			} catch ( \SmartyException $SmartyException ) {
 				echo $SmartyException->getMessage ();
 			}
+		}
+
+		public function getSmarty () {
+			return $this->smarty;
 		}
 	}

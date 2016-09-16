@@ -3,9 +3,12 @@
         <h2>Zadejte název filmu, který se vám líbí</h2>
     </div>
     <div id="search-wrap">
-        <form method="post" action="">
-            <input type="search" name="search" id="search" placeholder="Zadejte prosím název filmu"/>
-            <input id="search-button" name="submit" type="submit" value="">
+        <form method="post" action="?akce=search" id="myform">
+            <input type="search" name="search" id="search" class="search-live" placeholder="Zadejte prosím název filmu"
+                   autocomplete="off"/>
+            <input id="search-button" name="test" type="submit" value="">
+            <div id="result-live"></div>
+            <p id="mysubmit">Zobrazit všechny výsledky</p>
         </form>
     </div>
     <div class="panel-text-wrap">

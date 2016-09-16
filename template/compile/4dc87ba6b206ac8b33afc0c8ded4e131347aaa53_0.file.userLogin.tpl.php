@@ -28,10 +28,10 @@
                 <input name="user_name" type="text" maxlength="100"
                        value="<?php echo $_smarty_tpl->tpl_vars[ 'user_name' ]->value; ?>
 " placeholder="Uživatelské jméno">
-            </label>
-            <label>Uživatelské heslo
-                <input name="user_password" type="password" value="" placeholder="Uživatelské heslo">
-            </label>
+    </label>
+    <label>Uživatelské heslo
+        <input name="user_password" type="password" value="" placeholder="Uživatelské heslo">
+    </label>
             <input type="submit" name="submit" value="Přihlásit">
             </form><?php }
     }

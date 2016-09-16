@@ -12,7 +12,8 @@
         {foreach $data as $movie}
             <div class="result-marginer">
                 <div class="result-item">
-                    <div class="result-image" style="background-image: url('{$movie['movie_picture']}')"></div>
+                    <div class="result-image"
+                         style="background-image: url('./images/{$movie['movie_picture']}.jpg')"></div>
                     <div class="result-info"><h3>{$movie['movie_name_czech']}</h3>
                         <p>{$movie['movie_year']}</p>
                     </div>

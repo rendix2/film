@@ -7,10 +7,10 @@
      * @author     Rodney Rehm
      */
     abstract class Smarty_Template_Resource_Base {
-        /**
-         * Compiled Filepath
-         * @var string
-         */
+    /**
+     * Compiled Filepath
+     * @var string
+     */
         public $filepath = NULL;
 
         /**
@@ -33,62 +33,73 @@
 
         /**
          * Compiled Content Loaded
+         *
          * @var boolean
          */
         public $processed = FALSE;
 
         /**
          * unique function name for compiled template code
+         *
          * @var string
          */
         public $unifunc = '';
 
         /**
          * flag if template does contain nocache code sections
+         *
          * @var bool
          */
         public $has_nocache_code = FALSE;
 
         /**
          * resource file dependency
+         *
          * @var array
          */
         public $file_dependency = [ ];
 
         /**
          * Content buffer
+         *
          * @var string
          */
         public $content = NULL;
 
         /**
          * required plugins
+         *
          * @var array
          */
         public $required_plugins = [ ];
 
         /**
          * Included subtemplates
+         *
          * @var array
          */
         public $includes = [ ];
 
         /**
          * Flag if this is a cache resource
+         *
          * @var bool
          */
         public $isCache = FALSE;
 
         /**
          * Process resource
+         *
          * @param Smarty_Internal_Template $_template template object
          */
         abstract public function process ( Smarty_Internal_Template $_template );
 
         /**
          * get rendered template content by calling compiled or cached template code
+         *
          * @param \Smarty_Internal_Template $_template
          * @param string $unifunc function with template code
+         *
          * @throws \Exception
          */
         public function getRenderedTemplateCode ( Smarty_Internal_Template $_template, $unifunc = NULL ) {
@@ -107,17 +118,17 @@
                         call_user_func ( $callback, $_template );
                     }
                 }
-                $unifunc( $_template );
+            $unifunc( $_template );
                 foreach ( $_template->endRenderCallbacks as $callback ) {
                     call_user_func ( $callback, $_template );
                 }
                 $_template->isRenderingCache = FALSE;
-            } catch ( Exception $e ) {
+            } catch (Exception $e ) {
                 $_template->isRenderingCache = FALSE;
                 while ( ob_get_level () > $level ) {
                     ob_end_clean ();
                 }
-                if ( isset( $smarty->security_policy ) ) {
+                if (isset( $smarty->security_policy ) ) {
                     $smarty->security_policy->endTemplate ();
                 }
                 throw $e;
@@ -126,6 +137,7 @@
 
         /**
          * Get compiled time stamp
+         *
          * @return int
          */
         public function getTimeStamp () {

@@ -10,10 +10,10 @@
      */
     class Smarty_Template_Compiled extends Smarty_Template_Resource_Base {
 
-        /**
-         * nocache hash
-         * @var string|null
-         */
+    /**
+     * nocache hash
+     * @var string|null
+     */
         public $nocache_hash = NULL;
 
         /**
@@ -33,7 +33,48 @@
         }
 
         /**
+         * compile template from source
+         * @param Smarty_Internal_Template $_template
+         * @throws Exception
+         */
+        public function compileTemplateSource ( Smarty_Internal_Template $_template ) {
+            $this->file_dependency = [ ];
+            $this->includes        = [ ];
+            $this->nocache_hash    = NULL;
+            $this->unifunc         = NULL;
+            // compile locking
+            if ( $saved_timestamp = $this->getTimeStamp () ) {
+                touch ( $this->filepath );
+            }
+            // call compiler
+            $_template->loadCompiler ();
+            $this->write ( $_template, $_template->compiler->compileTemplate ( $_template ) );
+            // release compiler object to free memory
+            unset( $_template->compiler );
+        }
+
+        /**
+         * Load fresh compiled template by including the PHP file
+         * HHVM requires a work around because of a PHP incompatibility
+         *
+         * @param \Smarty_Internal_Template $_smarty_tpl do not change variable name, is used by compiled template
+         */
+        private function loadCompiledTemplate ( Smarty_Internal_Template $_smarty_tpl ) {
+            if ( function_exists ( 'opcache_invalidate' ) && strlen ( ini_get ( "opcache.restrict_api" ) ) < 1 ) {
+                opcache_invalidate ( $this->filepath, TRUE );
+            } elseif ( function_exists ( 'apc_compile_file' ) ) {
+                apc_compile_file ( $this->filepath );
+            }
+            if (defined ( 'HHVM_VERSION' ) ) {
+                eval( "?>" . file_get_contents ( $this->filepath ) );
+            } else {
+                include ( $this->filepath );
+            }
+        }
+
+        /**
          * populate Compiled Object with compiled filepath
+         *
          * @param Smarty_Internal_Template $_template template object
          **/
         public function populateCompiledFilepath ( Smarty_Internal_Template $_template ) {
@@ -73,7 +114,9 @@
 
         /**
          * load compiled template or compile from source
+         *
          * @param Smarty_Internal_Template $_smarty_tpl do not change variable name, is used by compiled template
+         *
          * @throws Exception
          */
         public function process ( Smarty_Internal_Template $_smarty_tpl ) {
@@ -99,34 +142,31 @@
                         $smarty->compile_check = FALSE;
                         $this->loadCompiledTemplate ( $_smarty_tpl );
                         $smarty->compile_check = $compileCheck;
-                    }
                 }
-                $_smarty_tpl->_subTemplateRegister ();
+            }
+            $_smarty_tpl->_subTemplateRegister ();
                 $this->processed = TRUE;
             }
         }
 
-        /**
-         * Load fresh compiled template by including the PHP file
-         * HHVM requires a work around because of a PHP incompatibility
-         * @param \Smarty_Internal_Template $_smarty_tpl do not change variable name, is used by compiled template
-         */
-        private function loadCompiledTemplate ( Smarty_Internal_Template $_smarty_tpl ) {
-            if ( function_exists ( 'opcache_invalidate' ) && strlen ( ini_get ( "opcache.restrict_api" ) ) < 1 ) {
-                opcache_invalidate ( $this->filepath, TRUE );
-            } elseif ( function_exists ( 'apc_compile_file' ) ) {
-                apc_compile_file ( $this->filepath );
+    /**
+     * Read compiled content from handler
+     * @param Smarty_Internal_Template $_template template object
+     * @return string content
+     */
+        public function read ( Smarty_Internal_Template $_template ) {
+            if ( !$_template->source->handler->recompiled ) {
+                return file_get_contents ( $this->filepath );
             }
-            if ( defined ( 'HHVM_VERSION' ) ) {
-                eval( "?>" . file_get_contents ( $this->filepath ) );
-            } else {
-                include ( $this->filepath );
-            }
+
+            return isset( $this->content ) ? $this->content : FALSE;
         }
 
         /**
          * render compiled template code
+         *
          * @param Smarty_Internal_Template $_template
+         *
          * @return string
          * @throws Exception
          */
@@ -136,13 +176,13 @@
                 $type = $_template->source->isConfig ? 'config' : 'template';
                 throw new SmartyException( "Unable to load {$type} '{$_template->source->type}:{$_template->source->name}'" );
             }
-            if ( $_template->smarty->debugging ) {
+            if ($_template->smarty->debugging ) {
                 if ( !isset( $_template->smarty->_debug ) ) {
                     $_template->smarty->_debug = new Smarty_Internal_Debug();
                 }
                 $_template->smarty->_debug->start_render ( $_template );
             }
-            if ( !$this->processed ) {
+            if (!$this->processed ) {
                 $this->process ( $_template );
             }
             if ( isset( $_template->cached ) ) {
@@ -163,30 +203,11 @@
         }
 
         /**
-         * compile template from source
-         * @param Smarty_Internal_Template $_template
-         * @throws Exception
-         */
-        public function compileTemplateSource ( Smarty_Internal_Template $_template ) {
-            $this->file_dependency = [ ];
-            $this->includes        = [ ];
-            $this->nocache_hash    = NULL;
-            $this->unifunc         = NULL;
-            // compile locking
-            if ( $saved_timestamp = $this->getTimeStamp () ) {
-                touch ( $this->filepath );
-            }
-            // call compiler
-            $_template->loadCompiler ();
-            $this->write ( $_template, $_template->compiler->compileTemplate ( $_template ) );
-            // release compiler object to free memory
-            unset( $_template->compiler );
-        }
-
-        /**
          * Write compiled code by handler
+         *
          * @param Smarty_Internal_Template $_template template object
          * @param string $code compiled code
+         *
          * @return boolean success
          */
         public function write ( Smarty_Internal_Template $_template, $code ) {
@@ -198,24 +219,10 @@
 
                         return TRUE;
                     }
-                }
-
-                return FALSE;
+            }
+            return FALSE;
             }
 
-            return TRUE;
-        }
-
-        /**
-         * Read compiled content from handler
-         * @param Smarty_Internal_Template $_template template object
-         * @return string content
-         */
-        public function read ( Smarty_Internal_Template $_template ) {
-            if ( !$_template->source->handler->recompiled ) {
-                return file_get_contents ( $this->filepath );
-            }
-
-            return isset( $this->content ) ? $this->content : FALSE;
+            return true;
         }
     }

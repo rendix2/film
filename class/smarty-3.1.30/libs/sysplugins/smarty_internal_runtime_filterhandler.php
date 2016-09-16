@@ -7,11 +7,12 @@
      * @author     Uwe Tews
      */
 
-    /**
-     * Class for filter processing
-     * @package    Smarty
-     * @subpackage PluginsInternal
-     */
+/**
+ * Class for filter processing
+ *
+ * @package    Smarty
+ * @subpackage PluginsInternal
+ */
     class Smarty_Internal_Runtime_FilterHandler {
         /**
          * Run filters over content
@@ -51,14 +52,13 @@
                     $content = call_user_func ( $callback, $content, $template );
                 }
             }
-            // loop over registered filters of specified type
+        // loop over registered filters of specified type
             if ( !empty( $template->smarty->registered_filters[ $type ] ) ) {
                 foreach ( $template->smarty->registered_filters[ $type ] as $key => $name ) {
                     $content = call_user_func ( $template->smarty->registered_filters[ $type ][ $key ], $content, $template );
                 }
             }
-
-            // return filtered output
+        // return filtered output
             return $content;
         }
     }

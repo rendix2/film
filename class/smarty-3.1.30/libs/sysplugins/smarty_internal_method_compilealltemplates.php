@@ -8,26 +8,11 @@
      * @author     Uwe Tews
      */
     class Smarty_Internal_Method_CompileAllTemplates {
-        /**
-         * Valid for Smarty object
-         * @var int
-         */
+    /**
+     * Valid for Smarty object
+     * @var int
+     */
         public $objMap = 1;
-
-        /**
-         * Compile all template files
-         * @api  Smarty::compileAllTemplates()
-         * @param \Smarty $smarty passed smarty object
-         * @param  string $extension file extension
-         * @param  bool $force_compile force all to recompile
-         * @param  int $time_limit
-         * @param  int $max_errors
-         * @return integer number of template files recompiled
-         */
-        public function compileAllTemplates ( Smarty $smarty, $extension = '.tpl', $force_compile = FALSE, $time_limit = 0,
-        $max_errors = NULL ) {
-            return $this->compileAll ( $smarty, $extension, $force_compile, $time_limit, $max_errors );
-        }
 
         /**
          * Compile all template or config files
@@ -88,7 +73,7 @@
                             echo ' is up to date';
                             flush ();
                         }
-                    } catch ( Exception $e ) {
+                } catch ( Exception $e ) {
                         echo "\n<br>        ------>Error: ", $e->getMessage (), "<br><br>\n";
                         $_error_count++;
                     }
@@ -100,9 +85,27 @@
                         exit();
                     }
                 }
-            }
-            echo "\n<br>";
+        }
+        echo "\n<br>";
 
             return $_count;
+        }
+
+        /**
+         * Compile all template files
+         *
+         * @api  Smarty::compileAllTemplates()
+         *
+         * @param \Smarty $smarty passed smarty object
+         * @param  string $extension file extension
+         * @param  bool $force_compile force all to recompile
+         * @param  int $time_limit
+         * @param  int $max_errors
+         *
+         * @return integer number of template files recompiled
+         */
+        public function compileAllTemplates ( Smarty $smarty, $extension = '.tpl', $force_compile = FALSE, $time_limit = 0,
+        $max_errors = NULL ) {
+            return $this->compileAll ( $smarty, $extension, $force_compile, $time_limit, $max_errors );
         }
     }

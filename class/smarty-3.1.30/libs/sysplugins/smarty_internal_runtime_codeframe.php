@@ -7,13 +7,13 @@
      * @author     Uwe Tews
      */
 
-    /**
-     * Class Smarty_Internal_Extension_CodeFrame
-     * Create code frame for compiled and cached templates
-     */
+/**
+ * Class Smarty_Internal_Extension_CodeFrame
+ * Create code frame for compiled and cached templates
+ */
     class Smarty_Internal_Runtime_CodeFrame {
         /**
-         * Create code frame for compiled and cached templates
+     * Create code frame for compiled and cached templates
          * @param Smarty_Internal_Template $_template
          * @param string $content optional template content
          * @param string $functions compiled template function and block code
@@ -63,8 +63,8 @@
                             } else {
                                 $output .= "if (!is_callable('{$data['function']}')) require_once '{$file}';\n";
                             }
-                        }
                     }
+                }
                 }
                 if ( $_template->caching && !empty( $_template->compiled->required_plugins[ 'nocache' ] ) ) {
                     $_template->compiled->has_nocache_code = TRUE;
@@ -77,11 +77,11 @@
                             } else {
                                 $output .= addslashes ( "if (!is_callable('{$data['function']}')) require_once '{$file}';\n" );
                             }
-                        }
                     }
+                }
                     $output .= "?>/*/%%SmartyNocache:{$_template->compiled->nocache_hash}%%*/';\n";
                 }
-            }
+        }
             $output .= "?>\n";
             $output .= $content;
             $output .= "<?php }\n?>";

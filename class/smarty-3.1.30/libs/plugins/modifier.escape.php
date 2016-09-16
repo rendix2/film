@@ -5,19 +5,22 @@
      * @subpackage PluginsModifier
      */
 
-    /**
-     * Smarty escape modifier plugin
-     * Type:     modifier<br>
-     * Name:     escape<br>
-     * Purpose:  escape string for output
-     * @link   http://www.smarty.net/docs/en/language.modifier.escape
-     * @author Monte Ohrt <monte at ohrt dot com>
-     * @param string $string input string
-     * @param string $esc_type escape type
-     * @param string $char_set character set, used for htmlspecialchars() or htmlentities()
-     * @param boolean $double_encode encode already encoded entitites again, used for htmlspecialchars() or htmlentities()
-     * @return string escaped input string
-     */
+/**
+ * Smarty escape modifier plugin
+ * Type:     modifier<br>
+ * Name:     escape<br>
+ * Purpose:  escape string for output
+ *
+ * @link   http://www.smarty.net/docs/en/language.modifier.escape
+ * @author Monte Ohrt <monte at ohrt dot com>
+ *
+ * @param string $string input string
+ * @param string $esc_type escape type
+ * @param string $char_set character set, used for htmlspecialchars() or htmlentities()
+ * @param boolean $double_encode encode already encoded entitites again, used for htmlspecialchars() or htmlentities()
+ *
+ * @return string escaped input string
+ */
     function smarty_modifier_escape ( $string, $esc_type = 'html', $char_set = NULL, $double_encode = TRUE ) {
         static $_double_encode = NULL;
         if ( $_double_encode === NULL ) {
@@ -58,17 +61,17 @@
                             // php <5.2.3 - only handle double encoding
                             $string = htmlspecialchars ( $string, ENT_QUOTES, $char_set );
                         } else {
-                            // php <5.2.3 - prevent double encoding
+                        // php <5.2.3 - prevent double encoding
                             $string = preg_replace ( '!&(#?\w+);!', '%%%SMARTY_START%%%\\1%%%SMARTY_END%%%', $string );
                             $string = htmlspecialchars ( $string, ENT_QUOTES, $char_set );
                             $string =
                             str_replace ( [ '%%%SMARTY_START%%%', '%%%SMARTY_END%%%' ], [ '&', ';' ], $string );
 
                             return $string;
-                        }
                     }
+                }
 
-                    // htmlentities() won't convert everything, so use mb_convert_encoding
+                // htmlentities() won't convert everything, so use mb_convert_encoding
                     return mb_convert_encoding ( $string, 'HTML-ENTITIES', $char_set );
                 }
 
@@ -79,7 +82,7 @@
                     if ( $double_encode ) {
                         return htmlentities ( $string, ENT_QUOTES, $char_set );
                     } else {
-                        $string = preg_replace ( '!&(#?\w+);!', '%%%SMARTY_START%%%\\1%%%SMARTY_END%%%', $string );
+                    $string     = preg_replace ( '!&(#?\w+);!', '%%%SMARTY_START%%%\\1%%%SMARTY_END%%%', $string );
                         $string = htmlentities ( $string, ENT_QUOTES, $char_set );
                         $string = str_replace ( [ '%%%SMARTY_START%%%', '%%%SMARTY_END%%%' ], [ '&', ';' ], $string );
 
@@ -87,8 +90,8 @@
                     }
                 }
 
-            case 'url':
-                return rawurlencode ( $string );
+        case 'url':
+            return rawurlencode ( $string );
 
             case 'urlpathinfo':
                 return str_replace ( '%2F', '/', rawurlencode ( $string ) );
@@ -118,8 +121,8 @@
                     }
 
                     return $return;
-                }
-                // no MBString fallback
+            }
+            // no MBString fallback
                 $_length = strlen ( $string );
                 for ( $x = 0; $x < $_length; $x++ ) {
                     $return .= '&#x' . bin2hex ( $string[ $x ] ) . ';';
@@ -137,8 +140,8 @@
                     }
 
                     return $return;
-                }
-                // no MBString fallback
+            }
+            // no MBString fallback
                 $_length = strlen ( $string );
                 for ( $x = 0; $x < $_length; $x++ ) {
                     $return .= '&#' . ord ( $string[ $x ] ) . ';';
@@ -171,14 +174,14 @@
                         if ( $unicode >= 126 ) {
                             $return .= '&#' . $unicode . ';';
                         } else {
-                            $return .= chr ( $unicode );
+                            $return .= chr($unicode);
                         }
                     }
 
                     return $return;
-                }
+            }
 
-                $_length = strlen ( $string );
+            $_length = strlen($string);
                 for ( $_i = 0; $_i < $_length; $_i++ ) {
                     $_ord = ord ( substr ( $string, $_i, 1 ) );
                     // non-standard char, escape it

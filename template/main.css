@@ -13,7 +13,7 @@ dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
+figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
     margin: 0;
@@ -22,38 +22,31 @@ time, mark, audio, video {
 
     vertical-align: top;
 }
-
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
+article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
-
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
     display: none;
 }
-
 body {
     line-height: 1;
 }
-
 ol, ul {
     list-style: none;
 }
-
 blockquote, q {
     quotes: none;
 }
-
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: '';
     content: none;
 }
-
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -220,11 +213,82 @@ input:focus {
     background-color: #7db435;
 }
 
+/*--------------------------------------------------------LIVESEARCH---------------------------------------------*/
+#result-live {
+
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    display: none;
+    margin-top: -1px;
+
+    overflow: hidden;
+
+    background-color: white;
+    -webkit-box-shadow: inset 0px 6px 3px -5px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: inset 0px 6px 3px -5px rgba(50, 50, 50, 0.5);
+    box-shadow: inset 0px 6px 3px -5px rgba(50, 50, 50, 0.5);
+}
+
+.result-item-live {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+.result-item-live:hover {
+    background-color: #e4e4e4;
+}
+
+.result-image-live {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+
+}
+
+.result-info-live {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.result-item-live h3 {
+    font-size: 14px;
+    font-weight: 600;
+    width: 300px;
+    line-height: 1.2;
+    padding: 2px 0 5px 0;
+}
+
+#mysubmit {
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #dfdfdf;
+    text-align: center;
+
+    padding: 10px;
+    cursor: pointer;
+    display: none;
+}
+
+/*-------------------------------------------------------------------------------------------*/
 /*-------------------------------------------RESULTS GRID----------------------------------------------------------------*/
 #results {
 
     background-color: white;
-
+	
+	
 }
 
 #results-panel {
@@ -301,19 +365,16 @@ input:focus {
     margin-left: 20px;
     font-size: 16px;
 }
-
 @media (max-width: 1024px) {
     .result-marginer {
         width: 50%;
     }
 }
-
 @media (max-width: 700px) {
     .result-marginer {
         width: 100%;
     }
 }
-
 @media (max-width: 400px) {
     .result-image {
         display: block;
@@ -333,5 +394,4 @@ input:focus {
         text-align: center;
     }
 }
-
 /*-------------------------------------------------------------------------------------------*/
