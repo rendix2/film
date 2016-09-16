@@ -131,7 +131,7 @@
 
 				$year2 = substr ( $name[ 1 ], 0, 4 );
 			}
-
+///
 			$imageName = self::saveImage ( $result[ 'image' ] );
 
 			return [ 'cz'    => $czechName, 'origin' => $engName, 'year' => $year2, 'desc' => $result[ 'description' ],
