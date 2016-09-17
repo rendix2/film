@@ -36,7 +36,7 @@
     <label>Uživatelské heslo pro kontrolu
         <input name="user_password_check" type="password" value="" placeholder="Uživatelské heslo pro kontrolu">
     </label>
-            <input type="submit" name="submit" value="Registrovat">
+    <input type="submit" name="submit" value="Registrovat">
 
             </form><?php }
     }

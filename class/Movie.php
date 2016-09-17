@@ -29,6 +29,16 @@
 			return explode ( '-', $csfdId[ 4 ] )[ 0 ];
 		}
 
+		private static function prepareOrderBy () {
+			switch ( $_POST[ 'orderBy' ] ) {
+				case 'year':
+					return 'movie_year';
+				case 'name':
+				default:
+					return 'movie_name_czech';
+			}
+		}
+
 		private static function saveImage ( $address ) {
 			$image     = file_get_contents ( $address );
 			$imageName = md5 ( uniqid ( mt_rand (), TRUE ) );
@@ -162,6 +172,10 @@
 			$this->smarty->display ( 'liveMoviesView', $this->database->fetchAll () );
 		}
 
+		private function preparePagination () {
+
+		}
+
 		private function prepareSearch ( $input ) {
 			$errors = [ ];
 
@@ -227,4 +241,5 @@
 
 			return $dom;
 		}
+
 	}

@@ -27,5 +27,5 @@
             <input type="text" name="csfdLink" value="<?php echo $_smarty_tpl->tpl_vars[ 'csfdLink' ]->value; ?>
 " placeholder="http://www.csfd.cz/film/13-akta-x/prehled/" maxlength="200" size="100">
     <input type="submit" name="submit" value="Přidat film">
-            </form><?php }
-    }
+</form><?php }
+}
