@@ -95,10 +95,18 @@
 			}
 		}
 
+		private function addRelatedMovie () {
+			$this->database->query ( 'INSERT INTO related_movies (movie_id, movie_related_id) VALUES (:movie_id,
+			:movie_realted_id);',
+			[ 'movie_id' => $_GET[ 'movie_id' ], 'movie_related_id' => $_POST[ 'movie_related_id' ] ] );
+
+			echo $this->database->numRows () == 1 ? 'Doporučený film uložen' : 'Doporučení se nepodařilo uložit';
+		}
+
 		private function getMovieInfo () {
 			$result = [ ];
 
-			foreach ( $this->startParse ()->find ( 'meta' ) as $element ) {
+			foreach ( $this->startParseData ()->find ( 'meta' ) as $element ) {
 				//echo $element->content.'<br>';
 
 				if ( $element->name == 'description' ) {
@@ -204,11 +212,18 @@
 			$this->smarty->display ( 'moviesView', $this->database->fetchAll () );
 		}
 
-		public function remove () {
+		public function removeMovie () {
 
+			$this->database->query ( 'DELETE FROM movies WHERE movie_id = :movie_id AND user_id = :user_id;',
+			[ 'movie_id' => $_GET[ 'movie_id' ], 'user_id' => $_SESSION[ 'user_id' ] ] );
+
+			if ( $this->database->numRows () == 1 )
+				echo 'Film jsem smazal';
+			else
+				echo 'Film se nepodařilo smazat';
 		}
 
-		public function search () {
+		public function searchMovie () {
 			//	if ( !isset( $_POST[ 'submit' ] ) )
 
 			$this->smarty->display ( 'movieSearch', $_POST[ 'search' ], 'search' );
@@ -230,7 +245,15 @@
 			$this->smarty->display ( 'movieShow', $this->database->fetch () );
 		}
 
-		private function startParse () {
+		private function showRelatedMovies () {
+			$this->database->query ( 'SELECT m.movie_id, m.movie_name_czech, m.movie_year, m.movie_picture, rm.relation_id
+ 										FROM related_movies rm
+										LEFT JOIN movies m
+										ON rm.movie_related_id = m.movie_id
+ WHERE rm.movie_id = :movie_id', [ 'movie_id' => $_GET[ 'movie_id' ] ] );
+		}
+
+		private function startParseData () {
 			$html = file_get_contents ( $_POST[ 'csfdLink' ] );
 
 			/// check if used gzip or not!!

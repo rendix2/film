@@ -33,7 +33,7 @@
     switch ( $_GET[ 'akce' ] ) {
         case '':
         case 'searchMovie':
-            $movie->search ();
+            $movie->searchMovie ();
             break;
         case 'login':
             $user->login ();

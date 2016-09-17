@@ -12,7 +12,7 @@ OK 7. ukládat všechny obrázky k sobě
 13. některé akce pouze jako přihlášený
 14. bezpečná jména
 16. pagination
-17. sort by
+PREPARED 17. sort by
 OK 18. hledání pomocí LIKE i ve fultextovém // zatím jen když se nic nenajde
 20. šipky + esc při hledání
 21. v případě, že v realtime hledaní LIKE nic nenajde, použít fultext
