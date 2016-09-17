@@ -96,9 +96,11 @@
 		}
 
 		private function addRelatedMovie () {
-			$this->database->query ( 'INSERT INTO related_movies (movie_id, movie_related_id) VALUES (:movie_id,
+			$this->database->query ( 'INSERT INTO related_movies (user_id, movie_id, movie_related_id) VALUES (:user_id,:movie_id,
 			:movie_realted_id);',
-			[ 'movie_id' => $_GET[ 'movie_id' ], 'movie_related_id' => $_POST[ 'movie_related_id' ] ] );
+			[ 'user_id' => $_SESSION[ 'user_id' ], 'movie_id' => $_GET[ 'movie_id' ], 'movie_related_id' =>
+			$_POST[ 'movie_related_id' ],
+			] );
 
 			echo $this->database->numRows () == 1 ? 'Doporučený film uložen' : 'Doporučení se nepodařilo uložit';
 		}
@@ -264,5 +266,4 @@
 
 			return $dom;
 		}
-
 	}
