@@ -53,6 +53,8 @@
 		}
 
 		public function add () {
+			if ( !$_SESSION[ 'logged' ] ) Starter::myExit ( $this->smarty, 'Nejsi přihlášený' );
+
 			$this->smarty->display ( 'movieAdd', $_POST[ 'csfdLink' ], 'csfdLink' );
 
 			if ( isset( $_POST[ 'submit' ] ) ) {
@@ -129,7 +131,6 @@
 				}
 			}
 
-
 			if ( preg_match ( '#\/#', preg_quote ( $result[ 'title' ], '#' ) ) ) {
 				$names     = $result[ 'title' ];
 				$names     = explode ( '/ ', $names );
@@ -165,19 +166,6 @@
 			movies WHERE movie_name_czech LIKE concat("%", :search, "%") OR movie_name_origin LIKE concat("%",
 			:search, "%") LIMIT 6; ',
 			[ 'search' => $_POST[ 'liveSearch' ] ] );
-
-			//var_dump($_POST['liveSearch']);
-
-			//var_dump($this->database->numRows());
-
-			/*
-			$this->database->query("SELECT movie_name_czech, movie_picture, movie_name_origin, movie_year FROM movies
-									WHERE movie_name_czech LIKE '%:search%' OR movie_name_origin LIKE '%:search%'",
-			[ 'search' => $_POST['liveSearch'] ] );
-			*/
-
-			//var_dump($this->database->fetchAll());
-
 
 			$this->smarty->display ( 'liveMoviesView', $this->database->fetchAll () );
 		}
