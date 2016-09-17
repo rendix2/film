@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 <head>
     <title>Template</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700&subset=latin-ext"
@@ -37,6 +37,9 @@
             break;
         case 'login':
             $user->login ();
+            break;
+        case 'logout':
+            $user->logout ();
             break;
         case 'register':
             $user->register ();

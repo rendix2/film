@@ -40,8 +40,10 @@
 		}
 
 		private static function saveImage ( $address ) {
+			if ( $address == NULL ) return NULL;
+
 			$image     = file_get_contents ( $address );
-			$imageName = md5 ( uniqid ( mt_rand (), TRUE ) );
+			$imageName = Starter::generateHash ();
 			file_put_contents ( dirname ( __DIR__ ) . '/images/' . $imageName . '.jpg', $image );
 
 			return $imageName;
@@ -55,10 +57,14 @@
 		public function add () {
 			if ( !$_SESSION[ 'logged' ] ) Starter::myExit ( $this->smarty, 'Nejsi přihlášený' );
 
+			Starter::csrfGen ( $this->smarty );
 			$this->smarty->display ( 'movieAdd', $_POST[ 'csfdLink' ], 'csfdLink' );
 
 			if ( isset( $_POST[ 'submit' ] ) ) {
 				$errors = [ ];
+
+				if ( !Starter::csrfCheck () )
+					$errors[] = 'Neplatný token';
 
 				if ( empty( $_POST[ 'csfdLink' ] ) )
 					$errors[] = 'Prázdný odkaz na csfd';
@@ -79,20 +85,21 @@
 					Starter::myExit ( $this->smarty, implode ( '<br>', $errors ) );
 
 				$data = $this->getMovieInfo ();
-
 				$this->database->query (
-				'INSERT INTO movies (movie_csfd_id,movie_name_czech, movie_name_origin, movie_year, movie_picture, movie_description)
-					 VALUES (:movie_csfd_id, :movie_name_czech, :movie_name_origin, :movie_year, :movie_picture,
+				'INSERT INTO movies (user_id, movie_csfd_id,movie_name_czech, movie_name_origin, movie_year, movie_picture,
+movie_description)
+					 VALUES (:user_id, :movie_csfd_id, :movie_name_czech, :movie_name_origin, :movie_year,
+					 :movie_picture,
 					 :movie_description);',
 
-				[ 'movie_csfd_id'     => self::getCsfdId ( $_POST[ 'csfdLink' ] ),
+				[ 'user_id'           => $_SESSION[ 'user_id' ],
+				  'movie_csfd_id'     => self::getCsfdId ( $_POST[ 'csfdLink' ] ),
 				  'movie_name_czech'  => $data[ 'cz' ],
 				  'movie_name_origin' => $data[ 'origin' ],
 				  'movie_year'        => $data[ 'year' ],
 				  'movie_picture'     => $data[ 'image' ],
 				  'movie_description' => $data[ 'desc' ],
 				] );
-
 				echo $this->database->numRows () == 1 ? 'Film přidán!' : 'Film se nepodařilo uložit';
 			}
 		}
@@ -130,6 +137,9 @@
 					continue;
 				}
 			}
+
+			if ( !isset( $result[ 'image' ] ) )
+				$result[ 'image' ] = NULL;
 
 			if ( preg_match ( '#\/#', preg_quote ( $result[ 'title' ], '#' ) ) ) {
 				$names     = $result[ 'title' ];
@@ -177,6 +187,7 @@
 		private function prepareSearch ( $input ) {
 			$errors = [ ];
 
+
 			if ( empty( $input ) )
 				$errors[] = 'Prázné pole hledání';
 			if ( mb_strlen ( $input, Starter::UTF8 ) < 3 )
@@ -203,18 +214,17 @@
 		}
 
 		public function removeMovie () {
+			Starter::csrfGen ( $this->smarty );
 
 			$this->database->query ( 'DELETE FROM movies WHERE movie_id = :movie_id AND user_id = :user_id;',
 			[ 'movie_id' => $_GET[ 'movie_id' ], 'user_id' => $_SESSION[ 'user_id' ] ] );
 
-			if ( $this->database->numRows () == 1 )
-				echo 'Film jsem smazal';
-			else
-				echo 'Film se nepodařilo smazat';
+			echo $this->database->numRows () == 1 ? 'Film jsem smazal' : 'Film se nepodařilo smazat';
 		}
 
 		public function searchMovie () {
 			//	if ( !isset( $_POST[ 'submit' ] ) )
+
 
 			$this->smarty->display ( 'movieSearch', $_POST[ 'search' ], 'search' );
 
@@ -240,7 +250,8 @@
  										FROM related_movies rm
 										LEFT JOIN movies m
 										ON rm.movie_related_id = m.movie_id
- WHERE rm.movie_id = :movie_id', [ 'movie_id' => $_GET[ 'movie_id' ] ] );
+ 										WHERE rm.movie_id = :movie_id;',
+			[ 'movie_id' => $_GET[ 'movie_id' ] ] );
 		}
 
 		private function startParseData () {

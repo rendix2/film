@@ -31,6 +31,25 @@
 			$_POST[ 'search' ]    = isset( $_POST[ 'search' ] ) ? $_POST[ 'search' ] : '';
 		}
 
+		public static function csrfCheck () {
+			if ( !isset( $_POST[ 'csrfToken' ] ) ) return FALSE;
+
+			return $_SESSION[ 'csrfToken' ] === $_POST[ 'csrfToken' ];
+		}
+
+		public static function csrfGen ( MySmarty $smarty ) {
+			if ( !isset( $_SESSION[ 'csrfToken' ] ) )
+				$_SESSION[ 'csrfToken' ] = self::generateHash ();
+
+			$smarty->getSmarty ()->assign ( 'csrfToken', $_SESSION[ 'csrfToken' ] );
+
+			return $_SESSION[ 'csrfToken' ];
+		}
+
+		public static function generateHash () {
+			return md5 ( uniqid ( mt_rand (), TRUE ) );
+		}
+
 		public static function myExit ( MySmarty $smarty, $data = '' ) {
 			echo $data;
 			$smarty->display ( 'pageFooter', [ ] );
@@ -40,5 +59,4 @@
 		public static function start () {
 			return ( self::$starter === NULL ) ? new Starter() : self::$starter;
 		}
-
 	}

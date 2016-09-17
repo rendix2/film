@@ -1,5 +1,5 @@
 KO 1. preg_quote u preg_match
-2. csfr
+OK 2. csfr krom hledání!
 3. xss
 5. pokud na csfd není obrázek vlastní (not found obrázek)
 6. vlastní profil filmu
@@ -9,7 +9,7 @@ OK 7. ukládat všechny obrázky k sobě
 10. vazby filmů
 11. hodnocení filmů
 12. počítadlo pokusů o přidání filmu
-13. některé akce pouze jako přihlášený
+OK 13. některé akce pouze jako přihlášený (hotovo přidávání filmů)
 14. bezpečná jména
 16. pagination
 PREPARED 17. sort by

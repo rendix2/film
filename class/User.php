@@ -19,11 +19,14 @@
 		public function login () {
 			if ( $_SESSION[ 'logged' ] ) Starter::myExit ( $this->smarty, 'Jsi přihlášen' );
 
+			Starter::csrfGen ( $this->smarty );
 			$this->smarty->display ( 'userLogin', $_POST[ 'user_name' ], 'user_name' );
 
 			if ( isset( $_POST[ 'submit' ] ) ) {
 				$errors = [ ];
 
+				if ( !Starter::csrfCheck () )
+					$errors[] = 'Neplatný token';
 				if ( empty( $_POST[ 'user_name' ] ) )
 					$errors[] = 'Prázdné uživatelské jméno';
 				if ( empty( $_POST[ 'user_password' ] ) )
@@ -31,7 +34,7 @@
 				if ( count ( $errors ) != 0 )
 					Starter::myExit ( $this->smarty, implode ( '<br>', $errors ) );
 
-				$this->database->query ( 'SELECT user_name, user_password FROM users WHERE user_name = :user_name LIMIT 1;',
+				$this->database->query ( 'SELECT user_id, user_name, user_password FROM users WHERE user_name = :user_name LIMIT 1;',
 				[ 'user_name' => $_POST[ 'user_name' ] ] );
 
 				if ( !$this->database->numRows () == 1 )
@@ -42,8 +45,9 @@
 				if (
 				$data[ 'user_name' ] === $_POST[ 'user_name' ] &&
 				$data[ 'user_password' ] === hash ( 'sha512', $_POST[ 'user_password' ] )
-				)
-					$_SESSION[ 'logged' ] = TRUE;
+				) {
+					$_SESSION = [ 'user_id' => $data[ 'user_id' ], 'user_name' => $data[ 'user_name' ], 'logged' => TRUE ];
+				}
 				else {
 					$_SESSION[ 'logged' ] = FALSE;
 					echo 'Přihlášení se nezdařilo';
@@ -52,7 +56,7 @@
 		}
 
 		public function logout () {
-			if ( !$_SESSION[ 'logged' ] ) Starter::myExitm ( $this->smarty, 'Nejsi přihlášen' );
+			if ( !$_SESSION[ 'logged' ] ) Starter::myExit ( $this->smarty, 'Nejsi přihlášen' );
 
 			session_destroy ();
 		}
@@ -60,10 +64,14 @@
 		public function register () {
 			if ( $_SESSION[ 'logged' ] ) Starter::myExit ( $this->smarty, 'Jsi přihlášen' );
 
+			Starter::csrfGen ( $this->smarty );
 			$this->smarty->display ( 'userRegister', $_POST[ 'user_name' ], 'user_name' );
 
 			if ( isset( $_POST[ 'submit' ] ) ) {
 				$errors = [ ];
+
+				if ( !Starter::csrfCheck () )
+					$errors[] = 'Neplatný token';
 
 				if ( empty( $_POST[ 'user_name' ] ) )
 					$errors[] = 'Prázdné uživatelské jméno';
